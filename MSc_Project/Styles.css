@@ -1,0 +1,84 @@
+<STYLE type="text/css">
+UNKNOWN
+{
+}
+P.TopTitle
+{
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 20pt;
+    TEXT-ALIGN: center;
+	COLOR: blue;
+	PADDING-BOTTOM : 0pt;
+	PADDING-TOP : 6pt;
+	MARGIN-BOTTOM : 0pt;
+	MARGIN-TOP : 0pt;
+}
+P.TopSubTitle
+{
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 14pt;
+    TEXT-ALIGN: center;
+}
+P.MainTitle
+{
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 16pt;
+    TEXT-ALIGN: center;
+}
+P.MainSubTitle
+{
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 14pt;
+    TEXT-ALIGN: center;
+}
+P.MainSubTitleLeft
+{
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 14pt;
+    TEXT-ALIGN: left;
+}
+P.MainTextLeft
+{
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 12pt;
+    TEXT-ALIGN: left;
+}
+P.MainTextCenter
+{
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 12pt;
+    TEXT-ALIGN: center;
+}
+P.MainFigure
+{
+    TEXT-ALIGN: center;
+	PADDING-BOTTOM : 0pt;
+	MARGIN-BOTTOM : 0pt;
+}
+P.Menu
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 12pt;
+	FONT-WEIGHT: bold;
+	TEXT-ALIGN: center;
+}
+P.Footer
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 8pt;
+	TEXT-ALIGN: center;
+}
+A
+{
+    TEXT-DECORATION: none;
+}
+A:hover
+{
+	COLOR: red;
+}
+A:visited
+{
+}
+A:visited:hover
+{
+}

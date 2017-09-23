@@ -1,0 +1,56 @@
+.header{
+padding-top: 50px;
+padding-bottom:50px;
+}
+body{
+color: #323232!important;
+}
+.face{
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+.name{
+margin: 0 auto;
+text-align: center;
+}
+.subtitle{
+margin: 0 auto;
+text-align: center;
+margin-top: 20px;
+}
+.footer {
+text-align: center;
+padding: 50px;
+background-color: #585858;
+color: #fff;
+margin: 30px 0 0 0;
+border: 0px;
+}
+.socicon-linkedin{
+color: #3371b7;
+text-decoration: none!important;
+}
+.contentblock{
+margin-top:30px;
+width:50%;
+margin-right: auto!important;
+margin-left: auto!important;
+}
+.contentblockwide{
+margin-top:30px;
+width:70%;
+margin-right: auto!important;
+margin-left: auto!important;
+margin-bottom:30px;
+}
+.btn{
+background-color: #ffffff;
+color: #337AB7;
+border: solid 1px #337AB7!important;
+}
+.btn:hover{
+background-color: #337AB7;
+color: #ffffff!important;
+border: solid 1px #337AB7!important;
+}
