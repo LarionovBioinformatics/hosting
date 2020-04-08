@@ -1,0 +1,50 @@
+caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+.title{
+  font-size: 48px;
+  color: DarkRed;
+}
+
+.subtitle{
+  font-size: 18px;
+  font-style: italic;
+  font-weight: normal;
+  color: Grey;
+}
+
+h1{
+  font-size: 32px;
+  color: DarkCyan;
+}
+
+h2{
+  font-size: 24px;
+  font-style: italic;
+  color: DarkCyan;
+}
+
+h3{
+  font-size: 18px;
+  font-weight: bold;
+  color: DarkCyan;
+}
+
+s3{
+  font-size: 18px;
+  margin-left: 20px;
+  font-style: italic;
+  color: Teal;
+}

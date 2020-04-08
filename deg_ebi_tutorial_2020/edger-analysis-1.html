@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 edgeR analysis | Differential Gene Expression Analysis</title>
+  <meta name="description" content="Differential Genes with DESeq2 and edgeR" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 edgeR analysis | Differential Gene Expression Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Differential Genes with DESeq2 and edgeR" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 edgeR analysis | Differential Gene Expression Analysis" />
+  
+  <meta name="twitter:description" content="Differential Genes with DESeq2 and edgeR" />
+  
+
+<meta name="author" content="Alexey Larionov" />
+
+
+<meta name="date" content="2020-04-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="deseq2-analyisis.html"/>
+<link rel="next" href="compare-deg-lists.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">RNAseq Differential Gene Expression</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#dispersion-assessment"><i class="fa fa-check"></i><b>1.1</b> Dispersion assessment</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#bioconductors-tutorials"><i class="fa fa-check"></i><b>1.2</b> Bioconductor’s tutorials</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#default-threshiolds"><i class="fa fa-check"></i><b>1.3</b> Default threshiolds</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#tcga"><i class="fa fa-check"></i><b>1.4</b> TCGA</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#tcga-data-access"><i class="fa fa-check"></i><b>1.4.1</b> TCGA data access</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#tcga-rna-seq-pipeline"><i class="fa fa-check"></i><b>1.4.2</b> TCGA RNA-seq pipeline</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#tutorial-structure"><i class="fa fa-check"></i><b>1.5</b> Tutorial structure</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#samples-and-genes"><i class="fa fa-check"></i><b>1.5.1</b> Samples and Genes</a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#deseq2-analysis"><i class="fa fa-check"></i><b>1.5.2</b> DESeq2 analysis</a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#edger-analysis"><i class="fa fa-check"></i><b>1.5.3</b> edgeR analysis</a></li>
+<li class="chapter" data-level="1.5.4" data-path="index.html"><a href="index.html#comparison-of-degs"><i class="fa fa-check"></i><b>1.5.4</b> Comparison of DEGs</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#content-of-the-base-folder"><i class="fa fa-check"></i><b>1.6</b> Content of the base folder</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html"><i class="fa fa-check"></i><b>2</b> Setting the Enviroment</a><ul>
+<li class="chapter" data-level="2.1" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html#required-libraries"><i class="fa fa-check"></i><b>2.1</b> Required libraries</a></li>
+<li class="chapter" data-level="2.2" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html#base-folder-etc"><i class="fa fa-check"></i><b>2.2</b> Base folder etc</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="preparing-sample-information.html"><a href="preparing-sample-information.html"><i class="fa fa-check"></i><b>3</b> Preparing sample information</a></li>
+<li class="chapter" data-level="4" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html"><i class="fa fa-check"></i><b>4</b> Preparing gene information</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html#load-required-libraries"><i class="fa fa-check"></i><b>4.0.1</b> Load required libraries</a></li>
+<li class="chapter" data-level="4.0.2" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html#read-genes-data"><i class="fa fa-check"></i><b>4.0.2</b> Read genes data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html"><i class="fa fa-check"></i><b>5</b> DESeq2 analyisis</a><ul>
+<li class="chapter" data-level="5.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#deseqdataset-object"><i class="fa fa-check"></i><b>5.1</b> DESeqDataSet object</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#make-deseqdataset-object"><i class="fa fa-check"></i><b>5.1.1</b> Make DESeqDataSet object</a></li>
+<li class="chapter" data-level="5.1.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#explore-deseqdataset-object"><i class="fa fa-check"></i><b>5.1.2</b> Explore DESeqDataSet object</a></li>
+<li class="chapter" data-level="5.1.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#rowdata-adding-genes-names"><i class="fa fa-check"></i><b>5.1.3</b> rowData: adding genes names</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#genes-filtering"><i class="fa fa-check"></i><b>5.2</b> Genes filtering</a></li>
+<li class="chapter" data-level="5.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#exploring-source-data"><i class="fa fa-check"></i><b>5.3</b> Exploring source data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#normalizing-variance"><i class="fa fa-check"></i><b>5.3.1</b> Normalizing variance</a></li>
+<li class="chapter" data-level="5.3.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#pca-plot"><i class="fa fa-check"></i><b>5.3.2</b> PCA plot</a></li>
+<li class="chapter" data-level="5.3.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#hierarchical-clustering"><i class="fa fa-check"></i><b>5.3.3</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#calculating-degs"><i class="fa fa-check"></i><b>5.4</b> Calculating DEGs</a></li>
+<li class="chapter" data-level="5.5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#extracting-results"><i class="fa fa-check"></i><b>5.5</b> Extracting results</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#explore-default-thresholds"><i class="fa fa-check"></i><b>5.5.1</b> Explore default thresholds</a></li>
+<li class="chapter" data-level="5.5.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#user-defined-thresholds"><i class="fa fa-check"></i><b>5.5.2</b> User-defined thresholds</a></li>
+<li class="chapter" data-level="5.5.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#compare-results-with-different-thresholds"><i class="fa fa-check"></i><b>5.5.3</b> Compare results with different thresholds</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#exploring-results"><i class="fa fa-check"></i><b>5.6</b> Exploring results</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#check-genes-with-no-p-value"><i class="fa fa-check"></i><b>5.6.1</b> Check genes with no p-value</a></li>
+<li class="chapter" data-level="5.6.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#plot-dispersions"><i class="fa fa-check"></i><b>5.6.2</b> Plot dispersions</a></li>
+<li class="chapter" data-level="5.6.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#ma-plots"><i class="fa fa-check"></i><b>5.6.3</b> MA plots</a></li>
+<li class="chapter" data-level="5.6.4" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#plot-counts-for-an-individual-gene"><i class="fa fa-check"></i><b>5.6.4</b> Plot counts for an individual gene</a></li>
+<li class="chapter" data-level="5.6.5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#convert-results-to-data-frame"><i class="fa fa-check"></i><b>5.6.5</b> Convert results to data-frame</a></li>
+<li class="chapter" data-level="5.6.6" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#check-known-genes"><i class="fa fa-check"></i><b>5.6.6</b> Check known genes</a></li>
+<li class="chapter" data-level="5.6.7" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#volcano-plot"><i class="fa fa-check"></i><b>5.6.7</b> Volcano plot</a></li>
+<li class="chapter" data-level="5.6.8" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#hierarchical-clustering-using-degs"><i class="fa fa-check"></i><b>5.6.8</b> Hierarchical clustering using DEGs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#save-results"><i class="fa fa-check"></i><b>5.7</b> Save results</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html"><i class="fa fa-check"></i><b>6</b> edgeR analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#read-htseq-counts-to-dgelist"><i class="fa fa-check"></i><b>6.1</b> Read HTSeq counts to DGEList</a></li>
+<li class="chapter" data-level="6.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#explore-and-update-the-deglist-object"><i class="fa fa-check"></i><b>6.2</b> Explore and update the DEGList object</a></li>
+<li class="chapter" data-level="6.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#gene-filtering"><i class="fa fa-check"></i><b>6.3</b> Gene filtering</a></li>
+<li class="chapter" data-level="6.4" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#normalizing-by-tmm"><i class="fa fa-check"></i><b>6.4</b> Normalizing by TMM</a></li>
+<li class="chapter" data-level="6.5" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#exploring-source-data-1"><i class="fa fa-check"></i><b>6.5</b> Exploring source data</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#boxplot"><i class="fa fa-check"></i><b>6.5.1</b> Boxplot</a></li>
+<li class="chapter" data-level="6.5.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#mds-plot"><i class="fa fa-check"></i><b>6.5.2</b> MDS plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#calculate-degs"><i class="fa fa-check"></i><b>6.6</b> Calculate DEGs</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#specify-design"><i class="fa fa-check"></i><b>6.6.1</b> Specify design</a></li>
+<li class="chapter" data-level="6.6.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#estimate-dispersions"><i class="fa fa-check"></i><b>6.6.2</b> Estimate dispersions</a></li>
+<li class="chapter" data-level="6.6.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#fit-the-model"><i class="fa fa-check"></i><b>6.6.3</b> Fit the model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#extract-results"><i class="fa fa-check"></i><b>6.7</b> Extract results</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#default-settings"><i class="fa fa-check"></i><b>6.7.1</b> Default settings</a></li>
+<li class="chapter" data-level="6.7.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#customised-thresholds"><i class="fa fa-check"></i><b>6.7.2</b> Customised thresholds</a></li>
+<li class="chapter" data-level="6.7.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#check-known-genes-1"><i class="fa fa-check"></i><b>6.7.3</b> Check known genes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#save-results-1"><i class="fa fa-check"></i><b>6.8</b> Save results</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html"><i class="fa fa-check"></i><b>7</b> Compare DEG lists</a><ul>
+<li class="chapter" data-level="7.1" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#venn-diagram"><i class="fa fa-check"></i><b>7.1</b> Venn diagram</a></li>
+<li class="chapter" data-level="7.2" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#compare-fc-and-fdr-estimates"><i class="fa fa-check"></i><b>7.2</b> Compare FC and FDR estimates</a></li>
+<li class="chapter" data-level="7.3" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#degs-intersect-list"><i class="fa fa-check"></i><b>7.3</b> DEGs intersect list</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="final-section.html"><a href="final-section.html"><i class="fa fa-check"></i><b>8</b> Final section</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Differential Gene Expression Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="edger-analysis-1" class="section level1">
+<h1><span class="header-section-number">6</span> edgeR analysis</h1>
+<p>First, we load edgeR library:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;BiocManager&quot;)</span>
+<span class="co">#BiocManager::install(&quot;edgeR&quot;)</span>
+<span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(edgeR)))</code></pre></div>
+<div id="read-htseq-counts-to-dgelist" class="section level2">
+<h2><span class="header-section-number">6.1</span> Read HTSeq counts to DGEList</h2>
+<p>Prior the analysis <strong>edgeR</strong> needs to collect all necessary information. <strong>edgeR</strong> collects the counts, samples and genes data in a single list called <strong>DGEList</strong>. To facilitate the data input <strong>edgeR</strong> provides a function called <strong>readDGE</strong> that makes a single matrix from multiple files, allows adding sample information etc.</p>
+<p>The function can read tabulated text files of arbitrary format, as long as one of the file’s columns contains genes names and another column contains the counts. Format of an HTSeq counts file can be explored using <strong>Bash</strong> functions <strong>head</strong> and <strong>tail</strong>:</p>
+<pre><code>## ENSG00000000003.13   2569
+## ENSG00000000005.5    1
+## ENSG00000000419.11   3180
+## ENSG00000000457.12   3332
+## ENSG00000000460.15   1621
+## ENSG00000000938.11   530
+## ENSG00000000971.14   7282
+## ENSG00000001036.12   3312
+## ENSG00000001084.9    2642
+## ENSG00000001167.13   3322
+## ...
+## ENSGR0000275287.3    0
+## ENSGR0000276543.3    0
+## ENSGR0000277120.3    0
+## ENSGR0000280767.1    0
+## ENSGR0000281849.1    0
+## __no_feature 3069305
+## __ambiguous  3368739
+## __too_low_aQual  0
+## __not_aligned    0
+## __alignment_not_unique   23748640</code></pre>
+<p>It can be seen that an <strong>HTSeq counts file</strong> fits <strong>readDGE</strong> requirements, except for some summary lines at the end of the file. Luckily, <strong>readDGE</strong> can take care about these summary lines with <strong>comment.char</strong> option. Finally, <strong>header = FALSE</strong> should be used to specify that the 1st row contains data, not the header:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Counts folder</span>
+counts_folder=<span class="kw">file.path</span>(base_folder,<span class="st">&quot;data&quot;</span>,<span class="st">&quot;HTSeq_counts&quot;</span>)
+
+<span class="co"># Read HTSeq counts to DGE object</span>
+<span class="co"># (&quot;dgl&quot; stands for &quot;DGEList&quot;)</span>
+dgl &lt;-<span class="st"> </span><span class="kw">readDGE</span>(<span class="dt">files=</span>samples.df<span class="op">$</span>file, <span class="co"># files names</span>
+        <span class="dt">path=</span>counts_folder, <span class="co"># folder with count files</span>
+        <span class="dt">columns=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="co"># columns with gene name (1) and count (2)</span>
+        <span class="dt">labels=</span>samples.df<span class="op">$</span>patient, <span class="co"># samples names corresponding to the files</span>
+        <span class="dt">comment.char=</span><span class="st">&quot;_&quot;</span>, <span class="co"># lines starting with this character are excluded</span>
+        <span class="dt">header =</span> <span class="ot">FALSE</span>) <span class="co"># the 1st row contains data, not header</span>
+
+<span class="co"># Clean-up</span>
+<span class="kw">rm</span>(counts_folder)</code></pre></div>
+<p>See <strong>readDGE</strong> help for details of other options used in the above command.</p>
+</div>
+<div id="explore-and-update-the-deglist-object" class="section level2">
+<h2><span class="header-section-number">6.2</span> Explore and update the DEGList object</h2>
+<p>The code chunk below</p>
+<ul>
+<li>checks content of the counts’ matrix read to the DEGList object<br />
+</li>
+<li>checks samples information and adds OCT-status as an example of potential experimental confounder<br />
+</li>
+<li>adds genes information to the DEGList object</li>
+</ul>
+<p>See <strong>DEGList</strong> help for details.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Check content of created DEGList</span>
+<span class="kw">names</span>(dgl)</code></pre></div>
+<pre><code>## [1] &quot;samples&quot; &quot;counts&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The counts matrix is identical to the counts in DESeq2DataSet</span>
+<span class="kw">dim</span>(dgl<span class="op">$</span>counts)</code></pre></div>
+<pre><code>## [1] 60483   238</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dgl<span class="op">$</span>counts[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##                     Samples
+## Tags                 TCGA-A7-A0DA TCGA-D8-A1XU TCGA-D8-A143 TCGA-A7-A4SB TCGA-D8-A1XR
+##   ENSG00000000003.13         2724         5645         6180         2558         3884
+##   ENSG00000000005.5             7            6            1           32          109
+##   ENSG00000000419.11         1962         4926         2624         1068         3337
+##   ENSG00000000457.12         1973         2271         1860         1362         4953
+##   ENSG00000000460.15          867          675         2359          494         2284</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add information about the exparimental groups for DEG detection (ER status)  </span>
+<span class="kw">head</span>(dgl<span class="op">$</span>samples)</code></pre></div>
+<pre><code>##                                                             files group lib.size norm.factors
+## TCGA-A7-A0DA a33029dd-b5fa-4be0-9cbf-971d289146dd.htseq.counts.gz     1 66687895            1
+## TCGA-D8-A1XU 8d54214a-1d9b-4fea-9c42-5bbb3cd11da9.htseq.counts.gz     1 93109355            1
+## TCGA-D8-A143 4b19c0e2-2a61-4f0a-9257-4a528e6b320e.htseq.counts.gz     1 55477594            1
+## TCGA-A7-A4SB cc233ff9-d5fb-4e9b-9007-f58d008df995.htseq.counts.gz     1 38870554            1
+## TCGA-D8-A1XR bdd8c340-250b-474a-8802-7653b7884ced.htseq.counts.gz     1 82295968            1
+## TCGA-BH-A18L 5bc7e90d-0fa4-4bde-bee8-4f9b92de03a2.htseq.counts.gz     1 71552576            1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add ER and OCT status to the samples information</span>
+dgl<span class="op">$</span>samples<span class="op">$</span>er &lt;-<span class="st"> </span>samples.df<span class="op">$</span>er
+dgl<span class="op">$</span>samples<span class="op">$</span>oct &lt;-<span class="st"> </span>samples.df<span class="op">$</span>oct
+<span class="kw">head</span>(dgl<span class="op">$</span>samples)</code></pre></div>
+<pre><code>##                                                             files group lib.size norm.factors       er   oct
+## TCGA-A7-A0DA a33029dd-b5fa-4be0-9cbf-971d289146dd.htseq.counts.gz     1 66687895            1 Negative false
+## TCGA-D8-A1XU 8d54214a-1d9b-4fea-9c42-5bbb3cd11da9.htseq.counts.gz     1 93109355            1 Positive false
+## TCGA-D8-A143 4b19c0e2-2a61-4f0a-9257-4a528e6b320e.htseq.counts.gz     1 55477594            1 Negative false
+## TCGA-A7-A4SB cc233ff9-d5fb-4e9b-9007-f58d008df995.htseq.counts.gz     1 38870554            1 Positive false
+## TCGA-D8-A1XR bdd8c340-250b-474a-8802-7653b7884ced.htseq.counts.gz     1 82295968            1 Positive false
+## TCGA-BH-A18L 5bc7e90d-0fa4-4bde-bee8-4f9b92de03a2.htseq.counts.gz     1 71552576            1 Positive  true</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add genes information</span>
+genes.df &lt;-<span class="st"> </span>genes.df[<span class="kw">rownames</span>(dgl<span class="op">$</span>counts),] <span class="co"># Reorder genes to match the genes order in the counts matrix</span>
+dgl<span class="op">$</span>genes &lt;-<span class="st"> </span>genes.df
+<span class="kw">names</span>(dgl)</code></pre></div>
+<pre><code>## [1] &quot;samples&quot; &quot;counts&quot;  &quot;genes&quot;</code></pre>
+</div>
+<div id="gene-filtering" class="section level2">
+<h2><span class="header-section-number">6.3</span> Gene filtering</h2>
+<p>In <strong>DESeq2</strong> analysis we manually removed genes, for which less than 10 samples had count above 10. This reduced the nimber of genes from ~60k to ~28k.</p>
+<p><strong>edgrR</strong> has a dedicated build-in function <strong>filterByExpr</strong> to remove low-expressed genes. This function also keeps the genes with a count above 10 in a certain number of samples, depending in the groups size. Applying this function to our TCGA-BRCA dataset preserves ~24k of genes, which is reasonably close to the manual filtering applyed in DESeq2 analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Select genes with sufficien expression for comparison in ER groups</span>
+keep.exprs &lt;-<span class="st"> </span><span class="kw">filterByExpr</span>(dgl, <span class="dt">group=</span>dgl<span class="op">$</span>samples<span class="op">$</span>er)
+<span class="kw">sum</span>(keep.exprs)</code></pre></div>
+<pre><code>## [1] 24361</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove low-expressed genes </span>
+dgl &lt;-<span class="st"> </span>dgl[keep.exprs,, keep.lib.sizes=<span class="ot">FALSE</span>]
+<span class="kw">dim</span>(dgl)</code></pre></div>
+<pre><code>## [1] 24361   238</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(keep.exprs)</code></pre></div>
+</div>
+<div id="normalizing-by-tmm" class="section level2">
+<h2><span class="header-section-number">6.4</span> Normalizing by TMM</h2>
+<p><strong>edgeR</strong>’s preferred method of normalization is <strong>Trimmed Means of M-values</strong> (TMM)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Aply normalization</span>
+dgl &lt;-<span class="st"> </span><span class="kw">calcNormFactors</span>(dgl, <span class="dt">method =</span> <span class="st">&quot;TMM&quot;</span>)
+
+<span class="co"># Look at the calculated TMM notmalization factors</span>
+<span class="kw">plot</span>(dgl<span class="op">$</span>samples<span class="op">$</span>norm.factors, <span class="dt">main=</span><span class="st">&quot;Normalization factors&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+</div>
+<div id="exploring-source-data-1" class="section level2">
+<h2><span class="header-section-number">6.5</span> Exploring source data</h2>
+<p>Like in <strong>DESeq2</strong> analysis, the source data is explored in a normalized form. For this, <strong>edgeR</strong> allows to calculate log-transformed counts per million:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lcpm &lt;-<span class="st"> </span><span class="kw">cpm</span>(dgl, <span class="dt">log=</span><span class="ot">TRUE</span>)</code></pre></div>
+<div id="boxplot" class="section level3">
+<h3><span class="header-section-number">6.5.1</span> Boxplot</h3>
+<p>The boxplot shows that counts range and central positions are similar in different samples after the normalization:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(lcpm, <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Normalized log-transformed data&quot;</span>,
+        <span class="dt">xlab=</span><span class="st">&quot;Samples&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Log(normalized counts)&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+</div>
+<div id="mds-plot" class="section level3">
+<h3><span class="header-section-number">6.5.2</span> MDS plot</h3>
+<p>Multi Dimentional Scaling (MDS) is similar to PCA: it places similar samples close to each other in a 2-dimention plot. <strong>edgeR</strong> provides a function for making a MDS plot. The plot shows a clear separation of ER-positive and Triple-negative breast cancers by the genes expression.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Colour code ER status</span>
+col_er &lt;-<span class="st"> </span><span class="kw">as.factor</span>(dgl<span class="op">$</span>samples<span class="op">$</span>er)
+<span class="kw">levels</span>(col_er) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)
+col_er &lt;-<span class="st"> </span><span class="kw">as.character</span>(col_er)
+
+<span class="co"># Make MDS plot</span>
+<span class="kw">plotMDS</span>(lcpm, <span class="dt">labels =</span> <span class="ot">NULL</span>, <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">col=</span>col_er,
+        <span class="dt">main=</span><span class="st">&quot;MDS plot&quot;</span>)
+
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="co"># the location of the legend on the plot</span>
+       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;ER-neg&quot;</span>, <span class="st">&quot;ER-pos&quot;</span>), <span class="co"># labels</span>
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>),
+       <span class="dt">pch =</span> <span class="dv">1</span>) <span class="co"># colours</span></code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(lcpm, col_er)</code></pre></div>
+</div>
+</div>
+<div id="calculate-degs" class="section level2">
+<h2><span class="header-section-number">6.6</span> Calculate DEGs</h2>
+<div id="specify-design" class="section level3">
+<h3><span class="header-section-number">6.6.1</span> Specify design</h3>
+<p>Like in <strong>DESeq2</strong> the design in <strong>edgeR</strong> is defined by a text string that follows the format of a <strong>glm</strong> formula in R: <strong>~ oct + er</strong>. It is used to specify the variable of interest for differential expression (“er”&quot; in our case) and the confounding variables, if any (“oct” in our case). By convention, the variable of interest should be placed is at the end of the design formula.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">design &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span><span class="st"> </span>oct <span class="op">+</span><span class="st"> </span>er, <span class="dt">data =</span> dgl<span class="op">$</span>samples)</code></pre></div>
+</div>
+<div id="estimate-dispersions" class="section level3">
+<h3><span class="header-section-number">6.6.2</span> Estimate dispersions</h3>
+<p>Like in <strong>DESeq2</strong>, the variance estimation and adjustment is a core element of building the <strong>edgeR</strong> statistical model:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dgl &lt;-<span class="st"> </span><span class="kw">estimateDisp</span>(dgl, design)
+<span class="kw">plotBCV</span>(dgl, <span class="dt">main=</span><span class="st">&quot;Dispersion estimates and adjustments&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+</div>
+<div id="fit-the-model" class="section level3">
+<h3><span class="header-section-number">6.6.3</span> Fit the model</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">glmQLFit</span>(dgl, design)</code></pre></div>
+</div>
+</div>
+<div id="extract-results" class="section level2">
+<h2><span class="header-section-number">6.7</span> Extract results</h2>
+<p>The gene-wise statistical significance is extracted from the model, which has been fitted in the previous code chunk.</p>
+<div id="default-settings" class="section level3">
+<h3><span class="header-section-number">6.7.1</span> Default settings</h3>
+<p>By default edgeR calculates tests against the null hypothesis of no change (i.e. <strong>alt hypothesis of any change</strong>). The key results are written in the <strong>table</strong> slot of the specialised <strong>TopTags</strong> result object.</p>
+<p>Note that in <strong>glmQLFTest</strong> function call the <strong>coef=ncol(design)</strong> points to the last column in the design table. You may remember that,by convention, the variable of interest was placed at the end of the design formula.</p>
+<p>The <strong>topTags</strong> function actually prepared the table with results. By default, though, it will only show the top 10 genes… To extract results for all the genes <strong>n = nrow(x)</strong> option is used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate the test statistics</span>
+edgeR_any_change &lt;-<span class="st"> </span><span class="kw">glmQLFTest</span>(fit, <span class="dt">coef =</span> <span class="kw">ncol</span>(design))
+
+<span class="co"># Extract statistics for all genes</span>
+edgeR_any_change_all_genes &lt;-<span class="st"> </span><span class="kw">topTags</span>(edgeR_any_change, <span class="dt">n =</span> <span class="kw">nrow</span>(dgl), <span class="dt">sort.by =</span> <span class="st">&quot;none&quot;</span>)
+<span class="kw">names</span>(edgeR_any_change_all_genes)</code></pre></div>
+<pre><code>## [1] &quot;table&quot;         &quot;adjust.method&quot; &quot;comparison&quot;    &quot;test&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Explore table with results</span>
+<span class="kw">dim</span>(edgeR_any_change_all_genes<span class="op">$</span>table)</code></pre></div>
+<pre><code>## [1] 24361     7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(edgeR_any_change_all_genes<span class="op">$</span>table)</code></pre></div>
+<pre><code>##                               gene_id gene_name      logFC      logCPM        F       PValue          FDR
+## ENSG00000000003.13 ENSG00000000003.13    TSPAN6 -0.6784647  5.73670542 23.82900 1.925960e-06 6.531856e-06
+## ENSG00000000005.5   ENSG00000000005.5      TNMD  1.8310633 -0.08050533 18.95597 1.984714e-05 5.666193e-05
+## ENSG00000000419.11 ENSG00000000419.11      DPM1 -0.3582450  5.25058484 18.56443 2.400762e-05 6.752680e-05
+## ENSG00000000457.12 ENSG00000000457.12     SCYL3  0.3891598  5.09050998 18.72840 2.216723e-05 6.275607e-05
+## ENSG00000000460.15 ENSG00000000460.15  C1orf112 -0.8041035  3.83330744 54.05200 3.092747e-12 2.434327e-11
+## ENSG00000000938.11 ENSG00000000938.11       FGR -0.1688074  3.34761965  1.27565 2.598416e-01 3.256509e-01</code></pre>
+<p>Like in <strong>DESeq2</strong> analysis, the default settings lead to an inflated number of <strong>significant</strong> p-values (if compared to the expected uniform distribution of p-values under the null):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot histogram of p-values</span>
+<span class="kw">hist</span>(edgeR_any_change_all_genes<span class="op">$</span>table<span class="op">$</span>PValue)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p>By default, the <strong>topTags</strong> function does not apply a filter by p-value. However, such option exists. In the chunk below we apply a FDR 0.1 filter, by analogy with the default FDR threshold in <strong>DESeq2</strong>. Like in <strong>DESeq2</strong> analysis such thersholds would suggest that more than half of the genes are differentially expressed:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Select genes with FDR 0.1</span>
+edgeR_any_change_fdr_<span class="fl">0.1</span> &lt;-<span class="st"> </span><span class="kw">topTags</span>(edgeR_any_change, <span class="dt">n =</span> <span class="kw">nrow</span>(dgl), <span class="dt">p.value =</span> <span class="fl">0.1</span>)
+<span class="kw">dim</span>(edgeR_any_change_fdr_<span class="fl">0.1</span><span class="op">$</span>table)</code></pre></div>
+<pre><code>## [1] 16575     7</code></pre>
+<p>MA plot in <strong>edgeR</strong> is plotted by <strong>plotSmear</strong> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSmear</span>(edgeR_any_change, <span class="dt">de.tags =</span> edgeR_any_change_fdr_<span class="fl">0.1</span><span class="op">$</span>table<span class="op">$</span>gene_id,
+          <span class="dt">main=</span><span class="st">&quot;edgeR: any change at FDR 0.1&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+</div>
+<div id="customised-thresholds" class="section level3">
+<h3><span class="header-section-number">6.7.2</span> Customised thresholds</h3>
+<p>Like in the <strong>DESeq2</strong> analysis, <strong>edgeR</strong> allows to calculate p-values for the alternative hypothesis of at least <strong>2 fold difference</strong> at <strong>FDR 0.01</strong>. Like in the <strong>DESeq2</strong> analysis, this improves the p-values distribution and reduces the number of suggested DEGs to less than 10% of the genes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate significance for 2-fold change</span>
+edgeR_fc2 &lt;-<span class="st"> </span><span class="kw">glmTreat</span>(fit, <span class="dt">coef =</span> <span class="kw">ncol</span>(design), <span class="dt">lfc =</span> <span class="dv">1</span>)
+
+<span class="co"># Extract data for all genes</span>
+edgeR_fc2_all_genes &lt;-<span class="st"> </span><span class="kw">topTags</span>(edgeR_fc2, <span class="dt">n =</span> <span class="kw">nrow</span>(dgl), <span class="dt">sort.by =</span> <span class="st">&quot;none&quot;</span>)
+
+<span class="co"># Check distribution of all p-values</span>
+<span class="kw">hist</span>(edgeR_fc2_all_genes<span class="op">$</span>table<span class="op">$</span>PValue)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Select DEGs with FDR&lt;0.01</span>
+edgeR_fc2_fdr_<span class="fl">0.01</span> &lt;-<span class="st"> </span><span class="kw">topTags</span>(edgeR_fc2, <span class="dt">n =</span> <span class="kw">nrow</span>(dgl), <span class="dt">p.value =</span> <span class="fl">0.01</span>)
+
+<span class="co"># Count DEGs</span>
+<span class="kw">dim</span>(edgeR_fc2_fdr_<span class="fl">0.01</span><span class="op">$</span>table)</code></pre></div>
+<pre><code>## [1] 2345    7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># MA plot</span>
+<span class="kw">plotSmear</span>(edgeR_fc2, <span class="dt">de.tags =</span> edgeR_fc2_fdr_<span class="fl">0.01</span><span class="op">$</span>table<span class="op">$</span>gene_id,
+          <span class="dt">main=</span><span class="st">&quot;edgeR: 2-fold change at FDR 0.01&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-53-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(edgeR_any_change, edgeR_any_change_all_genes, edgeR_any_change_fdr_<span class="fl">0.1</span>)</code></pre></div>
+</div>
+<div id="check-known-genes-1" class="section level3">
+<h3><span class="header-section-number">6.7.3</span> Check known genes</h3>
+<p>Like in <strong>DESeq2</strong> analysis, the list of DEGs suggested by <strong>edgeR</strong> includes selected known genes, which expression is associated with ER in breast cancer:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># List of selected previously known genes of interest</span>
+selected_known_genes=<span class="kw">c</span>(<span class="st">&quot;ESR1&quot;</span>, <span class="st">&quot;PGR&quot;</span>, <span class="st">&quot;TFF1&quot;</span>, <span class="st">&quot;TFF3&quot;</span>, <span class="st">&quot;GATA3&quot;</span>, <span class="st">&quot;FOXA1&quot;</span>, <span class="st">&quot;FOXC1&quot;</span>, <span class="st">&quot;MIA&quot;</span>)
+
+<span class="co"># Look at the genes of interest in the edgeR DEGs</span>
+edgeR_fc2_fdr_<span class="fl">0.01</span><span class="op">$</span>table <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(gene_name <span class="op">%in%</span><span class="st"> </span>selected_known_genes)</code></pre></div>
+<pre><code>##              gene_id gene_name     logFC unshrunk.logFC   logCPM       PValue          FDR
+## 1  ENSG00000054598.6     FOXC1 -3.702670      -3.702971 4.900554 5.479376e-43 8.342693e-40
+## 2 ENSG00000091831.20      ESR1  4.428545       4.428643 8.928694 4.484183e-23 8.152178e-21
+## 3  ENSG00000261857.5       MIA -3.856874      -3.858896 2.278226 1.154317e-19 1.434710e-17
+## 4 ENSG00000107485.14     GATA3  2.766902       2.766926 9.178419 1.539914e-17 1.506580e-15
+## 5  ENSG00000129514.5     FOXA1  2.814738       2.814787 8.249821 8.375199e-13 4.445060e-11
+## 6 ENSG00000082175.13       PGR  3.617757       3.617892 7.617047 2.641659e-10 9.206504e-09
+## 7  ENSG00000160182.2      TFF1  4.454900       4.455097 8.046632 2.002155e-09 6.058944e-08
+## 8 ENSG00000160180.15      TFF3  3.462370       3.462466 8.112775 5.373016e-08 1.289577e-06</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(selected_known_genes)</code></pre></div>
+</div>
+</div>
+<div id="save-results-1" class="section level2">
+<h2><span class="header-section-number">6.8</span> Save results</h2>
+<p><strong>write.table</strong> function can be used to save DEGs (and results for all genes) to text files:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Save DEGs</span>
+<span class="kw">write.table</span>(edgeR_fc2_fdr_<span class="fl">0.01</span><span class="op">$</span>table, 
+            <span class="dt">file=</span><span class="kw">file.path</span>(base_folder,<span class="st">&quot;analysis&quot;</span>,<span class="st">&quot;results&quot;</span>,<span class="st">&quot;edgeR_fc_2_fdr_0_01_DEGs.txt&quot;</span>),
+            <span class="dt">quote=</span>F, <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> F)
+
+<span class="co"># Save all genes</span>
+<span class="kw">write.table</span>(edgeR_fc2_all_genes<span class="op">$</span>table, 
+            <span class="dt">file=</span><span class="kw">file.path</span>(base_folder,<span class="st">&quot;analysis&quot;</span>,<span class="st">&quot;results&quot;</span>,<span class="st">&quot;edgeR_fc_2_fdr_0_01_all_genes.txt&quot;</span>),
+            <span class="dt">quote=</span>F, <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> F)</code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="deseq2-analyisis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="compare-deg-lists.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": true,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["RNAseq_DEGs.pdf", "RNAseq_DEGs.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Final section | Differential Gene Expression Analysis</title>
+  <meta name="description" content="Differential Genes with DESeq2 and edgeR" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Final section | Differential Gene Expression Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Differential Genes with DESeq2 and edgeR" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Final section | Differential Gene Expression Analysis" />
+  
+  <meta name="twitter:description" content="Differential Genes with DESeq2 and edgeR" />
+  
+
+<meta name="author" content="Alexey Larionov" />
+
+
+<meta name="date" content="2020-04-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="compare-deg-lists.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">RNAseq Differential Gene Expression</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#dispersion-assessment"><i class="fa fa-check"></i><b>1.1</b> Dispersion assessment</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#bioconductors-tutorials"><i class="fa fa-check"></i><b>1.2</b> Bioconductor’s tutorials</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#default-threshiolds"><i class="fa fa-check"></i><b>1.3</b> Default threshiolds</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#tcga"><i class="fa fa-check"></i><b>1.4</b> TCGA</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#tcga-data-access"><i class="fa fa-check"></i><b>1.4.1</b> TCGA data access</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#tcga-rna-seq-pipeline"><i class="fa fa-check"></i><b>1.4.2</b> TCGA RNA-seq pipeline</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#tutorial-structure"><i class="fa fa-check"></i><b>1.5</b> Tutorial structure</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#samples-and-genes"><i class="fa fa-check"></i><b>1.5.1</b> Samples and Genes</a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#deseq2-analysis"><i class="fa fa-check"></i><b>1.5.2</b> DESeq2 analysis</a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#edger-analysis"><i class="fa fa-check"></i><b>1.5.3</b> edgeR analysis</a></li>
+<li class="chapter" data-level="1.5.4" data-path="index.html"><a href="index.html#comparison-of-degs"><i class="fa fa-check"></i><b>1.5.4</b> Comparison of DEGs</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#content-of-the-base-folder"><i class="fa fa-check"></i><b>1.6</b> Content of the base folder</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html"><i class="fa fa-check"></i><b>2</b> Setting the Enviroment</a><ul>
+<li class="chapter" data-level="2.1" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html#required-libraries"><i class="fa fa-check"></i><b>2.1</b> Required libraries</a></li>
+<li class="chapter" data-level="2.2" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html#base-folder-etc"><i class="fa fa-check"></i><b>2.2</b> Base folder etc</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="preparing-sample-information.html"><a href="preparing-sample-information.html"><i class="fa fa-check"></i><b>3</b> Preparing sample information</a></li>
+<li class="chapter" data-level="4" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html"><i class="fa fa-check"></i><b>4</b> Preparing gene information</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html#load-required-libraries"><i class="fa fa-check"></i><b>4.0.1</b> Load required libraries</a></li>
+<li class="chapter" data-level="4.0.2" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html#read-genes-data"><i class="fa fa-check"></i><b>4.0.2</b> Read genes data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html"><i class="fa fa-check"></i><b>5</b> DESeq2 analyisis</a><ul>
+<li class="chapter" data-level="5.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#deseqdataset-object"><i class="fa fa-check"></i><b>5.1</b> DESeqDataSet object</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#make-deseqdataset-object"><i class="fa fa-check"></i><b>5.1.1</b> Make DESeqDataSet object</a></li>
+<li class="chapter" data-level="5.1.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#explore-deseqdataset-object"><i class="fa fa-check"></i><b>5.1.2</b> Explore DESeqDataSet object</a></li>
+<li class="chapter" data-level="5.1.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#rowdata-adding-genes-names"><i class="fa fa-check"></i><b>5.1.3</b> rowData: adding genes names</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#genes-filtering"><i class="fa fa-check"></i><b>5.2</b> Genes filtering</a></li>
+<li class="chapter" data-level="5.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#exploring-source-data"><i class="fa fa-check"></i><b>5.3</b> Exploring source data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#normalizing-variance"><i class="fa fa-check"></i><b>5.3.1</b> Normalizing variance</a></li>
+<li class="chapter" data-level="5.3.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#pca-plot"><i class="fa fa-check"></i><b>5.3.2</b> PCA plot</a></li>
+<li class="chapter" data-level="5.3.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#hierarchical-clustering"><i class="fa fa-check"></i><b>5.3.3</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#calculating-degs"><i class="fa fa-check"></i><b>5.4</b> Calculating DEGs</a></li>
+<li class="chapter" data-level="5.5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#extracting-results"><i class="fa fa-check"></i><b>5.5</b> Extracting results</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#explore-default-thresholds"><i class="fa fa-check"></i><b>5.5.1</b> Explore default thresholds</a></li>
+<li class="chapter" data-level="5.5.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#user-defined-thresholds"><i class="fa fa-check"></i><b>5.5.2</b> User-defined thresholds</a></li>
+<li class="chapter" data-level="5.5.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#compare-results-with-different-thresholds"><i class="fa fa-check"></i><b>5.5.3</b> Compare results with different thresholds</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#exploring-results"><i class="fa fa-check"></i><b>5.6</b> Exploring results</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#check-genes-with-no-p-value"><i class="fa fa-check"></i><b>5.6.1</b> Check genes with no p-value</a></li>
+<li class="chapter" data-level="5.6.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#plot-dispersions"><i class="fa fa-check"></i><b>5.6.2</b> Plot dispersions</a></li>
+<li class="chapter" data-level="5.6.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#ma-plots"><i class="fa fa-check"></i><b>5.6.3</b> MA plots</a></li>
+<li class="chapter" data-level="5.6.4" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#plot-counts-for-an-individual-gene"><i class="fa fa-check"></i><b>5.6.4</b> Plot counts for an individual gene</a></li>
+<li class="chapter" data-level="5.6.5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#convert-results-to-data-frame"><i class="fa fa-check"></i><b>5.6.5</b> Convert results to data-frame</a></li>
+<li class="chapter" data-level="5.6.6" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#check-known-genes"><i class="fa fa-check"></i><b>5.6.6</b> Check known genes</a></li>
+<li class="chapter" data-level="5.6.7" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#volcano-plot"><i class="fa fa-check"></i><b>5.6.7</b> Volcano plot</a></li>
+<li class="chapter" data-level="5.6.8" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#hierarchical-clustering-using-degs"><i class="fa fa-check"></i><b>5.6.8</b> Hierarchical clustering using DEGs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#save-results"><i class="fa fa-check"></i><b>5.7</b> Save results</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html"><i class="fa fa-check"></i><b>6</b> edgeR analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#read-htseq-counts-to-dgelist"><i class="fa fa-check"></i><b>6.1</b> Read HTSeq counts to DGEList</a></li>
+<li class="chapter" data-level="6.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#explore-and-update-the-deglist-object"><i class="fa fa-check"></i><b>6.2</b> Explore and update the DEGList object</a></li>
+<li class="chapter" data-level="6.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#gene-filtering"><i class="fa fa-check"></i><b>6.3</b> Gene filtering</a></li>
+<li class="chapter" data-level="6.4" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#normalizing-by-tmm"><i class="fa fa-check"></i><b>6.4</b> Normalizing by TMM</a></li>
+<li class="chapter" data-level="6.5" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#exploring-source-data-1"><i class="fa fa-check"></i><b>6.5</b> Exploring source data</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#boxplot"><i class="fa fa-check"></i><b>6.5.1</b> Boxplot</a></li>
+<li class="chapter" data-level="6.5.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#mds-plot"><i class="fa fa-check"></i><b>6.5.2</b> MDS plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#calculate-degs"><i class="fa fa-check"></i><b>6.6</b> Calculate DEGs</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#specify-design"><i class="fa fa-check"></i><b>6.6.1</b> Specify design</a></li>
+<li class="chapter" data-level="6.6.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#estimate-dispersions"><i class="fa fa-check"></i><b>6.6.2</b> Estimate dispersions</a></li>
+<li class="chapter" data-level="6.6.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#fit-the-model"><i class="fa fa-check"></i><b>6.6.3</b> Fit the model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#extract-results"><i class="fa fa-check"></i><b>6.7</b> Extract results</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#default-settings"><i class="fa fa-check"></i><b>6.7.1</b> Default settings</a></li>
+<li class="chapter" data-level="6.7.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#customised-thresholds"><i class="fa fa-check"></i><b>6.7.2</b> Customised thresholds</a></li>
+<li class="chapter" data-level="6.7.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#check-known-genes-1"><i class="fa fa-check"></i><b>6.7.3</b> Check known genes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#save-results-1"><i class="fa fa-check"></i><b>6.8</b> Save results</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html"><i class="fa fa-check"></i><b>7</b> Compare DEG lists</a><ul>
+<li class="chapter" data-level="7.1" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#venn-diagram"><i class="fa fa-check"></i><b>7.1</b> Venn diagram</a></li>
+<li class="chapter" data-level="7.2" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#compare-fc-and-fdr-estimates"><i class="fa fa-check"></i><b>7.2</b> Compare FC and FDR estimates</a></li>
+<li class="chapter" data-level="7.3" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#degs-intersect-list"><i class="fa fa-check"></i><b>7.3</b> DEGs intersect list</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="final-section.html"><a href="final-section.html"><i class="fa fa-check"></i><b>8</b> Final section</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Differential Gene Expression Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="final-section" class="section level1">
+<h1><span class="header-section-number">8</span> Final section</h1>
+<p>Record time and objects in the environment at the end of analysis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.time</span>()</code></pre></div>
+<pre><code>## [1] &quot;2020-04-08 16:25:51 BST&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
+<pre><code>##  [1] &quot;all_genes_intersect.df&quot;            &quot;base_folder&quot;                       &quot;colorize&quot;                          &quot;ddx&quot;                               &quot;DEGs_intersect.df&quot;                 &quot;DESeq2_fc_2_fdr_0.01_all_genes.df&quot; &quot;DESeq2_fc_2_fdr_0.01_DEGs.df&quot;      &quot;design&quot;                            &quot;dgl&quot;                               &quot;edgeR_fc2&quot;                         &quot;edgeR_fc2_all_genes&quot;               &quot;edgeR_fc2_fdr_0.01&quot;                &quot;fit&quot;                               &quot;genes.df&quot;                          &quot;samples.df&quot;                        &quot;vst_dds&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Catalina 10.15.4
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
+## 
+## attached base packages:
+##  [1] grid      parallel  stats4    stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] VennDiagram_1.6.20          futile.logger_1.4.3         edgeR_3.28.1                limma_3.42.2                DESeq2_1.26.0               SummarizedExperiment_1.16.1 DelayedArray_0.12.2         BiocParallel_1.20.1         matrixStats_0.56.0          Biobase_2.46.0              rtracklayer_1.46.0          GenomicRanges_1.38.0        GenomeInfoDb_1.22.1         IRanges_2.20.2              S4Vectors_0.24.3            BiocGenerics_0.32.0         dplyr_0.8.5                 knitr_1.28                 
+## 
+## loaded via a namespace (and not attached):
+##  [1] bitops_1.0-6             bit64_0.9-7              RColorBrewer_1.1-2       tools_3.6.2              backports_1.1.6          R6_2.4.1                 rpart_4.1-15             Hmisc_4.4-0              DBI_1.1.0                colorspace_1.4-1         nnet_7.3-13              tidyselect_1.0.0         gridExtra_2.3            bit_1.1-15.2             compiler_3.6.2           cli_2.0.2                formatR_1.7              htmlTable_1.13.3         labeling_0.3             bookdown_0.18            scales_1.1.0             checkmate_2.0.0          genefilter_1.68.0        stringr_1.4.0            digest_0.6.25            Rsamtools_2.2.3          foreign_0.8-76           rmarkdown_2.1            XVector_0.26.0           base64enc_0.1-3          jpeg_0.1-8.1             pkgconfig_2.0.3          htmltools_0.4.0          htmlwidgets_1.5.1        rlang_0.4.5              rstudioapi_0.11          RSQLite_2.2.0            farver_2.0.3             acepack_1.4.1           
+## [40] RCurl_1.98-1.1           magrittr_1.5             GenomeInfoDbData_1.2.2   Formula_1.2-3            Matrix_1.2-18            Rcpp_1.0.4               munsell_0.5.0            fansi_0.4.1              lifecycle_0.2.0          stringi_1.4.6            yaml_2.2.1               zlibbioc_1.32.0          blob_1.2.1               crayon_1.3.4             lattice_0.20-41          Biostrings_2.54.0        splines_3.6.2            annotate_1.64.0          locfit_1.5-9.4           pillar_1.4.3             geneplotter_1.64.0       futile.options_1.0.1     XML_3.99-0.3             glue_1.4.0               evaluate_0.14            latticeExtra_0.6-29      lambda.r_1.2.4           data.table_1.12.8        png_0.1-7                vctrs_0.2.4              gtable_0.3.0             purrr_0.3.3              assertthat_0.2.1         ggplot2_3.3.0            xfun_0.12                xtable_1.8-4             survival_3.1-11          tibble_3.0.0             GenomicAlignments_1.22.1
+## [79] AnnotationDbi_1.48.0     memoise_1.1.0            cluster_2.1.0            ellipsis_0.3.0</code></pre>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="compare-deg-lists.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": true,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["RNAseq_DEGs.pdf", "RNAseq_DEGs.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

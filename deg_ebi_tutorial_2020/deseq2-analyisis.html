@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 DESeq2 analyisis | Differential Gene Expression Analysis</title>
+  <meta name="description" content="Differential Genes with DESeq2 and edgeR" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 DESeq2 analyisis | Differential Gene Expression Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Differential Genes with DESeq2 and edgeR" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 DESeq2 analyisis | Differential Gene Expression Analysis" />
+  
+  <meta name="twitter:description" content="Differential Genes with DESeq2 and edgeR" />
+  
+
+<meta name="author" content="Alexey Larionov" />
+
+
+<meta name="date" content="2020-04-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="preparing-gene-information.html"/>
+<link rel="next" href="edger-analysis-1.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">RNAseq Differential Gene Expression</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#dispersion-assessment"><i class="fa fa-check"></i><b>1.1</b> Dispersion assessment</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#bioconductors-tutorials"><i class="fa fa-check"></i><b>1.2</b> Bioconductor’s tutorials</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#default-threshiolds"><i class="fa fa-check"></i><b>1.3</b> Default threshiolds</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#tcga"><i class="fa fa-check"></i><b>1.4</b> TCGA</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#tcga-data-access"><i class="fa fa-check"></i><b>1.4.1</b> TCGA data access</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#tcga-rna-seq-pipeline"><i class="fa fa-check"></i><b>1.4.2</b> TCGA RNA-seq pipeline</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#tutorial-structure"><i class="fa fa-check"></i><b>1.5</b> Tutorial structure</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#samples-and-genes"><i class="fa fa-check"></i><b>1.5.1</b> Samples and Genes</a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#deseq2-analysis"><i class="fa fa-check"></i><b>1.5.2</b> DESeq2 analysis</a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#edger-analysis"><i class="fa fa-check"></i><b>1.5.3</b> edgeR analysis</a></li>
+<li class="chapter" data-level="1.5.4" data-path="index.html"><a href="index.html#comparison-of-degs"><i class="fa fa-check"></i><b>1.5.4</b> Comparison of DEGs</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#content-of-the-base-folder"><i class="fa fa-check"></i><b>1.6</b> Content of the base folder</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html"><i class="fa fa-check"></i><b>2</b> Setting the Enviroment</a><ul>
+<li class="chapter" data-level="2.1" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html#required-libraries"><i class="fa fa-check"></i><b>2.1</b> Required libraries</a></li>
+<li class="chapter" data-level="2.2" data-path="setting-the-enviroment.html"><a href="setting-the-enviroment.html#base-folder-etc"><i class="fa fa-check"></i><b>2.2</b> Base folder etc</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="preparing-sample-information.html"><a href="preparing-sample-information.html"><i class="fa fa-check"></i><b>3</b> Preparing sample information</a></li>
+<li class="chapter" data-level="4" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html"><i class="fa fa-check"></i><b>4</b> Preparing gene information</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html#load-required-libraries"><i class="fa fa-check"></i><b>4.0.1</b> Load required libraries</a></li>
+<li class="chapter" data-level="4.0.2" data-path="preparing-gene-information.html"><a href="preparing-gene-information.html#read-genes-data"><i class="fa fa-check"></i><b>4.0.2</b> Read genes data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html"><i class="fa fa-check"></i><b>5</b> DESeq2 analyisis</a><ul>
+<li class="chapter" data-level="5.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#deseqdataset-object"><i class="fa fa-check"></i><b>5.1</b> DESeqDataSet object</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#make-deseqdataset-object"><i class="fa fa-check"></i><b>5.1.1</b> Make DESeqDataSet object</a></li>
+<li class="chapter" data-level="5.1.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#explore-deseqdataset-object"><i class="fa fa-check"></i><b>5.1.2</b> Explore DESeqDataSet object</a></li>
+<li class="chapter" data-level="5.1.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#rowdata-adding-genes-names"><i class="fa fa-check"></i><b>5.1.3</b> rowData: adding genes names</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#genes-filtering"><i class="fa fa-check"></i><b>5.2</b> Genes filtering</a></li>
+<li class="chapter" data-level="5.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#exploring-source-data"><i class="fa fa-check"></i><b>5.3</b> Exploring source data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#normalizing-variance"><i class="fa fa-check"></i><b>5.3.1</b> Normalizing variance</a></li>
+<li class="chapter" data-level="5.3.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#pca-plot"><i class="fa fa-check"></i><b>5.3.2</b> PCA plot</a></li>
+<li class="chapter" data-level="5.3.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#hierarchical-clustering"><i class="fa fa-check"></i><b>5.3.3</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#calculating-degs"><i class="fa fa-check"></i><b>5.4</b> Calculating DEGs</a></li>
+<li class="chapter" data-level="5.5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#extracting-results"><i class="fa fa-check"></i><b>5.5</b> Extracting results</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#explore-default-thresholds"><i class="fa fa-check"></i><b>5.5.1</b> Explore default thresholds</a></li>
+<li class="chapter" data-level="5.5.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#user-defined-thresholds"><i class="fa fa-check"></i><b>5.5.2</b> User-defined thresholds</a></li>
+<li class="chapter" data-level="5.5.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#compare-results-with-different-thresholds"><i class="fa fa-check"></i><b>5.5.3</b> Compare results with different thresholds</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#exploring-results"><i class="fa fa-check"></i><b>5.6</b> Exploring results</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#check-genes-with-no-p-value"><i class="fa fa-check"></i><b>5.6.1</b> Check genes with no p-value</a></li>
+<li class="chapter" data-level="5.6.2" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#plot-dispersions"><i class="fa fa-check"></i><b>5.6.2</b> Plot dispersions</a></li>
+<li class="chapter" data-level="5.6.3" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#ma-plots"><i class="fa fa-check"></i><b>5.6.3</b> MA plots</a></li>
+<li class="chapter" data-level="5.6.4" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#plot-counts-for-an-individual-gene"><i class="fa fa-check"></i><b>5.6.4</b> Plot counts for an individual gene</a></li>
+<li class="chapter" data-level="5.6.5" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#convert-results-to-data-frame"><i class="fa fa-check"></i><b>5.6.5</b> Convert results to data-frame</a></li>
+<li class="chapter" data-level="5.6.6" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#check-known-genes"><i class="fa fa-check"></i><b>5.6.6</b> Check known genes</a></li>
+<li class="chapter" data-level="5.6.7" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#volcano-plot"><i class="fa fa-check"></i><b>5.6.7</b> Volcano plot</a></li>
+<li class="chapter" data-level="5.6.8" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#hierarchical-clustering-using-degs"><i class="fa fa-check"></i><b>5.6.8</b> Hierarchical clustering using DEGs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="deseq2-analyisis.html"><a href="deseq2-analyisis.html#save-results"><i class="fa fa-check"></i><b>5.7</b> Save results</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html"><i class="fa fa-check"></i><b>6</b> edgeR analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#read-htseq-counts-to-dgelist"><i class="fa fa-check"></i><b>6.1</b> Read HTSeq counts to DGEList</a></li>
+<li class="chapter" data-level="6.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#explore-and-update-the-deglist-object"><i class="fa fa-check"></i><b>6.2</b> Explore and update the DEGList object</a></li>
+<li class="chapter" data-level="6.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#gene-filtering"><i class="fa fa-check"></i><b>6.3</b> Gene filtering</a></li>
+<li class="chapter" data-level="6.4" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#normalizing-by-tmm"><i class="fa fa-check"></i><b>6.4</b> Normalizing by TMM</a></li>
+<li class="chapter" data-level="6.5" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#exploring-source-data-1"><i class="fa fa-check"></i><b>6.5</b> Exploring source data</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#boxplot"><i class="fa fa-check"></i><b>6.5.1</b> Boxplot</a></li>
+<li class="chapter" data-level="6.5.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#mds-plot"><i class="fa fa-check"></i><b>6.5.2</b> MDS plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#calculate-degs"><i class="fa fa-check"></i><b>6.6</b> Calculate DEGs</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#specify-design"><i class="fa fa-check"></i><b>6.6.1</b> Specify design</a></li>
+<li class="chapter" data-level="6.6.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#estimate-dispersions"><i class="fa fa-check"></i><b>6.6.2</b> Estimate dispersions</a></li>
+<li class="chapter" data-level="6.6.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#fit-the-model"><i class="fa fa-check"></i><b>6.6.3</b> Fit the model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#extract-results"><i class="fa fa-check"></i><b>6.7</b> Extract results</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#default-settings"><i class="fa fa-check"></i><b>6.7.1</b> Default settings</a></li>
+<li class="chapter" data-level="6.7.2" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#customised-thresholds"><i class="fa fa-check"></i><b>6.7.2</b> Customised thresholds</a></li>
+<li class="chapter" data-level="6.7.3" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#check-known-genes-1"><i class="fa fa-check"></i><b>6.7.3</b> Check known genes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="edger-analysis-1.html"><a href="edger-analysis-1.html#save-results-1"><i class="fa fa-check"></i><b>6.8</b> Save results</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html"><i class="fa fa-check"></i><b>7</b> Compare DEG lists</a><ul>
+<li class="chapter" data-level="7.1" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#venn-diagram"><i class="fa fa-check"></i><b>7.1</b> Venn diagram</a></li>
+<li class="chapter" data-level="7.2" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#compare-fc-and-fdr-estimates"><i class="fa fa-check"></i><b>7.2</b> Compare FC and FDR estimates</a></li>
+<li class="chapter" data-level="7.3" data-path="compare-deg-lists.html"><a href="compare-deg-lists.html#degs-intersect-list"><i class="fa fa-check"></i><b>7.3</b> DEGs intersect list</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="final-section.html"><a href="final-section.html"><i class="fa fa-check"></i><b>8</b> Final section</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Differential Gene Expression Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="deseq2-analyisis" class="section level1">
+<h1><span class="header-section-number">5</span> DESeq2 analyisis</h1>
+<p>First, load DESeq2 library. Beware: DESeq2 dependencies may interfere with <em>dplyr</em>. To avoid interference you may use the library name explicitly, when calling functions, e.g. use <strong>DESeq2::plotPCA()</strong> instead of just <strong>plotPCA()</strong> (not used in this tutorial).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;BiocManager&quot;)</span>
+<span class="co">#BiocManager::install(&quot;DESeq2&quot;)</span>
+<span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(DESeq2)))</code></pre></div>
+<div id="deseqdataset-object" class="section level2">
+<h2><span class="header-section-number">5.1</span> DESeqDataSet object</h2>
+<div id="make-deseqdataset-object" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Make DESeqDataSet object</h3>
+<p>DESeq2 provides several functions for data import from different upstream tools that generate RNA-seq counts. We use the <strong>DESeqDataSetFromHTSeqCount</strong> function that matches the type of data provided by PCA.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set counts folder</span>
+counts_folder=<span class="kw">file.path</span>(base_folder,<span class="st">&quot;data&quot;</span>,<span class="st">&quot;HTSeq_counts&quot;</span>)
+
+<span class="co"># Make the design variables as factors</span>
+<span class="co"># (remember: we customised stringsAsFactors to FALSE in the Start section)</span>
+samples.df<span class="op">$</span>oct &lt;-<span class="st"> </span><span class="kw">as.factor</span>(samples.df<span class="op">$</span>oct)
+samples.df<span class="op">$</span>er &lt;-<span class="st"> </span><span class="kw">as.factor</span>(samples.df<span class="op">$</span>er)
+
+<span class="co"># Import sanmples data and counts into DESeqDataSet object</span>
+<span class="co"># &quot;dds&quot; stands for Deseq-Data-Set</span>
+dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromHTSeqCount</span>(<span class="dt">sampleTable =</span> samples.df,
+                                  <span class="dt">directory =</span> counts_folder,
+                                  <span class="dt">design =</span> <span class="op">~</span><span class="st"> </span>oct <span class="op">+</span><span class="st"> </span>er)
+
+<span class="co"># Clean-up</span>
+<span class="kw">rm</span>(counts_folder)</code></pre></div>
+</div>
+<div id="explore-deseqdataset-object" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Explore DESeqDataSet object</h3>
+<p>In short, the <strong>DESeqDataSet</strong> object generated by <strong>DESeqDataSetFromHTSeqCount</strong> includes the following slots:</p>
+<ul>
+<li>slot for the matrix with <strong>counts</strong> (a part of the <strong>assays</strong> collection, although no other assays is added when reading HTSeq counts)<br />
+</li>
+<li>slot for the samples information (<strong>colData</strong>)<br />
+</li>
+<li>slot for the genes information (<strong>rowData</strong>). It is empty when reading HTSeq counts. To illustrate the use of <strong>rowData</strong> we will manually add the gene names (from gencode.22 GTF file)<br />
+</li>
+<li>slot for some <strong>metadata</strong> (is virtually empty when reading HTSeq counts)<br />
+</li>
+<li>slot for <strong>design</strong>: an important slot that includes a string that defines the analysis, which will be performed by DESeq2 later</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># A very short summary</span>
+<span class="kw">summary</span>(dds)</code></pre></div>
+<pre><code>## [1] &quot;DESeqDataSet object of length 60483 with 0 metadata columns&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># A bit more expanded summary</span>
+dds</code></pre></div>
+<pre><code>## class: DESeqDataSet 
+## dim: 60483 238 
+## metadata(1): version
+## assays(1): counts
+## rownames(60483): ENSG00000000003.13 ENSG00000000005.5 ... ENSGR0000280767.1 ENSGR0000281849.1
+## rowData names(0):
+## colnames(238): TCGA-A7-A0DA TCGA-D8-A1XU ... TCGA-D8-A1XB TCGA-AO-A03M
+## colData names(2): oct er</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Metadata slot</span>
+<span class="kw">metadata</span>(dds)</code></pre></div>
+<pre><code>## $version
+## [1] &#39;1.26.0&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &quot;counts&quot; slot</span>
+<span class="kw">counts</span>(dds)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##                    TCGA-A7-A0DA TCGA-D8-A1XU TCGA-D8-A143 TCGA-A7-A4SB TCGA-D8-A1XR
+## ENSG00000000003.13         2724         5645         6180         2558         3884
+## ENSG00000000005.5             7            6            1           32          109
+## ENSG00000000419.11         1962         4926         2624         1068         3337
+## ENSG00000000457.12         1973         2271         1860         1362         4953
+## ENSG00000000460.15          867          675         2359          494         2284</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># colData slot: samples information</span>
+<span class="kw">head</span>(<span class="kw">as.data.frame</span>(<span class="kw">colData</span>(dds)))</code></pre></div>
+<pre><code>##                oct       er
+## TCGA-A7-A0DA false Negative
+## TCGA-D8-A1XU false Positive
+## TCGA-D8-A143 false Negative
+## TCGA-A7-A4SB false Positive
+## TCGA-D8-A1XR false Positive
+## TCGA-BH-A18L  true Positive</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rowData slot</span>
+<span class="kw">rowData</span>(dds) <span class="co"># Genes information is empty</span></code></pre></div>
+<pre><code>## DataFrame with 60483 rows and 0 columns</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Design slot: a string that follows R conventions for a &quot;formula&quot; in glm models.    </span>
+<span class="kw">design</span>(dds)</code></pre></div>
+<pre><code>## ~oct + er</code></pre>
+<p>In general, the string in <strong>design</strong> slot folows the conventions for a <strong>formula</strong> in R glm analyses. Importantly, by default, <strong>the last element</strong> in the design formula (“er” in this example) will be used for differential expression analysis. The previous elements (“oct” in this example) will be treated as confounding factors (e.g. for batch effect correction etc).</p>
+</div>
+<div id="rowdata-adding-genes-names" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> rowData: adding genes names</h3>
+<p>If data was imported from <strong>Salmon</strong> counts by <strong>tximeta</strong> then the genes names and coordinates would be added in <strong>Genomic Ranges</strong> format. Unfortunately, <strong>HTSeq</strong> counts are not supported by <strong>tximeta</strong>. So, we add the gene names manually: just to illustrate such opportunity (we are not going to use <strong>rowData</strong> slot later).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Syncronise genes order in genes.df with genes order in dds</span>
+genes.df &lt;-<span class="st"> </span>genes.df[<span class="kw">rownames</span>(dds),]
+
+<span class="co"># Add gene names to rowData slot of dds</span>
+<span class="kw">rowData</span>(dds) &lt;-<span class="st"> </span>genes.df</code></pre></div>
+</div>
+</div>
+<div id="genes-filtering" class="section level2">
+<h2><span class="header-section-number">5.2</span> Genes filtering</h2>
+<p>Removing consistently low-expressed genes reduces the number of tests and improves conditions for multiple testing correction later in the analysis. Arbitrarily, in this tutorial we remove any genes with less than 10 cases having counts more than 10.</p>
+<p>An alternative/additional approach might be to keep only the most variable genes. However, such approach could be complicated by the fact that variance in RNA-seq counts may depend on the level of expression.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Check the initial number of genes in DESeqDataSet object</span>
+<span class="kw">nrow</span>(dds)</code></pre></div>
+<pre><code>## [1] 60483</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make index for genes with less than 10 cases having count &gt;= 10</span>
+keep &lt;-<span class="st"> </span><span class="kw">rowSums</span>(<span class="kw">counts</span>(dds) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">10</span>) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">10</span>
+<span class="kw">sum</span>(keep)</code></pre></div>
+<pre><code>## [1] 28362</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Update the DESeqDataSet object</span>
+dds &lt;-<span class="st"> </span>dds[keep,]
+<span class="kw">nrow</span>(dds)</code></pre></div>
+<pre><code>## [1] 28362</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(keep)</code></pre></div>
+</div>
+<div id="exploring-source-data" class="section level2">
+<h2><span class="header-section-number">5.3</span> Exploring source data</h2>
+<p>Before looking for the specific genes differentialy expressed between ER-positive and Triple-negative breast cancers, it might be interesting to see if these groups are separated in the space of genes expression. One of the methods that allows such visual check is <strong>PCA plot</strong>. An alternative widely used method is <strong>Hierarchical Clustering</strong> (HC).</p>
+<div id="normalizing-variance" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Normalizing variance</h3>
+<p>Both, <strong>PCA</strong> and <strong>HC</strong>, prioritise the most variable genes when calculating distances between samples. Because the variance in RNA-Seq counts is often higher in highly-expressed genes, <strong>PCA</strong> and <strong>HC</strong> may be dominated by the data from the most expressed genes. Normalising variance between low- and highly- expressed genes improves informativeness of <strong>PCA</strong> and <strong>HC</strong>.</p>
+<p>DESeq2 provides two methods for such variance normalization: <strong>VST</strong> (Variance Stabilizing Transformation) and <strong>Rlog</strong> (regularised log-transformation). In essense, both methods are similar to a simple log-transfrormation with some additional correction for the low-expressed genes. Also, DeSeq2 provides a function for generating <strong>PCA plot</strong> from the <em>transformed</em> data.</p>
+<p>Note that the transformed data (<strong>vst_dds</strong>) is <em>NOT</em> used for the actual differential expression analysis later. The differential analysis will be performed usng the raw counts (<strong>dds</strong>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make transformed DESeq dataset</span>
+vst_dds &lt;-<span class="st"> </span><span class="kw">vst</span>(dds) 
+
+<span class="co"># Summary information for the transformed DESeq dataset</span>
+vst_dds </code></pre></div>
+<pre><code>## class: DESeqTransform 
+## dim: 28362 238 
+## metadata(1): version
+## assays(1): &#39;&#39;
+## rownames(28362): ENSG00000000003.13 ENSG00000000005.5 ... ENSG00000281912.1 ENSG00000281920.1
+## rowData names(6): gene_id gene_name ... allZero dispFit
+## colnames(238): TCGA-A7-A0DA TCGA-D8-A1XU ... TCGA-D8-A1XB TCGA-AO-A03M
+## colData names(3): oct er sizeFactor</code></pre>
+</div>
+<div id="pca-plot" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> PCA plot</h3>
+<p>The <strong>PCA plot</strong> below shows a clear separation of ER-positive and ER-negative cases in the space of gene expression. At the same time, OCT-imbedding ( true / false ) does not influence position of samples in the PCA plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotPCA</span>(vst_dds, <span class="dt">intgroup =</span> <span class="kw">c</span>(<span class="st">&quot;er&quot;</span>, <span class="st">&quot;oct&quot;</span>))</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+<div id="hierarchical-clustering" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> Hierarchical Clustering</h3>
+<p>The <strong>HC</strong> plot shows that most of ER-negative cases are aggregated together into a separate cluster. However, the separation is not perfect and the <strong>heatmap</strong> is not very informative because of the large number of irrelevant genes.</p>
+<p>In this example we use <strong>pheatmap</strong> (pretty heatmap) package to make the heatmap and to perform hierarchical clustering. Other often used packages for plotting heatmaps include <strong>heatmap</strong> and <strong>heatmap.2</strong>. <strong>heatmap</strong> is a reliable base-R tool; however it lacks many convinience features. <strong>heatmap.2</strong> (from gplots package) has a bug, which makes it very slow for plotting large matrices (~28k genes x ~230 samples is considered to be a large matrix for this purpose). Also, the heatmap could be plotted with <strong>ggplot2</strong>, which could provide many advantages (e.g. animation with <strong>plotly</strong>). I selected <strong>pheatmap</strong> here because of its simplicity and convinience; and because this tutorial does not need the advasnced <strong>ggplot2</strong> features.</p>
+<p>Beware: calculating dendrogram for ~28k hgenes may take very long time and require large memory. The code includes <strong>cluster_rows = FALSE</strong> option in <strong>pheatmap</strong> to avoid the long calculations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Libraries for drawing heatmap</span>
+<span class="co">#install.packages(&quot;RColorBrewer&quot;)</span>
+<span class="co">#install.packages(&quot;pheatmap&quot;)</span>
+<span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(RColorBrewer)))
+<span class="kw">suppressWarnings</span>(<span class="kw">suppressMessages</span>(<span class="kw">library</span>(pheatmap)))
+
+<span class="co"># Matrix for clustering and heatmap</span>
+vst_counts &lt;-<span class="st"> </span><span class="kw">assay</span>(vst_dds)
+<span class="kw">dim</span>(vst_counts)
+
+<span class="co"># Scale and center by rows. </span>
+<span class="co"># Heatmap-making functions often include in-built functions for scaling.  </span>
+<span class="co"># However, this script does it manually to allow explicit centering, facilitating </span>
+<span class="co"># green-black-red palette, when black corresponds to zero (i.e. black = mean gene expression). </span>
+vst_counts &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">scale</span>(<span class="kw">t</span>(vst_counts)))
+
+<span class="co"># Make a dataframe with ER- and OCT- status</span>
+<span class="co"># (for colour-coded strips along the hea)</span>
+cases.df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">colData</span>(vst_dds))
+cases.df &lt;-<span class="st"> </span>cases.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(oct, er)
+
+<span class="co"># Make palette of 21 colours for heatmap drawing. </span>
+<span class="co"># The default heatmap palette would be white-yellow-red, </span>
+<span class="co"># which is not good for visualizing differences in genes expression. </span>
+gbr_<span class="dv">21</span> &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dt">n =</span> <span class="dv">21</span>)
+
+<span class="co"># Make breaks between colours</span>
+<span class="co"># By default, most hearmap-plotting tools place breaks at equal distance</span>
+<span class="co"># Customising breaks by placing them at quantiles makes the hearmap more informative</span>
+<span class="co"># (although this is a matter of personal preference :)</span>
+<span class="co"># The number of breaksshould be one more than the number of colours in palette</span>
+breaks_<span class="dv">22</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>(vst_counts, <span class="dt">probs=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out=</span><span class="dv">22</span>))
+
+<span class="co"># Make heatmap with dendrograms</span>
+<span class="co"># Calculating dendrogram for ~28k genes requires large memory and may crash a laptop</span>
+<span class="co"># On a laptop with 4 cores and 8GB RAM it may take ~30-40 min</span>
+<span class="co"># To suppress genes dendrogram add &quot;cluster_rows = FALSE&quot; option </span>
+<span class="kw">pheatmap</span>(
+  <span class="dt">mat =</span> vst_counts, <span class="co"># matrix with data</span>
+  <span class="dt">color =</span> gbr_<span class="dv">21</span>, <span class="co"># user-defined palette</span>
+  <span class="dt">breaks =</span> breaks_<span class="dv">22</span>, <span class="co"># user-defined breaks between colours</span>
+  <span class="dt">scale =</span> <span class="st">&quot;none&quot;</span>, <span class="co"># has been scaled manually</span>
+  <span class="dt">annotation_col =</span> cases.df, <span class="co"># data frame with ER- and OCT- status</span>
+  <span class="dt">border_color =</span> <span class="ot">NA</span>, <span class="co"># dont draw borders inside the heatmap</span>
+  <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>, <span class="co"># dont cluster genes (to avoid long calculations)</span>
+  <span class="dt">show_colnames =</span> <span class="ot">FALSE</span>, <span class="co"># too many samples names to show</span>
+  <span class="dt">show_rownames =</span> <span class="ot">FALSE</span>, <span class="co"># too many gene names to show</span>
+  <span class="dt">main =</span> <span class="st">&quot;HC with all genes (~28k)&quot;</span>)
+
+<span class="co"># Clean-up</span>
+<span class="kw">rm</span>(vst_counts, gbr_<span class="dv">21</span>, breaks_<span class="dv">22</span>, cases.df)</code></pre></div>
+<p><span style="color: red;">Note that the figure shown below was generated without &lt; cluster_rows = FALSE &gt; option, to illustrate the genes clustering.</span></p>
+<p><img src="figures/f02_hc_28k.png" width="100%" /></p>
+</div>
+</div>
+<div id="calculating-degs" class="section level2">
+<h2><span class="header-section-number">5.4</span> Calculating DEGs</h2>
+<p>Overall, the preliminary exploration has suggested that ER-positive and ER-negative tumours have <strong>distinctive</strong> gene expression profiles. So, what are the specific Differentially Expressed Genes (DEGs)?</p>
+<p>In practice, all the complicated DESeq2 statistics (discussed elsewere) is hidden from the user within <strong>a single function call</strong>, which adds the DEG results to the original DESeq2 dataset object …</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate the differentially expressed genes</span>
+ddx &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds) </code></pre></div>
+<pre><code>## estimating size factors</code></pre>
+<pre><code>## estimating dispersions</code></pre>
+<pre><code>## gene-wise dispersion estimates</code></pre>
+<pre><code>## mean-dispersion relationship</code></pre>
+<pre><code>## final dispersion estimates</code></pre>
+<pre><code>## fitting model and testing</code></pre>
+<pre><code>## -- replacing outliers and refitting for 2448 genes
+## -- DESeq argument &#39;minReplicatesForReplace&#39; = 7 
+## -- original counts are preserved in counts(dds)</code></pre>
+<pre><code>## estimating dispersions</code></pre>
+<pre><code>## fitting model and testing</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># summary of the DESeq Dataset with added results</span>
+ddx </code></pre></div>
+<pre><code>## class: DESeqDataSet 
+## dim: 28362 238 
+## metadata(1): version
+## assays(6): counts mu ... replaceCounts replaceCooks
+## rownames(28362): ENSG00000000003.13 ENSG00000000005.5 ... ENSG00000281912.1 ENSG00000281920.1
+## rowData names(29): gene_id gene_name ... maxCooks replace
+## colnames(238): TCGA-A7-A0DA TCGA-D8-A1XU ... TCGA-D8-A1XB TCGA-AO-A03M
+## colData names(4): oct er sizeFactor replaceable</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(dds)</code></pre></div>
+</div>
+<div id="extracting-results" class="section level2">
+<h2><span class="header-section-number">5.5</span> Extracting results</h2>
+<p>The results of differential gene expression analysis have been added to DESeq2 Data Set. The next chunk of code shows how to extract these results. This tutorial only considers the <strong>key results</strong> of DESeq2 analysis. Look for more details in DESeq2 package documentation.</p>
+<div id="explore-default-thresholds" class="section level3">
+<h3><span class="header-section-number">5.5.1</span> Explore default thresholds</h3>
+<p>For each gene DESeq2 provides mean expression, fold change and measures of statistical significance (p and “adjusted p”) that allow to conclude whether this gene has been significantly changed.</p>
+<p>The default DESeq’s thersholds for labelling genes as “significant” are</p>
+<ul>
+<li>the null hypothesis asuming that there is no difference between the compared groups<br />
+</li>
+<li>FDR 0.1</li>
+</ul>
+<p>These thersholds reflect the practices for RNA-seq experiments with a small number of sampes (the most common case at the early time of RNA-seq development).</p>
+<p>In this tutorial, when the data includes more than two hundreed samples, <strong>the default DESeq’s thresholds suggest that more than a half of the genes are “significantly” changed</strong> between ER-positive and Triple-negative breast cancers (68% = 32 Up-regilated and 36% Down-regulated genes). While it is well known that these cancers have very strong biological differences, such high proportion of changed genes is not realistic. It contradicts to a common assumption, that ony a small proportion of genes should be significantly changed. Also, the distribution of p-values shows noticeable inflation (increased proportion of low p-values) comparatively to the uniform distribution, typically expected under the null.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Testing against H0 of no difference at FDR 0.1</span>
+DESeq2_any_change_fdr_<span class="fl">0.1</span> &lt;-<span class="st"> </span><span class="kw">results</span>(ddx)
+DESeq2_any_change_fdr_<span class="fl">0.1</span></code></pre></div>
+<pre><code>## log2 fold change (MLE): er Positive vs Negative 
+## Wald test p-value: er Positive vs Negative 
+## DataFrame with 28362 rows and 6 columns
+##                            baseMean     log2FoldChange              lfcSE              stat               pvalue                 padj
+##                           &lt;numeric&gt;          &lt;numeric&gt;          &lt;numeric&gt;         &lt;numeric&gt;            &lt;numeric&gt;            &lt;numeric&gt;
+## ENSG00000000003.13 3254.88256154068 -0.690175380631575  0.142786200450243 -4.83362802886601 1.34066988573307e-06  4.3852011647055e-06
+## ENSG00000000005.5    56.40674633187   1.83304965161698  0.344713183710671  5.31760819787942 1.05140164399798e-07 3.96382472777758e-07
+## ENSG00000000419.11 2311.61509753107 -0.373419784953396 0.0828390167004984 -4.50777664712611 6.55104842598776e-06 1.93502223971948e-05
+## ENSG00000000457.12 2069.88515433684  0.376458293887623 0.0860125820091379  4.37678168814452 1.20444502953923e-05 3.42632597069124e-05
+## ENSG00000000460.15 864.522147486874 -0.812238896522597  0.112023122992459 -7.25063607249438 4.14818894531819e-13 2.94864498413821e-12
+## ...                             ...                ...                ...               ...                  ...                  ...
+## ENSG00000281883.1  3.63933518666046 0.0230481676343476  0.217488426209903 0.105974226012851    0.915602801673173    0.934448602412902
+## ENSG00000281896.1  53.2908748093281  0.268939774867321  0.152935139447986  1.75852178798182   0.0786587676712237    0.114055213123274
+## ENSG00000281903.1  24.7506455382964  0.770290213483771  0.175801373989849  4.38159381807931 1.17814293010927e-05 3.35722794973969e-05
+## ENSG00000281912.1   98.450301361596 -0.423446403741261  0.139085533004298 -3.04450358419502  0.00233064653179811  0.00461636964416915
+## ENSG00000281920.1    5.641455151427   1.29108849263691  0.253834348705963  5.08634272398054 3.65034159677914e-07 1.29058823694652e-06</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Explaing the columns in result table</span>
+<span class="kw">mcols</span>(DESeq2_any_change_fdr_<span class="fl">0.1</span>, <span class="dt">use.names =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## DataFrame with 6 rows and 2 columns
+##                        type                                     description
+##                 &lt;character&gt;                                     &lt;character&gt;
+## baseMean       intermediate       mean of normalized counts for all samples
+## log2FoldChange      results log2 fold change (MLE): er Positive vs Negative
+## lfcSE               results         standard error: er Positive vs Negative
+## stat                results         Wald statistic: er Positive vs Negative
+## pvalue              results      Wald test p-value: er Positive vs Negative
+## padj                results                            BH adjusted p-values</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># A very high proportion of suggested DEGs</span>
+<span class="kw">summary</span>(DESeq2_any_change_fdr_<span class="fl">0.1</span>)</code></pre></div>
+<pre><code>## 
+## out of 28362 with nonzero total read count
+## adjusted p-value &lt; 0.1
+## LFC &gt; 0 (up)       : 9053, 32%
+## LFC &lt; 0 (down)     : 10212, 36%
+## outliers [1]       : 0, 0%
+## low counts [2]     : 0, 0%
+## (mean count &lt; 0)
+## [1] see &#39;cooksCutoff&#39; argument of ?results
+## [2] see &#39;independentFiltering&#39; argument of ?results</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Inflated p-values comparatively to the expected uniform distribution</span>
+<span class="kw">hist</span>(DESeq2_any_change_fdr_<span class="fl">0.1</span><span class="op">$</span>pvalue) </code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="user-defined-thresholds" class="section level3">
+<h3><span class="header-section-number">5.5.2</span> User-defined thresholds</h3>
+<p>DESeq2 allows customised thresholds to select significant genes. The following chunk of code shows how to select genes that are significant for</p>
+<ul>
+<li>null hypothests that differences are less than 2-fold (log2 FC 1)<br />
+</li>
+<li>FDR 0.001</li>
+</ul>
+<p><strong>The adjusted thresholds suggest less than 10% are diferentially expressed genes</strong>: 3.9% up-regulated and 4.8% Down-regulated. This looks much more realistic estimate, than the one suggested using the default settings.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Testing for at least 2-fold difference at FDR 0.001</span>
+DESeq2_fc_2_fdr_<span class="fl">0.01</span> &lt;-<span class="st"> </span><span class="kw">results</span>(ddx, <span class="dt">lfcThreshold=</span><span class="dv">1</span>, <span class="dt">alpha=</span><span class="fl">0.01</span>)
+DESeq2_fc_2_fdr_<span class="fl">0.01</span></code></pre></div>
+<pre><code>## log2 fold change (MLE): er Positive vs Negative 
+## Wald test p-value: er Positive vs Negative 
+## DataFrame with 28362 rows and 6 columns
+##                            baseMean     log2FoldChange              lfcSE             stat             pvalue              padj
+##                           &lt;numeric&gt;          &lt;numeric&gt;          &lt;numeric&gt;        &lt;numeric&gt;          &lt;numeric&gt;         &lt;numeric&gt;
+## ENSG00000000003.13 3254.88256154068 -0.690175380631575  0.142786200450243                0                  1                 1
+## ENSG00000000005.5    56.40674633187   1.83304965161698  0.344713183710671 2.41664575357868 0.0156642534905646 0.135779204614729
+## ENSG00000000419.11 2311.61509753107 -0.373419784953396 0.0828390167004984                0                  1                 1
+## ENSG00000000457.12 2069.88515433684  0.376458293887623 0.0860125820091379                0                  1                 1
+## ENSG00000000460.15 864.522147486874 -0.812238896522597  0.112023122992459                0                  1                 1
+## ...                             ...                ...                ...              ...                ...               ...
+## ENSG00000281883.1  3.63933518666046 0.0230481676343476  0.217488426209903                0                  1                 1
+## ENSG00000281896.1  53.2908748093281  0.268939774867321  0.152935139447986                0                  1                 1
+## ENSG00000281903.1  24.7506455382964  0.770290213483771  0.175801373989849                0                  1                 1
+## ENSG00000281912.1   98.450301361596 -0.423446403741261  0.139085533004298                0                  1                 1
+## ENSG00000281920.1    5.641455151427   1.29108849263691  0.253834348705963 1.14676557416627  0.251478520760158                 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Check proportion of differentially expressed genes</span>
+<span class="kw">summary</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span>)</code></pre></div>
+<pre><code>## 
+## out of 28362 with nonzero total read count
+## adjusted p-value &lt; 0.01
+## LFC &gt; 1.00 (up)    : 1118, 3.9%
+## LFC &lt; -1.00 (down) : 1358, 4.8%
+## outliers [1]       : 0, 0%
+## low counts [2]     : 0, 0%
+## (mean count &lt; 0)
+## [1] see &#39;cooksCutoff&#39; argument of ?results
+## [2] see &#39;independentFiltering&#39; argument of ?results</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Distribution of p-values: </span>
+<span class="co"># not uniform, but without the huge inflation either  </span>
+<span class="kw">hist</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span><span class="op">$</span>pvalue)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="compare-results-with-different-thresholds" class="section level3">
+<h3><span class="header-section-number">5.5.3</span> Compare results with different thresholds</h3>
+<p>Importantly, the above result with adjusted thresholds is NOT equivalent to mere selecting of genes with fold change &gt;2 from the result obtained earlier using the default thersholds. While the fold-change and mean expression, of course, remain the same, the p-values and FDR have been changed, because they are calculated against a different null hypothesis. See help for <strong>DESEq2::results</strong> function for more details.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span><span class="op">$</span>baseMean, DESeq2_any_change_fdr_<span class="fl">0.1</span><span class="op">$</span>baseMean,
+     <span class="dt">main=</span><span class="st">&quot;Compare mean expressions&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span><span class="op">$</span>log2FoldChange, DESeq2_any_change_fdr_<span class="fl">0.1</span><span class="op">$</span>log2FoldChange,
+     <span class="dt">main=</span><span class="st">&quot;Compare fold changes&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span><span class="op">$</span>pvalue, DESeq2_any_change_fdr_<span class="fl">0.1</span><span class="op">$</span>pvalue,
+     <span class="dt">main=</span><span class="st">&quot;Compare p-values&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-21-3.png" width="672" /></p>
+</div>
+</div>
+<div id="exploring-results" class="section level2">
+<h2><span class="header-section-number">5.6</span> Exploring results</h2>
+<p>In this tutorial, we will explore the results with the modifyed thresholds: at least 2 fold change with FDR 0.01.</p>
+<p>These thresholds where selected iteratively, checking the result against a list of selcted known genes, which were reported previously by others for ER-positive breast cancers.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DESeq2_any_change_fdr_<span class="fl">0.1</span>)</code></pre></div>
+<div id="check-genes-with-no-p-value" class="section level3">
+<h3><span class="header-section-number">5.6.1</span> Check genes with no p-value</h3>
+<p>Because of the large number of samples, no genes have been excluded from analysis by DESeq in this example. However, for a smaller number of samples, DESeq2 may exclude some genes, which are very unlikely to be differentially expressed, to improve conditions for multiple testing correction. For such genes the <strong>padj</strong> (FDR) value would be set to <strong>NA</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="kw">is.na</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span><span class="op">$</span>padj))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="plot-dispersions" class="section level3">
+<h3><span class="header-section-number">5.6.2</span> Plot dispersions</h3>
+<p>Adjustment of dispersions is one of the key statistical tasks in DSEq2. However, in this analysis, because of the large number of samples, the dispersion adjustments were very modest (blue dots overlay the black ones).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDispEsts</span>(ddx, <span class="dt">main=</span><span class="st">&quot;Dispersion estimates and adjustments&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="ma-plots" class="section level3">
+<h3><span class="header-section-number">5.6.3</span> MA plots</h3>
+<p><strong>MA plot</strong> shows fold change along the y-axis, mean expression along the x-axis and significance by colour coding (in red). Each dot represents a gene. The genes equally expressed in both groups (ER-positive and Triple-negative tumours) are located along the middle zero-line. The differentially expressed genes will be located above- or below- the zero-line.</p>
+<p>Because of the large number of available samples, a large number of genes have reached statistical “significance” at the default FDR &lt; 0.1 threshold (red dots). This is consistent with the strong biological difference between ER-positive and ER-negative breast cancers. A smaller, but still very large number of genes have reached “significance” at FDR &lt; 10-6 level.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotMA</span>(ddx, <span class="dt">lfcThreshold=</span><span class="dv">1</span>, <span class="dt">alpha=</span><span class="fl">0.01</span>, <span class="dt">main=</span><span class="st">&quot;ER-pos vs Triple-neg</span><span class="ch">\n</span><span class="st">red: FC&gt;2, FDR&lt;0.01&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>This would be the MA-plot for the <strong>default</strong> DESeq2 settings:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotMA</span>(ddx, <span class="dt">main=</span><span class="st">&quot;ER-pos vs Triple-neg</span><span class="ch">\n</span><span class="st">red: Any Change, FDR&gt;0.1 (default settings)&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>By default, of course, the null hypothesis is either of no difference, or that the difference is below the specified logFC threshold. That means the alternative hypothesis is that the changes are above the threshold.</p>
+<p>A very interesting and unusual feature of DESeq2 is that it allows to test for alternative hypothesis that the change is <strong>LESS</strong> than a specified threshold. In other words, DESeq2 provides <strong>a statistical framework to look for unchanged genes</strong>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotMA</span>(ddx, <span class="dt">lfcThreshold=</span><span class="dv">1</span>, <span class="dt">altHypothesis=</span><span class="st">&quot;lessAbs&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.01</span>, 
+       <span class="dt">main=</span><span class="st">&quot;ER-pos vs Triple-neg</span><span class="ch">\n</span><span class="st">red: FC&lt;2, FDR&lt;0.01&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+</div>
+<div id="plot-counts-for-an-individual-gene" class="section level3">
+<h3><span class="header-section-number">5.6.4</span> Plot counts for an individual gene</h3>
+<p>In this tutorial we will plot counts for Estrogen Receptor Alpha (ESR1) comparing ER-positive and Triple-negative groups.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get gene ID for ESR1</span>
+ESR1_gene_id &lt;-<span class="st"> </span>genes.df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(gene_name <span class="op">==</span><span class="st"> &quot;ESR1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(gene_id)
+
+<span class="co"># Make the plot  </span>
+<span class="kw">plotCounts</span>(ddx, <span class="dt">gene=</span><span class="kw">as.character</span>(ESR1_gene_id), <span class="dt">intgroup =</span> <span class="st">&quot;er&quot;</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(ESR1_gene_id)</code></pre></div>
+</div>
+<div id="convert-results-to-data-frame" class="section level3">
+<h3><span class="header-section-number">5.6.5</span> Convert results to data-frame</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The results can be converted to data.frame</span>
+DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span>)
+<span class="kw">head</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df)</code></pre></div>
+<pre><code>##                      baseMean log2FoldChange      lfcSE     stat     pvalue      padj
+## ENSG00000000003.13 3254.88256     -0.6901754 0.14278620 0.000000 1.00000000 1.0000000
+## ENSG00000000005.5    56.40675      1.8330497 0.34471318 2.416646 0.01566425 0.1357792
+## ENSG00000000419.11 2311.61510     -0.3734198 0.08283902 0.000000 1.00000000 1.0000000
+## ENSG00000000457.12 2069.88515      0.3764583 0.08601258 0.000000 1.00000000 1.0000000
+## ENSG00000000460.15  864.52215     -0.8122389 0.11202312 0.000000 1.00000000 1.0000000
+## ENSG00000000938.11  621.25238     -0.1733090 0.14869825 0.000000 1.00000000 1.0000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Copy gene ID-s from the rownames to a column</span>
+DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df<span class="op">$</span>gene_id=<span class="kw">rownames</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df)
+<span class="kw">head</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df)</code></pre></div>
+<pre><code>##                      baseMean log2FoldChange      lfcSE     stat     pvalue      padj            gene_id
+## ENSG00000000003.13 3254.88256     -0.6901754 0.14278620 0.000000 1.00000000 1.0000000 ENSG00000000003.13
+## ENSG00000000005.5    56.40675      1.8330497 0.34471318 2.416646 0.01566425 0.1357792  ENSG00000000005.5
+## ENSG00000000419.11 2311.61510     -0.3734198 0.08283902 0.000000 1.00000000 1.0000000 ENSG00000000419.11
+## ENSG00000000457.12 2069.88515      0.3764583 0.08601258 0.000000 1.00000000 1.0000000 ENSG00000000457.12
+## ENSG00000000460.15  864.52215     -0.8122389 0.11202312 0.000000 1.00000000 1.0000000 ENSG00000000460.15
+## ENSG00000000938.11  621.25238     -0.1733090 0.14869825 0.000000 1.00000000 1.0000000 ENSG00000000938.11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add gene names (using information obtained from the GTF file earlier)</span>
+DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df &lt;-<span class="kw">left_join</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df, genes.df, <span class="dt">by=</span><span class="st">&quot;gene_id&quot;</span>)
+<span class="kw">head</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df)</code></pre></div>
+<pre><code>##     baseMean log2FoldChange      lfcSE     stat     pvalue      padj            gene_id gene_name
+## 1 3254.88256     -0.6901754 0.14278620 0.000000 1.00000000 1.0000000 ENSG00000000003.13    TSPAN6
+## 2   56.40675      1.8330497 0.34471318 2.416646 0.01566425 0.1357792  ENSG00000000005.5      TNMD
+## 3 2311.61510     -0.3734198 0.08283902 0.000000 1.00000000 1.0000000 ENSG00000000419.11      DPM1
+## 4 2069.88515      0.3764583 0.08601258 0.000000 1.00000000 1.0000000 ENSG00000000457.12     SCYL3
+## 5  864.52215     -0.8122389 0.11202312 0.000000 1.00000000 1.0000000 ENSG00000000460.15  C1orf112
+## 6  621.25238     -0.1733090 0.14869825 0.000000 1.00000000 1.0000000 ENSG00000000938.11       FGR</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df)</code></pre></div>
+<pre><code>## [1] 28362     8</code></pre>
+<p>Make a separate dataframe with the differentially expressed genes only: expression change at least 2-fold with FDR 0.01</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Select Differentially Expressed Genes only</span>
+DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df &lt;-<span class="st"> </span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">-</span><span class="kw">log10</span>(padj) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>, <span class="kw">abs</span>(log2FoldChange) <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(gene_name, gene_id, baseMean, log2FoldChange, padj) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(log2FoldChange))
+
+<span class="co"># Check results</span>
+<span class="kw">dim</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df)</code></pre></div>
+<pre><code>## [1] 2476    5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df)</code></pre></div>
+<pre><code>##       gene_name            gene_id   baseMean log2FoldChange         padj
+## 1        CARTPT  ENSG00000164326.4   760.7236      11.041924 5.602005e-26
+## 2          CPB1 ENSG00000153002.10 64177.1952       9.673386 3.075352e-48
+## 3  RP11-53O19.2  ENSG00000248779.1   301.5455       9.376603 3.960013e-46
+## 4 RP11-473L15.3  ENSG00000249203.1   171.1401       8.504287 3.198874e-43
+## 5  RP11-680B3.2  ENSG00000240521.1   118.1529       8.138256 6.406333e-18
+## 6        CLEC3A  ENSG00000166509.9 19635.8020       7.839747 2.696858e-24</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(DESeq2_fc_2_fdr_<span class="fl">0.01</span>)</code></pre></div>
+</div>
+<div id="check-known-genes" class="section level3">
+<h3><span class="header-section-number">5.6.6</span> Check known genes</h3>
+<p>The list of genes up-regulated in ER-positive breast cancers is not yet definitevely established. Numerous papers report different lists of genes in cell lines or clinical biopsies, using different study designs, experimental methods etc. ESR1, PGR, TFF1, TFF3, FOXA1, GATA3 are amongst the most consistently mentioned genes up-regulated in ER-positive cancers. Reports about the genes down-regulated in ER-positive breast cancers are even less consistent, although FOXC1, MIA had been mentioned earlier in this context.</p>
+<p>The changes in expression of selected known ER-associated genes confirm that our findings are considtent with previous reports. In additon, our analysis suggests many other genes, not yet reported in context of ER signalling in breast cancer. The newly reported genes need to be validated in an independent dataset before making definitive conclusions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make a list of selected previously known genes of interest</span>
+selected_known_genes=<span class="kw">c</span>(<span class="st">&quot;ESR1&quot;</span>, <span class="st">&quot;PGR&quot;</span>, <span class="st">&quot;TFF1&quot;</span>, <span class="st">&quot;TFF3&quot;</span>, <span class="st">&quot;GATA3&quot;</span>, <span class="st">&quot;FOXA1&quot;</span>, <span class="st">&quot;FOXC1&quot;</span>, <span class="st">&quot;MIA&quot;</span>)
+
+<span class="co"># Look at the genes of interest in the top DEGs in our dataset  </span>
+DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(gene_name <span class="op">%in%</span><span class="st"> </span>selected_known_genes)</code></pre></div>
+<pre><code>##   gene_name            gene_id   baseMean log2FoldChange         padj
+## 1      TFF1  ENSG00000160182.2 16259.9568       4.476394 9.765610e-15
+## 2      ESR1 ENSG00000091831.20 29402.2500       4.406085 3.070201e-44
+## 3      TFF3 ENSG00000160180.15 16669.3405       4.175744 1.344767e-18
+## 4       PGR ENSG00000082175.13 11860.4295       3.597820 2.272716e-14
+## 5     FOXA1  ENSG00000129514.5 18425.8831       2.792643 8.023961e-16
+## 6     GATA3 ENSG00000107485.14 35098.3567       2.750493 1.204231e-22
+## 7     FOXC1  ENSG00000054598.6  1822.2110      -3.702730 2.674219e-47
+## 8       MIA  ENSG00000261857.5   296.8554      -3.865913 3.768407e-17</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(selected_known_genes)</code></pre></div>
+</div>
+<div id="volcano-plot" class="section level3">
+<h3><span class="header-section-number">5.6.7</span> Volcano plot</h3>
+<p>A <strong>volcano plot</strong> allows simultaneous visualisation of significance (y axis) and fold change (x axis).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Prepare colour-coding for genes: highlit the DEGs in red</span>
+genes_color &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;blue&quot;</span>,<span class="kw">nrow</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df))
+<span class="st">&quot;red&quot;</span> -&gt;<span class="st"> </span>genes_color[DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df<span class="op">$</span>gene_id <span class="op">%in%</span><span class="st"> </span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df<span class="op">$</span>gene_id]
+
+<span class="co"># Make plot</span>
+<span class="kw">plot</span>(<span class="dt">x=</span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df<span class="op">$</span>log2FoldChange, 
+     <span class="dt">y=</span><span class="op">-</span><span class="kw">log10</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df<span class="op">$</span>padj),
+     <span class="dt">col=</span>genes_color, 
+     <span class="dt">main=</span><span class="st">&quot;TCGA BTCA: ER-pos vs Triple-neg</span><span class="ch">\n</span><span class="st">FC 2, FDR 0.01&quot;</span>)
+
+<span class="co"># Add lines to show thresholds for the top genes</span>
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>) <span class="co"># FDR 0.01</span>
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>) <span class="co"># FC &lt; -2</span>
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>) <span class="co"># FC &gt; 2</span>
+
+<span class="co"># Label Estrogen Receptor Alpha gene</span>
+esr1.df &lt;-<span class="st"> </span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(gene_name <span class="op">==</span><span class="st"> &quot;ESR1&quot;</span>)
+<span class="kw">text</span>(esr1.df<span class="op">$</span>log2FoldChange, <span class="op">-</span><span class="kw">log10</span>(esr1.df<span class="op">$</span>padj), <span class="st">&quot;ESR1&quot;</span>, <span class="dt">font=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="dt">pos=</span><span class="dv">3</span>)
+
+<span class="co"># Label most down-regulated genes</span>
+down_regulated_genes.df &lt;-<span class="st"> </span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                  </span><span class="kw">filter</span>(<span class="op">-</span><span class="kw">log10</span>(padj)<span class="op">&gt;</span><span class="dv">60</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                  </span><span class="kw">select</span>(gene_name, log2FoldChange,padj)
+
+<span class="kw">text</span>(down_regulated_genes.df<span class="op">$</span>log2FoldChange, 
+     <span class="op">-</span><span class="kw">log10</span>(down_regulated_genes.df<span class="op">$</span>padj), 
+     down_regulated_genes.df<span class="op">$</span>gene_name, 
+     <span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="dt">pos=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>), <span class="dt">cex=</span><span class="fl">0.75</span>)</code></pre></div>
+<p><img src="RNAseq_DEGs_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clean-up</span>
+<span class="kw">rm</span>(genes_color, esr1.df, down_regulated_genes.df)</code></pre></div>
+</div>
+<div id="hierarchical-clustering-using-degs" class="section level3">
+<h3><span class="header-section-number">5.6.8</span> Hierarchical clustering using DEGs</h3>
+<p><strong>Hierarchical clustering</strong> is also informative to show relations between samples and top differentially expressed genes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Libraries for drawing heatmap</span>
+<span class="co">#install.packages(&quot;RColorBrewer&quot;)</span>
+<span class="co">#install.packages(&quot;pheatmap&quot;)</span>
+<span class="co">#library(RColorBrewer)</span>
+<span class="co">#library(pheatmap)</span>
+
+<span class="co"># Matrix for clustering and heatmap</span>
+vst_counts &lt;-<span class="st"> </span><span class="kw">assay</span>(vst_dds)
+DEGs &lt;-<span class="st"> </span><span class="kw">rownames</span>(vst_counts) <span class="op">%in%</span><span class="st"> </span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df<span class="op">$</span>gene_id
+vst_counts &lt;-<span class="st"> </span>vst_counts[DEGs,]
+
+<span class="co"># Scale and center by rows</span>
+vst_counts &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">scale</span>(<span class="kw">t</span>(vst_counts)))
+
+<span class="co"># Change genes IDs to genes Names</span>
+<span class="kw">rownames</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df) &lt;-<span class="st"> </span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df<span class="op">$</span>gene_id
+<span class="kw">rownames</span>(vst_counts) &lt;-<span class="st"> </span>DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df[<span class="kw">rownames</span>(vst_counts),<span class="st">&quot;gene_name&quot;</span>]
+
+<span class="co"># Data frame with ER- and OCT- status</span>
+cases.df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">colData</span>(vst_dds))
+cases.df &lt;-<span class="st"> </span>cases.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(oct, er)
+
+<span class="co"># Make palette of 99 colours for heatmap</span>
+gbr_<span class="dv">99</span> &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dt">n =</span> <span class="dv">99</span>)
+
+<span class="co"># Make breaks between colours by 100 quantiles </span>
+breaks_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>(vst_counts, <span class="dt">probs=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out=</span><span class="dv">100</span>))
+
+<span class="co"># Plot the heatmap and dendrograms</span>
+<span class="co"># Row and column names couls be shown if there was a smaller number of genes and samples</span>
+<span class="co"># Options &quot;fontsize_row&quot; and &quot;fontsize_col&quot; could be used for row/column labels adjustment </span>
+<span class="kw">pheatmap</span>(
+  <span class="dt">mat =</span> vst_counts, <span class="co"># matrix with data</span>
+  <span class="dt">color =</span> gbr_<span class="dv">99</span>, <span class="co"># user-defined palette</span>
+  <span class="dt">breaks =</span> breaks_<span class="dv">100</span>, <span class="co"># user-defined breaks between colours</span>
+  <span class="dt">annotation_col =</span> cases.df, <span class="co"># ER- and OCT- status</span>
+  <span class="dt">scale =</span> <span class="st">&quot;none&quot;</span>, <span class="co"># has been scaled manually</span>
+  <span class="dt">border_color =</span> <span class="ot">NA</span>, <span class="co"># dont draw borders in heatmap</span>
+  <span class="dt">show_rownames =</span> <span class="ot">FALSE</span>, <span class="co"># too many genes to show names</span>
+  <span class="dt">show_colnames =</span> <span class="ot">FALSE</span>, <span class="co"># too many samples to show names</span>
+  <span class="dt">main =</span> <span class="st">&quot;HC with top DEGs&quot;</span>)
+
+<span class="co"># Clean-up</span>
+<span class="kw">rm</span>(vst_counts, gbr_<span class="dv">99</span>, breaks_<span class="dv">100</span>, cases.df, DEGs)</code></pre></div>
+<p><img src="figures/f03_hc_2k.png" width="100%" /></p>
+</div>
+</div>
+<div id="save-results" class="section level2">
+<h2><span class="header-section-number">5.7</span> Save results</h2>
+<p>You can use <strong>write.table</strong> function to save DEGs (and results for all genes) to a text file:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Save DEGs</span>
+<span class="kw">write.table</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_DEGs.df, 
+            <span class="dt">file=</span><span class="kw">file.path</span>(base_folder,<span class="st">&quot;analysis&quot;</span>,<span class="st">&quot;results&quot;</span>,<span class="st">&quot;DESeq2_fc_2_fdr_0_01_DEGs.txt&quot;</span>),
+            <span class="dt">quote=</span>F, <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> F)
+
+<span class="co"># Save all genes</span>
+<span class="kw">write.table</span>(DESeq2_fc_2_fdr_<span class="fl">0.</span>01_all_genes.df, 
+            <span class="dt">file=</span><span class="kw">file.path</span>(base_folder,<span class="st">&quot;analysis&quot;</span>,<span class="st">&quot;results&quot;</span>,<span class="st">&quot;DESeq2_fc_2_fdr_0_01_all_genes.txt&quot;</span>),
+            <span class="dt">quote=</span>F, <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> F)</code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="preparing-gene-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="edger-analysis-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": true,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["RNAseq_DEGs.pdf", "RNAseq_DEGs.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
