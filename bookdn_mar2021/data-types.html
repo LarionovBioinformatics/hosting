@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 4 Data types | I forgot the title</title>
+  <meta name="description" content="This is my great book !" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 4 Data types | I forgot the title" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my great book !" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 4 Data types | I forgot the title" />
+  
+  <meta name="twitter:description" content="This is my great book !" />
+  
+
+<meta name="author" content="Of course, its Me" />
+
+
+<meta name="date" content="2021-03-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="a-simple-analysis.html"/>
+<link rel="next" href="plotly.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Hio the book !</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> My great Math LaTex</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#rendering-to-pdf-and-epub"><i class="fa fa-check"></i><b>1.1</b> Rendering to PDF and EPUB</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#sharing-on-social-media"><i class="fa fa-check"></i><b>1.2</b> Sharing on social media</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>2</b> R-Markdown</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-markdown.html"><a href="r-markdown.html#nd-level-header"><i class="fa fa-check"></i><b>2.1</b> 2nd level header</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r-markdown.html"><a href="r-markdown.html#rd-level-header"><i class="fa fa-check"></i><b>2.1.1</b> 3rd level header</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r-markdown.html"><a href="r-markdown.html#not-only-r"><i class="fa fa-check"></i><b>2.2</b> Not only R …</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-markdown.html"><a href="r-markdown.html#python"><i class="fa fa-check"></i><b>2.2.1</b> Python</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-markdown.html"><a href="r-markdown.html#bash"><i class="fa fa-check"></i><b>2.2.2</b> Bash</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-markdown.html"><a href="r-markdown.html#back-to-r"><i class="fa fa-check"></i><b>2.3</b> Back to R</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-markdown.html"><a href="r-markdown.html#r-markdown-1"><i class="fa fa-check"></i><b>2.3.1</b> R Markdown</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r-markdown.html"><a href="r-markdown.html#including-plots"><i class="fa fa-check"></i><b>2.3.2</b> Including Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html"><i class="fa fa-check"></i><b>3</b> A simple analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#in-built-datasets"><i class="fa fa-check"></i><b>3.1</b> In-built datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#explore-data"><i class="fa fa-check"></i><b>3.2</b> Explore data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#base-r-plottig"><i class="fa fa-check"></i><b>3.2.1</b> Base R plottig</a></li>
+<li class="chapter" data-level="3.2.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#ggplot-style"><i class="fa fa-check"></i><b>3.2.2</b> ggplot style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#t-test"><i class="fa fa-check"></i><b>3.3</b> T-test</a></li>
+<li class="chapter" data-level="3.4" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#liear-model"><i class="fa fa-check"></i><b>3.4</b> Liear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-hp"><i class="fa fa-check"></i><b>3.4.1</b> mpg ~ hp</a></li>
+<li class="chapter" data-level="3.4.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp"><i class="fa fa-check"></i><b>3.4.2</b> mpg ~ vs + hp</a></li>
+<li class="chapter" data-level="3.4.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp-1"><i class="fa fa-check"></i><b>3.4.3</b> mpg ~ vs * hp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-types.html"><a href="data-types.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="data-types.html"><a href="data-types.html#numeric-vectors"><i class="fa fa-check"></i><b>4.1.1</b> Numeric vectors</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-types.html"><a href="data-types.html#vector-elements-may-have-names"><i class="fa fa-check"></i><b>4.1.2</b> Vector elements may have names</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="data-types.html"><a href="data-types.html#numeric-matrices"><i class="fa fa-check"></i><b>4.2</b> Numeric matrices</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-types.html"><a href="data-types.html#matrices-may-have-rownames-and-colnames"><i class="fa fa-check"></i><b>4.2.1</b> Matrices may have rownames and colnames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="data-types.html"><a href="data-types.html#recycling-in-element-wise-operations"><i class="fa fa-check"></i><b>4.3</b> Recycling in element-wise operations</a></li>
+<li class="chapter" data-level="4.4" data-path="data-types.html"><a href="data-types.html#factors-categorical-variale"><i class="fa fa-check"></i><b>4.4</b> Factors: categorical variale</a></li>
+<li class="chapter" data-level="4.5" data-path="data-types.html"><a href="data-types.html#lists"><i class="fa fa-check"></i><b>4.5</b> Lists</a></li>
+<li class="chapter" data-level="4.6" data-path="data-types.html"><a href="data-types.html#dataframe-list-of-vectorsfactors"><i class="fa fa-check"></i><b>4.6</b> Dataframe: list of vectors/factors</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="plotly.html"><a href="plotly.html"><i class="fa fa-check"></i><b>5</b> Plotly</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plotly.html"><a href="plotly.html#reference"><i class="fa fa-check"></i><b>5.1</b> Reference</a></li>
+<li class="chapter" data-level="5.2" data-path="plotly.html"><a href="plotly.html#start-section"><i class="fa fa-check"></i><b>5.2</b> Start section</a></li>
+<li class="chapter" data-level="5.3" data-path="plotly.html"><a href="plotly.html#get-some-data"><i class="fa fa-check"></i><b>5.3</b> Get some data</a></li>
+<li class="chapter" data-level="5.4" data-path="plotly.html"><a href="plotly.html#plotly-magic"><i class="fa fa-check"></i><b>5.4</b> Plotly magic</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distributionns.html"><a href="distributionns.html"><i class="fa fa-check"></i><b>6</b> Distributionns</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distributionns.html"><a href="distributionns.html#function-curve"><i class="fa fa-check"></i><b>6.1</b> Function curve()</a></li>
+<li class="chapter" data-level="6.2" data-path="distributionns.html"><a href="distributionns.html#normal-distribution"><i class="fa fa-check"></i><b>6.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="6.3" data-path="distributionns.html"><a href="distributionns.html#gamma"><i class="fa fa-check"></i><b>6.3</b> Gamma</a></li>
+<li class="chapter" data-level="6.4" data-path="distributionns.html"><a href="distributionns.html#beta"><i class="fa fa-check"></i><b>6.4</b> Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>7</b> Package</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="package.html"><a href="package.html#user-defined-fnction"><i class="fa fa-check"></i><b>7.1</b> User-defined fnction</a></li>
+<li class="chapter" data-level="7.2" data-path="package.html"><a href="package.html#recursive-functions-are-allowed"><i class="fa fa-check"></i><b>7.2</b> Recursive functions are allowed</a></li>
+<li class="chapter" data-level="7.3" data-path="package.html"><a href="package.html#lets-add-some-data"><i class="fa fa-check"></i><b>7.3</b> Lets add some data</a></li>
+<li class="chapter" data-level="7.4" data-path="package.html"><a href="package.html#prepare-template-for-package-source-folder"><i class="fa fa-check"></i><b>7.4</b> Prepare template for package source folder</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-types" class="section level1" number="4">
+<h1><span class="header-section-number">Section 4</span> Data types</h1>
+<p>Be careful with changing folders in bookdown !!</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-types.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/alexey/OneDrive/Documents/Home/Alex/stat_in_r_Mar2021&quot;</span>)</span></code></pre></div>
+<div id="vectors" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Vectors</h2>
+<div id="numeric-vectors" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Numeric vectors</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-types.html#cb35-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb35-2"><a href="data-types.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(a)</span></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-types.html#cb37-1" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-types.html#cb39-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">10</span>, <span class="at">to=</span><span class="dv">50</span>, <span class="at">by=</span><span class="dv">10</span>)</span>
+<span id="cb39-2"><a href="data-types.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(b)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-types.html#cb41-1" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>## [1] 10 20 30 40 50</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="data-types.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectorised operation: element-wise summation</span></span>
+<span id="cb43-2"><a href="data-types.html#cb43-2" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> b</span></code></pre></div>
+<pre><code>## [1] 11 22 33 44 55</code></pre>
+</div>
+<div id="vector-elements-may-have-names" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Vector elements may have names</h3>
+<p>Names is a property</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="data-types.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(a)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="data-types.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(a) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;e1&quot;</span>,<span class="st">&quot;e2&quot;</span>,<span class="st">&quot;e3&quot;</span>,<span class="st">&quot;e4&quot;</span>,<span class="st">&quot;e5&quot;</span>)</span>
+<span id="cb47-2"><a href="data-types.html#cb47-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<pre><code>## e1 e2 e3 e4 e5 
+##  1  2  3  4  5</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="data-types.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(a)</span></code></pre></div>
+<pre><code>## $names
+## [1] &quot;e1&quot; &quot;e2&quot; &quot;e3&quot; &quot;e4&quot; &quot;e5&quot;</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="data-types.html#cb51-1" aria-hidden="true" tabindex="-1"></a>a[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>## e1 e2 e4 
+##  1  2  4</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="data-types.html#cb53-1" aria-hidden="true" tabindex="-1"></a>a[<span class="fu">c</span>(T,T,F,T,F)]</span></code></pre></div>
+<pre><code>## e1 e2 e4 
+##  1  2  4</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="data-types.html#cb55-1" aria-hidden="true" tabindex="-1"></a>a[<span class="fu">c</span>(<span class="st">&quot;e1&quot;</span>,<span class="st">&quot;e2&quot;</span>,<span class="st">&quot;e4&quot;</span>)]</span></code></pre></div>
+<pre><code>## e1 e2 e4 
+##  1  2  4</code></pre>
+</div>
+</div>
+<div id="numeric-matrices" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Numeric matrices</h2>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="data-types.html#cb57-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">nrow=</span><span class="dv">5</span>)</span>
+<span id="cb57-2"><a href="data-types.html#cb57-2" aria-hidden="true" tabindex="-1"></a>m1</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    6   11   16   21
+## [2,]    2    7   12   17   22
+## [3,]    3    8   13   18   23
+## [4,]    4    9   14   19   24
+## [5,]    5   10   15   20   25</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="data-types.html#cb59-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">10</span>,<span class="dv">25</span>), <span class="at">nrow=</span><span class="dv">5</span>)</span>
+<span id="cb59-2"><a href="data-types.html#cb59-2" aria-hidden="true" tabindex="-1"></a>m2</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]   10   10   10   10   10
+## [2,]   10   10   10   10   10
+## [3,]   10   10   10   10   10
+## [4,]   10   10   10   10   10
+## [5,]   10   10   10   10   10</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="data-types.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(m1) <span class="co"># Transposition</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15
+## [4,]   16   17   18   19   20
+## [5,]   21   22   23   24   25</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-types.html#cb63-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="sc">+</span> m2 <span class="co"># Element-wise summation</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]   11   16   21   26   31
+## [2,]   12   17   22   27   32
+## [3,]   13   18   23   28   33
+## [4,]   14   19   24   29   34
+## [5,]   15   20   25   30   35</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="data-types.html#cb65-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="sc">*</span> m2 <span class="co"># Element-wise multiplication</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]   10   60  110  160  210
+## [2,]   20   70  120  170  220
+## [3,]   30   80  130  180  230
+## [4,]   40   90  140  190  240
+## [5,]   50  100  150  200  250</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="data-types.html#cb67-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="sc">%*%</span> m2 <span class="co"># Matrix multiplication</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]  550  550  550  550  550
+## [2,]  600  600  600  600  600
+## [3,]  650  650  650  650  650
+## [4,]  700  700  700  700  700
+## [5,]  750  750  750  750  750</code></pre>
+<div id="matrices-may-have-rownames-and-colnames" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Matrices may have rownames and colnames</h3>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="data-types.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(m1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;s1&quot;</span>,<span class="st">&quot;s2&quot;</span>,<span class="st">&quot;s3&quot;</span>,<span class="st">&quot;s4&quot;</span>,<span class="st">&quot;s5&quot;</span>)</span>
+<span id="cb69-2"><a href="data-types.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;g1&quot;</span>,<span class="st">&quot;g2&quot;</span>,<span class="st">&quot;g3&quot;</span>,<span class="st">&quot;g4&quot;</span>,<span class="st">&quot;g5&quot;</span>)</span>
+<span id="cb69-3"><a href="data-types.html#cb69-3" aria-hidden="true" tabindex="-1"></a>m1</span></code></pre></div>
+<pre><code>##    g1 g2 g3 g4 g5
+## s1  1  6 11 16 21
+## s2  2  7 12 17 22
+## s3  3  8 13 18 23
+## s4  4  9 14 19 24
+## s5  5 10 15 20 25</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="data-types.html#cb71-1" aria-hidden="true" tabindex="-1"></a>m1[<span class="fu">c</span>(<span class="st">&quot;s2&quot;</span>,<span class="st">&quot;s3&quot;</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>##    g2 g4
+## s2  7 17
+## s3  8 18</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="data-types.html#cb73-1" aria-hidden="true" tabindex="-1"></a>m1[<span class="fu">c</span>(F,T,T,F,F),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>##    g2 g4
+## s2  7 17
+## s3  8 18</code></pre>
+</div>
+</div>
+<div id="recycling-in-element-wise-operations" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Recycling in element-wise operations</h2>
+<p>Shorter vector is recycled along the longer oject<br />
+Matrices are processed as vectors in <strong>column-after-column</strong> way</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="data-types.html#cb75-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb75-2"><a href="data-types.html#cb75-2" aria-hidden="true" tabindex="-1"></a>c</span></code></pre></div>
+<pre><code>## [1] 1 2 3</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="data-types.html#cb77-1" aria-hidden="true" tabindex="-1"></a>b <span class="sc">+</span> c</span></code></pre></div>
+<pre><code>## Warning in b + c: longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## [1] 11 22 33 41 52</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="data-types.html#cb80-1" aria-hidden="true" tabindex="-1"></a>c <span class="sc">+</span> m2</span></code></pre></div>
+<pre><code>## Warning in c + m2: longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]   11   13   12   11   13
+## [2,]   12   11   13   12   11
+## [3,]   13   12   11   13   12
+## [4,]   11   13   12   11   13
+## [5,]   12   11   13   12   11</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="data-types.html#cb83-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> m2</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]   11   11   11   11   11
+## [2,]   12   12   12   12   12
+## [3,]   13   13   13   13   13
+## [4,]   14   14   14   14   14
+## [5,]   15   15   15   15   15</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="data-types.html#cb85-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="sc">+</span> a</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]   11   11   11   11   11
+## [2,]   12   12   12   12   12
+## [3,]   13   13   13   13   13
+## [4,]   14   14   14   14   14
+## [5,]   15   15   15   15   15</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="data-types.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(a,b,c,m1,m2)</span></code></pre></div>
+</div>
+<div id="factors-categorical-variale" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Factors: categorical variale</h2>
+<p>Categorical != character</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="data-types.html#cb88-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>)</span>
+<span id="cb88-2"><a href="data-types.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(v)</span></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="data-types.html#cb90-1" aria-hidden="true" tabindex="-1"></a>v</span></code></pre></div>
+<pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot;</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="data-types.html#cb92-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>(v)</span>
+<span id="cb92-2"><a href="data-types.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(f)</span></code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="data-types.html#cb94-1" aria-hidden="true" tabindex="-1"></a>f</span></code></pre></div>
+<pre><code>## [1] A B C
+## Levels: A B C</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="data-types.html#cb96-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>(v, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;C&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;A&quot;</span>))</span>
+<span id="cb96-2"><a href="data-types.html#cb96-2" aria-hidden="true" tabindex="-1"></a>f</span></code></pre></div>
+<pre><code>## [1] A B C
+## Levels: C B A</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="data-types.html#cb98-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>(v, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;D&quot;</span>))</span>
+<span id="cb98-2"><a href="data-types.html#cb98-2" aria-hidden="true" tabindex="-1"></a>f</span></code></pre></div>
+<pre><code>## [1] &lt;NA&gt; B    C   
+## Levels: B C D</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="data-types.html#cb100-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>(v, <span class="at">levels=</span>LETTERS)</span>
+<span id="cb100-2"><a href="data-types.html#cb100-2" aria-hidden="true" tabindex="-1"></a>f</span></code></pre></div>
+<pre><code>## [1] A B C
+## Levels: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="data-types.html#cb102-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>(v, <span class="at">levels=</span>LETTERS, <span class="at">ordered =</span> T)</span>
+<span id="cb102-2"><a href="data-types.html#cb102-2" aria-hidden="true" tabindex="-1"></a>f</span></code></pre></div>
+<pre><code>## [1] A B C
+## 26 Levels: A &lt; B &lt; C &lt; D &lt; E &lt; F &lt; G &lt; H &lt; I &lt; J &lt; K &lt; L &lt; M &lt; N &lt; O &lt; ... &lt; Z</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="data-types.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Potential confusion</span></span>
+<span id="cb104-2"><a href="data-types.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">ordered=</span>T)</span></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5
+## Levels: 4 &lt; 5 &lt; 3 &lt; 2 &lt; 1</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="data-types.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(v,f)</span></code></pre></div>
+</div>
+<div id="lists" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Lists</h2>
+<p>Collection of ojects of different types</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="data-types.html#cb107-1" aria-hidden="true" tabindex="-1"></a>my.list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="st">&quot;A&quot;</span>,T )</span>
+<span id="cb107-2"><a href="data-types.html#cb107-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-3"><a href="data-types.html#cb107-3" aria-hidden="true" tabindex="-1"></a>my.list</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 1 2
+## 
+## [[2]]
+## [1] &quot;A&quot;
+## 
+## [[3]]
+## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="data-types.html#cb109-1" aria-hidden="true" tabindex="-1"></a>my.list[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 1 2</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="data-types.html#cb111-1" aria-hidden="true" tabindex="-1"></a>my.list[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="data-types.html#cb113-1" aria-hidden="true" tabindex="-1"></a>my.list[[<span class="dv">1</span>]][<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="data-types.html#cb115-1" aria-hidden="true" tabindex="-1"></a>my.list[<span class="dv">2</span>][<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;A&quot;</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="data-types.html#cb117-1" aria-hidden="true" tabindex="-1"></a>my.list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">lel1=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb117-2"><a href="data-types.html#cb117-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">lel2=</span><span class="st">&quot;A&quot;</span>,</span>
+<span id="cb117-3"><a href="data-types.html#cb117-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">lel3=</span>T )</span>
+<span id="cb117-4"><a href="data-types.html#cb117-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-5"><a href="data-types.html#cb117-5" aria-hidden="true" tabindex="-1"></a>my.list</span></code></pre></div>
+<pre><code>## $lel1
+## [1] 1 2
+## 
+## $lel2
+## [1] &quot;A&quot;
+## 
+## $lel3
+## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="data-types.html#cb119-1" aria-hidden="true" tabindex="-1"></a>my.list<span class="sc">$</span>lel1</span></code></pre></div>
+<pre><code>## [1] 1 2</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="data-types.html#cb121-1" aria-hidden="true" tabindex="-1"></a>my.list<span class="sc">$</span>lel1[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="data-types.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(my.list)</span></code></pre></div>
+</div>
+<div id="dataframe-list-of-vectorsfactors" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Dataframe: list of vectors/factors</h2>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="data-types.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co">#data(&quot;mtcars&quot;)</span></span>
+<span id="cb124-2"><a href="data-types.html#cb124-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-3"><a href="data-types.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mtcars)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="data-types.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="data-types.html#cb128-1" aria-hidden="true" tabindex="-1"></a>mtcars</span></code></pre></div>
+<pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="data-types.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co">#data(&quot;mpg&quot;)</span></span>
+<span id="cb130-2"><a href="data-types.html#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="co">#class(mpg)</span></span>
+<span id="cb130-3"><a href="data-types.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="co">#str(mpg)</span></span>
+<span id="cb130-4"><a href="data-types.html#cb130-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-5"><a href="data-types.html#cb130-5" aria-hidden="true" tabindex="-1"></a>my.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">first_name=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;AL&quot;</span>,<span class="st">&quot;AL&quot;</span>,<span class="st">&quot;BS&quot;</span>)),</span>
+<span id="cb130-6"><a href="data-types.html#cb130-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">second_name=</span><span class="fu">c</span>(<span class="st">&quot;Smith&quot;</span>,<span class="st">&quot;Larionov&quot;</span>,<span class="st">&quot;Bob&quot;</span>),</span>
+<span id="cb130-7"><a href="data-types.html#cb130-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">age=</span><span class="fu">c</span>(<span class="dv">15</span>,<span class="dv">23</span>,<span class="dv">1</span>),</span>
+<span id="cb130-8"><a href="data-types.html#cb130-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">income=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">200</span>,<span class="cn">NA</span>))</span>
+<span id="cb130-9"><a href="data-types.html#cb130-9" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(my.df)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="data-types.html#cb132-1" aria-hidden="true" tabindex="-1"></a>my.df</span></code></pre></div>
+<pre><code>##   first_name second_name age income
+## 1         AL       Smith  15    100
+## 2         AL    Larionov  23    200
+## 3         BS         Bob   1     NA</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="data-types.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    3 obs. of  4 variables:
+##  $ first_name : Factor w/ 2 levels &quot;AL&quot;,&quot;BS&quot;: 1 1 2
+##  $ second_name: Factor w/ 3 levels &quot;Bob&quot;,&quot;Larionov&quot;,..: 3 2 1
+##  $ age        : num  15 23 1
+##  $ income     : num  100 200 NA</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="data-types.html#cb136-1" aria-hidden="true" tabindex="-1"></a>my.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">first_name=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;AL&quot;</span>,<span class="st">&quot;AL&quot;</span>,<span class="st">&quot;BS&quot;</span>)),</span>
+<span id="cb136-2"><a href="data-types.html#cb136-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">second_name=</span><span class="fu">c</span>(<span class="st">&quot;Smith&quot;</span>,<span class="st">&quot;Larionov&quot;</span>,<span class="st">&quot;Bob&quot;</span>),</span>
+<span id="cb136-3"><a href="data-types.html#cb136-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">age=</span><span class="fu">c</span>(<span class="dv">15</span>,<span class="dv">23</span>,<span class="dv">1</span>),</span>
+<span id="cb136-4"><a href="data-types.html#cb136-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">income=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">200</span>,<span class="cn">NA</span>),</span>
+<span id="cb136-5"><a href="data-types.html#cb136-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">stringsAsFactors=</span>F)</span>
+<span id="cb136-6"><a href="data-types.html#cb136-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    3 obs. of  4 variables:
+##  $ first_name : Factor w/ 2 levels &quot;AL&quot;,&quot;BS&quot;: 1 1 2
+##  $ second_name: chr  &quot;Smith&quot; &quot;Larionov&quot; &quot;Bob&quot;
+##  $ age        : num  15 23 1
+##  $ income     : num  100 200 NA</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="a-simple-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="plotly.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
