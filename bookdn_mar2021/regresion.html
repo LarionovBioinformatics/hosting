@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 10 Regresion | I forgot the title</title>
+  <meta name="description" content="This is my great book !" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 10 Regresion | I forgot the title" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my great book !" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 10 Regresion | I forgot the title" />
+  
+  <meta name="twitter:description" content="This is my great book !" />
+  
+
+<meta name="author" content="Of course, its Me" />
+
+
+<meta name="date" content="2021-03-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-wrangling.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Hio the book !</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> My great Math LaTex</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#rendering-to-pdf-and-epub"><i class="fa fa-check"></i><b>1.1</b> Rendering to PDF and EPUB</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#sharing-on-social-media"><i class="fa fa-check"></i><b>1.2</b> Sharing on social media</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>2</b> R-Markdown</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-markdown.html"><a href="r-markdown.html#nd-level-header"><i class="fa fa-check"></i><b>2.1</b> 2nd level header</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r-markdown.html"><a href="r-markdown.html#rd-level-header"><i class="fa fa-check"></i><b>2.1.1</b> 3rd level header</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r-markdown.html"><a href="r-markdown.html#not-only-r"><i class="fa fa-check"></i><b>2.2</b> Not only R …</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-markdown.html"><a href="r-markdown.html#python"><i class="fa fa-check"></i><b>2.2.1</b> Python</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-markdown.html"><a href="r-markdown.html#bash"><i class="fa fa-check"></i><b>2.2.2</b> Bash</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-markdown.html"><a href="r-markdown.html#back-to-r"><i class="fa fa-check"></i><b>2.3</b> Back to R</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-markdown.html"><a href="r-markdown.html#r-markdown-1"><i class="fa fa-check"></i><b>2.3.1</b> R Markdown</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r-markdown.html"><a href="r-markdown.html#including-plots"><i class="fa fa-check"></i><b>2.3.2</b> Including Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html"><i class="fa fa-check"></i><b>3</b> A simple analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#in-built-datasets"><i class="fa fa-check"></i><b>3.1</b> In-built datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#explore-data"><i class="fa fa-check"></i><b>3.2</b> Explore data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#base-r-plottig"><i class="fa fa-check"></i><b>3.2.1</b> Base R plottig</a></li>
+<li class="chapter" data-level="3.2.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#ggplot-style"><i class="fa fa-check"></i><b>3.2.2</b> ggplot style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#t-test"><i class="fa fa-check"></i><b>3.3</b> T-test</a></li>
+<li class="chapter" data-level="3.4" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#liear-model"><i class="fa fa-check"></i><b>3.4</b> Liear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-hp"><i class="fa fa-check"></i><b>3.4.1</b> mpg ~ hp</a></li>
+<li class="chapter" data-level="3.4.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp"><i class="fa fa-check"></i><b>3.4.2</b> mpg ~ vs + hp</a></li>
+<li class="chapter" data-level="3.4.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp-1"><i class="fa fa-check"></i><b>3.4.3</b> mpg ~ vs * hp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-types.html"><a href="data-types.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="data-types.html"><a href="data-types.html#numeric-vectors"><i class="fa fa-check"></i><b>4.1.1</b> Numeric vectors</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-types.html"><a href="data-types.html#vector-elements-may-have-names"><i class="fa fa-check"></i><b>4.1.2</b> Vector elements may have names</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="data-types.html"><a href="data-types.html#numeric-matrices"><i class="fa fa-check"></i><b>4.2</b> Numeric matrices</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-types.html"><a href="data-types.html#matrices-may-have-rownames-and-colnames"><i class="fa fa-check"></i><b>4.2.1</b> Matrices may have rownames and colnames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="data-types.html"><a href="data-types.html#recycling-in-element-wise-operations"><i class="fa fa-check"></i><b>4.3</b> Recycling in element-wise operations</a></li>
+<li class="chapter" data-level="4.4" data-path="data-types.html"><a href="data-types.html#factors-categorical-variale"><i class="fa fa-check"></i><b>4.4</b> Factors: categorical variale</a></li>
+<li class="chapter" data-level="4.5" data-path="data-types.html"><a href="data-types.html#lists"><i class="fa fa-check"></i><b>4.5</b> Lists</a></li>
+<li class="chapter" data-level="4.6" data-path="data-types.html"><a href="data-types.html#dataframe-list-of-vectorsfactors"><i class="fa fa-check"></i><b>4.6</b> Dataframe: list of vectors/factors</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="plotly.html"><a href="plotly.html"><i class="fa fa-check"></i><b>5</b> Plotly</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plotly.html"><a href="plotly.html#reference"><i class="fa fa-check"></i><b>5.1</b> Reference</a></li>
+<li class="chapter" data-level="5.2" data-path="plotly.html"><a href="plotly.html#start-section"><i class="fa fa-check"></i><b>5.2</b> Start section</a></li>
+<li class="chapter" data-level="5.3" data-path="plotly.html"><a href="plotly.html#get-some-data"><i class="fa fa-check"></i><b>5.3</b> Get some data</a></li>
+<li class="chapter" data-level="5.4" data-path="plotly.html"><a href="plotly.html#plotly-magic"><i class="fa fa-check"></i><b>5.4</b> Plotly magic</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distributionns.html"><a href="distributionns.html"><i class="fa fa-check"></i><b>6</b> Distributionns</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distributionns.html"><a href="distributionns.html#function-curve"><i class="fa fa-check"></i><b>6.1</b> Function curve()</a></li>
+<li class="chapter" data-level="6.2" data-path="distributionns.html"><a href="distributionns.html#normal-distribution"><i class="fa fa-check"></i><b>6.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="6.3" data-path="distributionns.html"><a href="distributionns.html#gamma"><i class="fa fa-check"></i><b>6.3</b> Gamma</a></li>
+<li class="chapter" data-level="6.4" data-path="distributionns.html"><a href="distributionns.html#beta"><i class="fa fa-check"></i><b>6.4</b> Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>7</b> Package</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="package.html"><a href="package.html#user-defined-fnction"><i class="fa fa-check"></i><b>7.1</b> User-defined fnction</a></li>
+<li class="chapter" data-level="7.2" data-path="package.html"><a href="package.html#recursive-functions-are-allowed"><i class="fa fa-check"></i><b>7.2</b> Recursive functions are allowed</a></li>
+<li class="chapter" data-level="7.3" data-path="package.html"><a href="package.html#lets-add-some-data"><i class="fa fa-check"></i><b>7.3</b> Lets add some data</a></li>
+<li class="chapter" data-level="7.4" data-path="package.html"><a href="package.html#prepare-template-for-package-source-folder"><i class="fa fa-check"></i><b>7.4</b> Prepare template for package source folder</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-readingwriting.html"><a href="data-readingwriting.html"><i class="fa fa-check"></i><b>8</b> Data reading/writing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-readingwriting.html"><a href="data-readingwriting.html#a-simple-simulated-dataset"><i class="fa fa-check"></i><b>8.1</b> A simple simulated dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="data-readingwriting.html"><a href="data-readingwriting.html#saving-and-reading"><i class="fa fa-check"></i><b>8.2</b> Saving and reading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="data-readingwriting.html"><a href="data-readingwriting.html#rdata"><i class="fa fa-check"></i><b>8.2.1</b> RData</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-readingwriting.html"><a href="data-readingwriting.html#text-files"><i class="fa fa-check"></i><b>8.2.2</b> Text files</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>9</b> Data wrangling</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="data-wrangling.html"><a href="data-wrangling.html#read-data"><i class="fa fa-check"></i><b>9.1</b> Read data</a></li>
+<li class="chapter" data-level="9.2" data-path="data-wrangling.html"><a href="data-wrangling.html#apply-summary-functions-over-margin"><i class="fa fa-check"></i><b>9.2</b> Apply (summary) functions over margin</a></li>
+<li class="chapter" data-level="9.3" data-path="data-wrangling.html"><a href="data-wrangling.html#missed-values"><i class="fa fa-check"></i><b>9.3</b> Missed values</a></li>
+<li class="chapter" data-level="9.4" data-path="data-wrangling.html"><a href="data-wrangling.html#sorting-filtering-and-summarising"><i class="fa fa-check"></i><b>9.4</b> Sorting, filtering and summarising</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#base-r"><i class="fa fa-check"></i><b>9.4.1</b> Base R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="data-wrangling.html"><a href="data-wrangling.html#tables-to-tests"><i class="fa fa-check"></i><b>9.4.2</b> Tables to tests</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="data-wrangling.html"><a href="data-wrangling.html#dplyr-style"><i class="fa fa-check"></i><b>9.5</b> Dplyr style</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regresion.html"><a href="regresion.html"><i class="fa fa-check"></i><b>10</b> Regresion</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regresion.html"><a href="regresion.html#note"><i class="fa fa-check"></i><b>10.1</b> Note</a></li>
+<li class="chapter" data-level="10.2" data-path="regresion.html"><a href="regresion.html#start-session"><i class="fa fa-check"></i><b>10.2</b> Start session</a></li>
+<li class="chapter" data-level="10.3" data-path="regresion.html"><a href="regresion.html#load-data"><i class="fa fa-check"></i><b>10.3</b> Load data</a></li>
+<li class="chapter" data-level="10.4" data-path="regresion.html"><a href="regresion.html#explore-data-1"><i class="fa fa-check"></i><b>10.4</b> Explore data</a></li>
+<li class="chapter" data-level="10.5" data-path="regresion.html"><a href="regresion.html#impute-if-needed"><i class="fa fa-check"></i><b>10.5</b> Impute if needed</a></li>
+<li class="chapter" data-level="10.6" data-path="regresion.html"><a href="regresion.html#linear-modelling"><i class="fa fa-check"></i><b>10.6</b> Linear modelling</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="regresion.html"><a href="regresion.html#single-term"><i class="fa fa-check"></i><b>10.6.1</b> Single term</a></li>
+<li class="chapter" data-level="10.6.2" data-path="regresion.html"><a href="regresion.html#multiple-terms-without-interaction"><i class="fa fa-check"></i><b>10.6.2</b> Multiple terms without interaction</a></li>
+<li class="chapter" data-level="10.6.3" data-path="regresion.html"><a href="regresion.html#with-interaction"><i class="fa fa-check"></i><b>10.6.3</b> With interaction</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="regresion.html"><a href="regresion.html#lm-could-be-evaluated-by-anova"><i class="fa fa-check"></i><b>10.7</b> lm could be evaluated by ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="regresion.html"><a href="regresion.html#anova-could-be-used-to-compare-models"><i class="fa fa-check"></i><b>10.7.1</b> Anova could be used to compare models</a></li>
+<li class="chapter" data-level="10.7.2" data-path="regresion.html"><a href="regresion.html#a-bit-of-oop-about-anovalm"><i class="fa fa-check"></i><b>10.7.2</b> A bit of OOP about anova(lm)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="regresion.html"><a href="regresion.html#predict"><i class="fa fa-check"></i><b>10.8</b> Predict</a></li>
+<li class="chapter" data-level="10.9" data-path="regresion.html"><a href="regresion.html#update"><i class="fa fa-check"></i><b>10.9</b> Update</a></li>
+<li class="chapter" data-level="10.10" data-path="regresion.html"><a href="regresion.html#crooked-things-yet-to-explore"><i class="fa fa-check"></i><b>10.10</b> Crooked things yet to explore …</a>
+<ul>
+<li class="chapter" data-level="10.10.1" data-path="regresion.html"><a href="regresion.html#intercept-design-matrix"><i class="fa fa-check"></i><b>10.10.1</b> Intercept, design matrix</a></li>
+<li class="chapter" data-level="10.10.2" data-path="regresion.html"><a href="regresion.html#contrasts"><i class="fa fa-check"></i><b>10.10.2</b> Contrasts</a></li>
+<li class="chapter" data-level="10.10.3" data-path="regresion.html"><a href="regresion.html#type-i-ii-and-iii-sums"><i class="fa fa-check"></i><b>10.10.3</b> Type I, II and III sums</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regresion" class="section level1" number="10">
+<h1><span class="header-section-number">Section 10</span> Regresion</h1>
+<div id="note" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Note</h2>
+<p>Because of the shoterned time we only discussed examples with <strong>lm()</strong>;<br />
+interface to <strong>glm()</strong> works in a very similar way - look in the references that I e-mailed to you.</p>
+</div>
+<div id="start-session" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Start session</h2>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="regresion.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-03-22 22:39:54 GMT&quot;</code></pre>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="regresion.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb272-2"><a href="regresion.html#cb272-2" aria-hidden="true" tabindex="-1"></a><span class="fu">graphics.off</span>()</span>
+<span id="cb272-3"><a href="regresion.html#cb272-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div>
+<pre><code>##           used  (Mb) gc trigger (Mb) limit (Mb) max used  (Mb)
+## Ncells 2294725 122.6    4568477  244         NA  4568477 244.0
+## Vcells 4182205  32.0    8388608   64      16384  6483168  49.5</code></pre>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="regresion.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/OneDrive/Documents/Home/Alex/stat_in_r_Mar2021&quot;</span>)</span>
+<span id="cb274-2"><a href="regresion.html#cb274-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-3"><a href="regresion.html#cb274-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb274-4"><a href="regresion.html#cb274-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+</div>
+<div id="load-data" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Load data</h2>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="regresion.html#cb275-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;results.tsv&quot;</span>, </span>
+<span id="cb275-2"><a href="regresion.html#cb275-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb275-3"><a href="regresion.html#cb275-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span>T)</span></code></pre></div>
+</div>
+<div id="explore-data-1" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Explore data</h2>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="regresion.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_data.df)</span></code></pre></div>
+<pre><code>## [1] 1000    3</code></pre>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="regresion.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
+##  $ y: num  25.898 32.71 0.608 -34.722 11.314 ...
+##  $ x: num  28.196 0.713 59.606 15.888 20.545 ...
+##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="regresion.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
+<pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="regresion.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df)</span></code></pre></div>
+<pre><code>##             y          x f
+## 1  25.8981583 28.1963928 A
+## 2  32.7099195  0.7129387 A
+## 3   0.6081867 59.6062350 A
+## 4 -34.7215400 15.8881570 A
+## 5  11.3136815 20.5446596 A
+## 6  41.6588284 31.8951932 A</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="regresion.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
+<pre><code>##        y                 x            f      
+##  Min.   :-60.898   Min.   : 0.08329   A:500  
+##  1st Qu.:  5.645   1st Qu.:24.87320   B:500  
+##  Median : 25.657   Median :48.76544          
+##  Mean   : 25.234   Mean   :49.63886          
+##  3rd Qu.: 44.164   3rd Qu.:75.68934          
+##  Max.   :103.703   Max.   :99.96631</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="regresion.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(my_data.df))</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="regresion.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>my_data.df,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y,<span class="at">color=</span>f)) <span class="sc">+</span> </span>
+<span id="cb288-2"><a href="regresion.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb288-3"><a href="regresion.html#cb288-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="my_book_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
+<div id="impute-if-needed" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Impute if needed</h2>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="regresion.html#cb290-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="cn">NA</span>,<span class="cn">NA</span>)</span>
+<span id="cb290-2"><a href="regresion.html#cb290-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(x)</span></code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE  TRUE</code></pre>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="regresion.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="regresion.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))<span class="sc">/</span><span class="fu">length</span>(x)</span></code></pre></div>
+<pre><code>## [1] 0.4</code></pre>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="regresion.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="regresion.html#cb298-1" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> T)</span>
+<span id="cb298-2"><a href="regresion.html#cb298-2" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">-&gt;</span> x[<span class="fu">is.na</span>(x)]</span>
+<span id="cb298-3"><a href="regresion.html#cb298-3" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 1.000000 2.000000 5.000000 2.666667 2.666667</code></pre>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="regresion.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
+</div>
+<div id="linear-modelling" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Linear modelling</h2>
+<div id="single-term" class="section level3" number="10.6.1">
+<h3><span class="header-section-number">10.6.1</span> Single term</h3>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="regresion.html#cb301-1" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x, <span class="at">data=</span>my_data.df)</span>
+<span id="cb301-2"><a href="regresion.html#cb301-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb301-3"><a href="regresion.html#cb301-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.452 -19.826   0.531  19.121  79.221 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 24.47423    1.75968  13.908   &lt;2e-16 ***
+## x            0.01531    0.03058   0.501    0.617    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.16 on 998 degrees of freedom
+## Multiple R-squared:  0.0002511,  Adjusted R-squared:  -0.0007507 
+## F-statistic: 0.2506 on 1 and 998 DF,  p-value: 0.6167</code></pre>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="regresion.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_1)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-48-1.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-48-2.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-48-3.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-48-4.png" width="672" /></p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="regresion.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">data=</span>my_data.df)</span>
+<span id="cb304-2"><a href="regresion.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_1, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-48-5.png" width="672" /></p>
+</div>
+<div id="multiple-terms-without-interaction" class="section level3" number="10.6.2">
+<h3><span class="header-section-number">10.6.2</span> Multiple terms without interaction</h3>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="regresion.html#cb305-1" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb305-2"><a href="regresion.html#cb305-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb305-3"><a href="regresion.html#cb305-3" aria-hidden="true" tabindex="-1"></a><span class="co">#equivalent: note using dot for ALL terms</span></span>
+<span id="cb305-4"><a href="regresion.html#cb305-4" aria-hidden="true" tabindex="-1"></a>model_2_dot <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>., <span class="at">data=</span>my_data.df)</span>
+<span id="cb305-5"><a href="regresion.html#cb305-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb305-6"><a href="regresion.html#cb305-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + f, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.103 -20.138   0.335  19.159  78.870 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 24.12555    1.97166  12.236   &lt;2e-16 ***
+## x            0.01529    0.03059   0.500    0.617    
+## fB           0.69961    1.78152   0.393    0.695    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.17 on 997 degrees of freedom
+## Multiple R-squared:  0.0004057,  Adjusted R-squared:  -0.0016 
+## F-statistic: 0.2023 on 2 and 997 DF,  p-value: 0.8169</code></pre>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="regresion.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2_dot)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ ., data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.103 -20.138   0.335  19.159  78.870 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 24.12555    1.97166  12.236   &lt;2e-16 ***
+## x            0.01529    0.03059   0.500    0.617    
+## fB           0.69961    1.78152   0.393    0.695    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.17 on 997 degrees of freedom
+## Multiple R-squared:  0.0004057,  Adjusted R-squared:  -0.0016 
+## F-statistic: 0.2023 on 2 and 997 DF,  p-value: 0.8169</code></pre>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="regresion.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_2)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-49-1.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-49-2.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-49-3.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-49-4.png" width="672" /></p>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="regresion.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">col=</span><span class="fu">as.integer</span>(f),<span class="at">data=</span>my_data.df)</span>
+<span id="cb310-2"><a href="regresion.html#cb310-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_2, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## Warning in abline(model_2, col = &quot;blue&quot;, lwd = 3): only using the first two of 3
+## regression coefficients</code></pre>
+<p><img src="my_book_files/figure-html/unnamed-chunk-49-5.png" width="672" /></p>
+</div>
+<div id="with-interaction" class="section level3" number="10.6.3">
+<h3><span class="header-section-number">10.6.3</span> With interaction</h3>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="regresion.html#cb312-1" aria-hidden="true" tabindex="-1"></a>model_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">*</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb312-2"><a href="regresion.html#cb312-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb312-3"><a href="regresion.html#cb312-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_3)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x * f, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -68.253 -17.424   0.548  16.698  72.970 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.53463    2.09901  -0.731    0.465    
+## x            0.53279    0.03650  14.599   &lt;2e-16 ***
+## fB          52.15333    2.97254  17.545   &lt;2e-16 ***
+## x:fB        -1.03656    0.05165 -20.068   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 23.78 on 996 degrees of freedom
+## Multiple R-squared:  0.2882, Adjusted R-squared:  0.2861 
+## F-statistic: 134.4 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="regresion.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_3)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-50-1.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-50-2.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-50-3.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-50-4.png" width="672" /></p>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="regresion.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">col=</span><span class="fu">as.integer</span>(f),<span class="at">data=</span>my_data.df)</span>
+<span id="cb315-2"><a href="regresion.html#cb315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_3, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## Warning in abline(model_3, col = &quot;blue&quot;, lwd = 3): only using the first two of 4
+## regression coefficients</code></pre>
+<p><img src="my_book_files/figure-html/unnamed-chunk-50-5.png" width="672" /></p>
+</div>
+</div>
+<div id="lm-could-be-evaluated-by-anova" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> lm could be evaluated by ANOVA</h2>
+<p>Note that there are at least two slightly different functions for ANOVA: <strong>anova()</strong> and <strong>aov()</strong></p>
+<p><a href="https://stats.stackexchange.com/questions/115304/interpreting-output-from-anova-when-using-lm-as-input" class="uri">https://stats.stackexchange.com/questions/115304/interpreting-output-from-anova-when-using-lm-as-input</a></p>
+<p>Anova output may be more clear when categorical variables have more than 3 levels (we discussed it during the practical session)</p>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="regresion.html#cb317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: y
+##            Df Sum Sq Mean Sq F value Pr(&gt;F)
+## x           1    199  198.70  0.2506 0.6167
+## Residuals 998 791195  792.78</code></pre>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="regresion.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_2)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: y
+##            Df Sum Sq Mean Sq F value Pr(&gt;F)
+## x           1    199  198.70  0.2504 0.6169
+## f           1    122  122.36  0.1542 0.6946
+## Residuals 997 791072  793.45</code></pre>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="regresion.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_3)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: y
+##            Df Sum Sq Mean Sq  F value Pr(&gt;F)    
+## x           1    199     199   0.3513 0.5535    
+## f           1    122     122   0.2164 0.6419    
+## x:f         1 227772  227772 402.7356 &lt;2e-16 ***
+## Residuals 996 563300     566                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div id="anova-could-be-used-to-compare-models" class="section level3" number="10.7.1">
+<h3><span class="header-section-number">10.7.1</span> Anova could be used to compare models</h3>
+<p>This can be used in the following way:</p>
+<ul>
+<li>First a <strong>“null”</strong> model could be calculated with all the “confounders”/“covariates”<br />
+</li>
+<li>Then a predictor of interest is added to the model and models are compared by ANOVA<br />
+</li>
+<li>If the model is improved significantly, then the predictor is important</li>
+</ul>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="regresion.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1,model_3)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ x
+## Model 2: y ~ x * f
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    998 791195                                  
+## 2    996 563300  2    227895 201.48 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="regresion.html#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1,model_2,model_3)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ x
+## Model 2: y ~ x + f
+## Model 3: y ~ x * f
+##   Res.Df    RSS Df Sum of Sq        F Pr(&gt;F)    
+## 1    998 791195                                 
+## 2    997 791072  1       122   0.2164 0.6419    
+## 3    996 563300  1    227772 402.7356 &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="a-bit-of-oop-about-anovalm" class="section level3" number="10.7.2">
+<h3><span class="header-section-number">10.7.2</span> A bit of OOP about anova(lm)</h3>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="regresion.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What other methods could be applied to lm object?</span></span>
+<span id="cb327-2"><a href="regresion.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(model_1)</span></code></pre></div>
+<pre><code>## [1] &quot;lm&quot;</code></pre>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="regresion.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] add1           alias          anova          case.names     coerce        
+##  [6] confint        cooks.distance deviance       dfbeta         dfbetas       
+## [11] drop1          dummy.coef     effects        extractAIC     family        
+## [16] formula        fortify        hatvalues      influence      initialize    
+## [21] kappa          labels         logLik         model.frame    model.matrix  
+## [26] nobs           plot           predict        print          proj          
+## [31] qqnorm         qr             residuals      rstandard      rstudent      
+## [36] show           simulate       slotsFromS3    summary        variable.names
+## [41] vcov          
+## see &#39;?methods&#39; for accessing help and source code</code></pre>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="regresion.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What other classes coul be evaluated by ANOVA?</span></span>
+<span id="cb331-2"><a href="regresion.html#cb331-2" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(anova)</span></code></pre></div>
+<pre><code>##  [1] anova.gam*     anova.glm*     anova.glmlist* anova.gls*     anova.lm*     
+##  [6] anova.lme*     anova.lmlist*  anova.loess*   anova.mlm*     anova.nls*    
+## see &#39;?methods&#39; for accessing help and source code</code></pre>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="regresion.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="co">#?aov</span></span>
+<span id="cb333-2"><a href="regresion.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="co">#?anova</span></span>
+<span id="cb333-3"><a href="regresion.html#cb333-3" aria-hidden="true" tabindex="-1"></a><span class="co">#?anova.lm</span></span></code></pre></div>
+</div>
+</div>
+<div id="predict" class="section level2" number="10.8">
+<h2><span class="header-section-number">10.8</span> Predict</h2>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="regresion.html#cb334-1" aria-hidden="true" tabindex="-1"></a>new_data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>), <span class="at">f=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>)))</span>
+<span id="cb334-2"><a href="regresion.html#cb334-2" aria-hidden="true" tabindex="-1"></a>new_data.df</span></code></pre></div>
+<pre><code>##    x f
+## 1 10 A
+## 2 20 B</code></pre>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="regresion.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_1,new_data.df)</span></code></pre></div>
+<pre><code>##        1        2 
+## 24.62731 24.78039</code></pre>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="regresion.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_2,new_data.df)</span></code></pre></div>
+<pre><code>##        1        2 
+## 24.27840 25.13086</code></pre>
+</div>
+<div id="update" class="section level2" number="10.9">
+<h2><span class="header-section-number">10.9</span> Update</h2>
+<p>It is very rarely used, but occasionally could be seen in help and tutorials</p>
+<p>Note using dots on the left and right of <strong>~</strong> in the formula</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="regresion.html#cb340-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">lm</span>(y<span class="sc">~</span>x, <span class="at">data=</span>my_data.df)</span>
+<span id="cb340-2"><a href="regresion.html#cb340-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.452 -19.826   0.531  19.121  79.221 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 24.47423    1.75968  13.908   &lt;2e-16 ***
+## x            0.01531    0.03058   0.501    0.617    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.16 on 998 degrees of freedom
+## Multiple R-squared:  0.0002511,  Adjusted R-squared:  -0.0007507 
+## F-statistic: 0.2506 on 1 and 998 DF,  p-value: 0.6167</code></pre>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="regresion.html#cb342-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">update</span>(m1,.<span class="sc">~</span>.<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb342-2"><a href="regresion.html#cb342-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + f, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.103 -20.138   0.335  19.159  78.870 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 24.12555    1.97166  12.236   &lt;2e-16 ***
+## x            0.01529    0.03059   0.500    0.617    
+## fB           0.69961    1.78152   0.393    0.695    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.17 on 997 degrees of freedom
+## Multiple R-squared:  0.0004057,  Adjusted R-squared:  -0.0016 
+## F-statistic: 0.2023 on 2 and 997 DF,  p-value: 0.8169</code></pre>
+</div>
+<div id="crooked-things-yet-to-explore" class="section level2" number="10.10">
+<h2><span class="header-section-number">10.10</span> Crooked things yet to explore …</h2>
+<p>We could not discuss these because we were short of time (and I have limited understanding of them ?)</p>
+<div id="intercept-design-matrix" class="section level3" number="10.10.1">
+<h3><span class="header-section-number">10.10.1</span> Intercept, design matrix</h3>
+<p><em>See my PowerPoint slides for students with biological background</em></p>
+<p>Intercept could be set to zero by two ways:</p>
+<ul>
+<li>y ~ 0 + x<br />
+</li>
+<li>y ~ x - 1</li>
+</ul>
+<p>Something strange happens without intercept in the model.
+This something could be undertood by staring at “design matrix”</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="regresion.html#cb344-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb344-2"><a href="regresion.html#cb344-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + f, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.103 -20.138   0.335  19.159  78.870 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 24.12555    1.97166  12.236   &lt;2e-16 ***
+## x            0.01529    0.03059   0.500    0.617    
+## fB           0.69961    1.78152   0.393    0.695    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.17 on 997 degrees of freedom
+## Multiple R-squared:  0.0004057,  Adjusted R-squared:  -0.0016 
+## F-statistic: 0.2023 on 2 and 997 DF,  p-value: 0.8169</code></pre>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="regresion.html#cb346-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f<span class="dv">-1</span>, <span class="at">data=</span>my_data.df)</span>
+<span id="cb346-2"><a href="regresion.html#cb346-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + f - 1, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.103 -20.138   0.335  19.159  78.870 
+## 
+## Coefficients:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## x   0.01529    0.03059    0.50    0.617    
+## fA 24.12555    1.97166   12.24   &lt;2e-16 ***
+## fB 24.82516    1.97424   12.57   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.17 on 997 degrees of freedom
+## Multiple R-squared:  0.4461, Adjusted R-squared:  0.4444 
+## F-statistic: 267.6 on 3 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="regresion.html#cb348-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb348-2"><a href="regresion.html#cb348-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ 0 + x + f, data = my_data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -85.103 -20.138   0.335  19.159  78.870 
+## 
+## Coefficients:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## x   0.01529    0.03059    0.50    0.617    
+## fA 24.12555    1.97166   12.24   &lt;2e-16 ***
+## fB 24.82516    1.97424   12.57   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 28.17 on 997 degrees of freedom
+## Multiple R-squared:  0.4461, Adjusted R-squared:  0.4444 
+## F-statistic: 267.6 on 3 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="regresion.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mtcars&quot;</span>)</span>
+<span id="cb350-2"><a href="regresion.html#cb350-2" aria-hidden="true" tabindex="-1"></a>other_data <span class="ot">&lt;-</span> mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="fu">c</span>(<span class="st">&quot;vs&quot;</span>,<span class="st">&quot;am&quot;</span>,<span class="st">&quot;gear&quot;</span>)]</span>
+<span id="cb350-3"><a href="regresion.html#cb350-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb350-4"><a href="regresion.html#cb350-4" aria-hidden="true" tabindex="-1"></a>other_data</span></code></pre></div>
+<pre><code>##                   vs am gear
+## Mazda RX4          0  1    4
+## Mazda RX4 Wag      0  1    4
+## Datsun 710         1  1    4
+## Hornet 4 Drive     1  0    3
+## Hornet Sportabout  0  0    3
+## Valiant            1  0    3
+## Duster 360         0  0    3
+## Merc 240D          1  0    4
+## Merc 230           1  0    4
+## Merc 280           1  0    4</code></pre>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="regresion.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span>am<span class="sc">+</span>gear, <span class="at">data=</span>other_data)</span></code></pre></div>
+<pre><code>##                   (Intercept) am gear
+## Mazda RX4                   1  1    4
+## Mazda RX4 Wag               1  1    4
+## Datsun 710                  1  1    4
+## Hornet 4 Drive              1  0    3
+## Hornet Sportabout           1  0    3
+## Valiant                     1  0    3
+## Duster 360                  1  0    3
+## Merc 240D                   1  0    4
+## Merc 230                    1  0    4
+## Merc 280                    1  0    4
+## attr(,&quot;assign&quot;)
+## [1] 0 1 2</code></pre>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="regresion.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>am<span class="sc">+</span>gear, <span class="at">data=</span>other_data)</span></code></pre></div>
+<pre><code>##                   am gear
+## Mazda RX4          1    4
+## Mazda RX4 Wag      1    4
+## Datsun 710         1    4
+## Hornet 4 Drive     0    3
+## Hornet Sportabout  0    3
+## Valiant            0    3
+## Duster 360         0    3
+## Merc 240D          0    4
+## Merc 230           0    4
+## Merc 280           0    4
+## attr(,&quot;assign&quot;)
+## [1] 1 2</code></pre>
+</div>
+<div id="contrasts" class="section level3" number="10.10.2">
+<h3><span class="header-section-number">10.10.2</span> Contrasts</h3>
+<p>Also, there is some cryptic way allowing to specify what sub-groups to include/exclude in the comparison: this is something to do with “contrasts”</p>
+<p><a href="https://rcompanion.org/rcompanion/h_01.html" class="uri">https://rcompanion.org/rcompanion/h_01.html</a></p>
+<p><a href="https://stats.stackexchange.com/questions/64249/creating-contrast-matrix-for-linear-regression-in-r" class="uri">https://stats.stackexchange.com/questions/64249/creating-contrast-matrix-for-linear-regression-in-r</a></p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="regresion.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(my_data.df<span class="sc">$</span>f)</span></code></pre></div>
+<pre><code>##   B
+## A 0
+## B 1</code></pre>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="regresion.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(<span class="fu">as.factor</span>(other_data<span class="sc">$</span>gear))</span></code></pre></div>
+<pre><code>##   4
+## 3 0
+## 4 1</code></pre>
+</div>
+<div id="type-i-ii-and-iii-sums" class="section level3" number="10.10.3">
+<h3><span class="header-section-number">10.10.3</span> Type I, II and III sums</h3>
+<p>ANOVA and linear models are, in fact equivalent to each other (even at the level of implementation). Both rely on calculating some <strong>sum of squares</strong>. There are 3 ways of calculating these sums: Type I, Type II and Type III</p>
+<p>Google about these …</p>
+<p><a href="https://rcompanion.org/rcompanion/d_04.html" class="uri">https://rcompanion.org/rcompanion/d_04.html</a></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-wrangling.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

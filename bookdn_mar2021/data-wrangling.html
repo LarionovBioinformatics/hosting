@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Section 7 Package | I forgot the title</title>
+  <title>Section 9 Data wrangling | I forgot the title</title>
   <meta name="description" content="This is my great book !" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Section 7 Package | I forgot the title" />
+  <meta property="og:title" content="Section 9 Data wrangling | I forgot the title" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Section 7 Package | I forgot the title" />
+  <meta name="twitter:title" content="Section 9 Data wrangling | I forgot the title" />
   
   <meta name="twitter:description" content="This is my great book !" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="distributionns.html"/>
-<link rel="next" href="data-readingwriting.html"/>
+<link rel="prev" href="data-readingwriting.html"/>
+<link rel="next" href="regresion.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -284,70 +284,226 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="package" class="section level1" number="7">
-<h1><span class="header-section-number">Section 7</span> Package</h1>
-<div id="user-defined-fnction" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> User-defined fnction</h2>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="package.html#cb172-1" aria-hidden="true" tabindex="-1"></a>mff <span class="ot">&lt;-</span> <span class="cf">function</span>(a,b){</span>
-<span id="cb172-2"><a href="package.html#cb172-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(a<span class="sc">+</span>b)</span>
-<span id="cb172-3"><a href="package.html#cb172-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb172-4"><a href="package.html#cb172-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb172-5"><a href="package.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mff</span>(<span class="dv">3</span>,<span class="dv">5</span>)</span></code></pre></div>
+<div id="data-wrangling" class="section level1" number="9">
+<h1><span class="header-section-number">Section 9</span> Data wrangling</h1>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="data-wrangling.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb206-2"><a href="data-wrangling.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div id="read-data" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Read data</h2>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="data-wrangling.html#cb207-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;results.tsv&quot;</span>, </span>
+<span id="cb207-2"><a href="data-wrangling.html#cb207-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb207-3"><a href="data-wrangling.html#cb207-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span>T)</span>
+<span id="cb207-4"><a href="data-wrangling.html#cb207-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_data.df)</span></code></pre></div>
+<pre><code>## [1] 1000    3</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="data-wrangling.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
+##  $ y: num  25.898 32.71 0.608 -34.722 11.314 ...
+##  $ x: num  28.196 0.713 59.606 15.888 20.545 ...
+##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="data-wrangling.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
+<pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="data-wrangling.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
+<pre><code>##        y                 x            f      
+##  Min.   :-60.898   Min.   : 0.08329   A:500  
+##  1st Qu.:  5.645   1st Qu.:24.87320   B:500  
+##  Median : 25.657   Median :48.76544          
+##  Mean   : 25.234   Mean   :49.63886          
+##  3rd Qu.: 44.164   3rd Qu.:75.68934          
+##  Max.   :103.703   Max.   :99.96631</code></pre>
+</div>
+<div id="apply-summary-functions-over-margin" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Apply (summary) functions over margin</h2>
+<p>This is base R</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="data-wrangling.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mtcars&quot;</span>)</span>
+<span id="cb215-2"><a href="data-wrangling.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mtcars)</span></code></pre></div>
+<pre><code>## [1] 32 11</code></pre>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="data-wrangling.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="data-wrangling.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(mtcars,<span class="dv">2</span>,mean)</span></code></pre></div>
+<pre><code>##        mpg        cyl       disp         hp       drat         wt       qsec 
+##  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 
+##         vs         am       gear       carb 
+##   0.437500   0.406250   3.687500   2.812500</code></pre>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="data-wrangling.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(my_data.df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],<span class="dv">2</span>,mean)</span></code></pre></div>
+<pre><code>##        y        x 
+## 25.23409 49.63886</code></pre>
+</div>
+<div id="missed-values" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Missed values</h2>
+<p>Missed values could be <strong>NA</strong> or <strong>NULL</strong></p>
+<p>There are special values like <strong>Inf</strong> and <strong>-Inf</strong> (e.g. produced by division by zero) that are <strong>“Not a Number”</strong> or <strong>NaN</strong></p>
+<p><strong>NaN</strong> is <em>NOT</em> <strong>NA</strong></p>
+<p>The functions to chack such values include <strong>is.na</strong>, <strong>is.nan</strong>, <strong>is.finite</strong> etc</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="data-wrangling.html#cb223-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="cn">NA</span>,<span class="cn">NA</span>)</span>
+<span id="cb223-2"><a href="data-wrangling.html#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x,<span class="at">na.rm=</span>T)</span></code></pre></div>
+<pre><code>## [1] 2.666667</code></pre>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="data-wrangling.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x,<span class="at">na.rm=</span>T)</span></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="package.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co">#mff(3,&quot;Good&quot;)</span></span>
-<span id="cb174-2"><a href="package.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="co">#mff(&quot;a&quot;,&quot;b&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="data-wrangling.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(x)</span></code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE  TRUE</code></pre>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="data-wrangling.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="data-wrangling.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))<span class="sc">/</span><span class="fu">length</span>(x)</span></code></pre></div>
+<pre><code>## [1] 0.4</code></pre>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="data-wrangling.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="data-wrangling.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x)</span>
+<span id="cb235-2"><a href="data-wrangling.html#cb235-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-3"><a href="data-wrangling.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Division by zero is NOT NA</span></span>
+<span id="cb235-4"><a href="data-wrangling.html#cb235-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-5"><a href="data-wrangling.html#cb235-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="dv">0</span></span></code></pre></div>
+<pre><code>## [1] Inf</code></pre>
 </div>
-<div id="recursive-functions-are-allowed" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Recursive functions are allowed</h2>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="package.html#cb175-1" aria-hidden="true" tabindex="-1"></a>my_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
-<span id="cb175-2"><a href="package.html#cb175-2" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb175-3"><a href="package.html#cb175-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
-<span id="cb175-4"><a href="package.html#cb175-4" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> result <span class="sc">+</span> i</span>
-<span id="cb175-5"><a href="package.html#cb175-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb175-6"><a href="package.html#cb175-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
-<span id="cb175-7"><a href="package.html#cb175-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb175-8"><a href="package.html#cb175-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb175-9"><a href="package.html#cb175-9" aria-hidden="true" tabindex="-1"></a><span class="fu">my_sum</span>(<span class="dv">10</span>)</span></code></pre></div>
-<pre><code>## [1] 55</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="package.html#cb177-1" aria-hidden="true" tabindex="-1"></a>my_rsum <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
-<span id="cb177-2"><a href="package.html#cb177-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb177-3"><a href="package.html#cb177-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(n<span class="sc">&gt;</span><span class="dv">1</span>){</span>
-<span id="cb177-4"><a href="package.html#cb177-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(n<span class="sc">+</span><span class="fu">my_rsum</span>(n<span class="dv">-1</span>))</span>
-<span id="cb177-5"><a href="package.html#cb177-5" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb177-6"><a href="package.html#cb177-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(n<span class="sc">==</span><span class="dv">1</span>){</span>
-<span id="cb177-7"><a href="package.html#cb177-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">return</span>(n)</span>
-<span id="cb177-8"><a href="package.html#cb177-8" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb177-9"><a href="package.html#cb177-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb177-10"><a href="package.html#cb177-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb177-11"><a href="package.html#cb177-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-12"><a href="package.html#cb177-12" aria-hidden="true" tabindex="-1"></a><span class="fu">my_rsum</span>(<span class="dv">10</span>)</span></code></pre></div>
-<pre><code>## [1] 55</code></pre>
+<div id="sorting-filtering-and-summarising" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Sorting, filtering and summarising</h2>
+<div id="base-r" class="section level3" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Base R</h3>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="data-wrangling.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count/Tabulate </span></span>
+<span id="cb237-2"><a href="data-wrangling.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(my_data.df<span class="sc">$</span>f,<span class="at">useNA=</span><span class="st">&quot;always&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##    A    B &lt;NA&gt; 
+##  500  500    0</code></pre>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-wrangling.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering</span></span>
+<span id="cb239-2"><a href="data-wrangling.html#cb239-2" aria-hidden="true" tabindex="-1"></a>my_data.df[my_data.df<span class="sc">$</span>x <span class="sc">&gt;</span><span class="dv">99</span>,]</span></code></pre></div>
+<pre><code>##               y        x f
+## 82   64.3351216 99.92403 A
+## 154  -2.7398795 99.55298 A
+## 209  56.7305344 99.73455 A
+## 392  40.5609259 99.14226 A
+## 494  39.5435736 99.28240 A
+## 511   6.1916169 99.25735 B
+## 529  -0.7624645 99.18217 B
+## 598   1.0192030 99.53238 B
+## 600  -7.5869199 99.10099 B
+## 616  -3.5378826 99.96631 B
+## 624 -22.6120308 99.14213 B
+## 762 -31.9086809 99.30844 B
+## 813  23.2319006 99.84282 B
+## 931   4.6506074 99.53870 B</code></pre>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-wrangling.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordering != sorting</span></span>
+<span id="cb241-2"><a href="data-wrangling.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1] 0.08329046 0.28067506 0.38070760 0.54251330 0.71293870</code></pre>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-wrangling.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1] 220 939 842 712   2</code></pre>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-wrangling.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df[<span class="fu">order</span>(my_data.df<span class="sc">$</span>x),])</span></code></pre></div>
+<pre><code>##              y          x f
+## 220  -4.222194 0.08329046 A
+## 939  57.116509 0.28067506 B
+## 842  88.102414 0.38070760 B
+## 712 103.703100 0.54251330 B
+## 2    32.709919 0.71293870 A
+## 60  -23.471388 0.85684769 A</code></pre>
 </div>
-<div id="lets-add-some-data" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Lets add some data</h2>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="package.html#cb179-1" aria-hidden="true" tabindex="-1"></a>my_great_dataset <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;D&quot;</span>),</span>
-<span id="cb179-2"><a href="package.html#cb179-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">values=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>))</span></code></pre></div>
+<div id="tables-to-tests" class="section level3" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Tables to tests</h3>
+<p>In base R <strong>contingency tables</strong> are naturally connected to tests</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="data-wrangling.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mtcars<span class="sc">$</span>vs)</span></code></pre></div>
+<pre><code>## 
+##  0  1 
+## 18 14</code></pre>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="data-wrangling.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mtcars<span class="sc">$</span>am)</span></code></pre></div>
+<pre><code>## 
+##  0  1 
+## 19 13</code></pre>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="data-wrangling.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mtcars<span class="sc">$</span>vs,mtcars<span class="sc">$</span>am)</span></code></pre></div>
+<pre><code>##    
+##      0  1
+##   0 12  6
+##   1  7  7</code></pre>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="data-wrangling.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(<span class="fu">table</span>(mtcars<span class="sc">$</span>vs,mtcars<span class="sc">$</span>am)) <span class="co"># Chi Square etc</span></span></code></pre></div>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  table(mtcars$vs, mtcars$am)
+## p-value = 0.4727
+## alternative hypothesis: true odds ratio is not equal to 1
+## 95 percent confidence interval:
+##   0.3825342 10.5916087
+## sample estimates:
+## odds ratio 
+##   1.956055</code></pre>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="data-wrangling.html#cb255-1" aria-hidden="true" tabindex="-1"></a>x.mx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">37</span>,<span class="dv">11</span>,<span class="dv">14</span>,<span class="dv">24</span>),<span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb255-2"><a href="data-wrangling.html#cb255-2" aria-hidden="true" tabindex="-1"></a>x.mx </span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]   37   14
+## [2,]   11   24</code></pre>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="data-wrangling.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(x.mx)</span></code></pre></div>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  x.mx
+## p-value = 0.0003348
+## alternative hypothesis: true odds ratio is not equal to 1
+## 95 percent confidence interval:
+##   2.047814 16.532095
+## sample estimates:
+## odds ratio 
+##    5.63382</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="data-wrangling.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="co">#table(mtcars$vs,mtcars$am,mtcars$gear)</span></span></code></pre></div>
 </div>
-<div id="prepare-template-for-package-source-folder" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Prepare template for package source folder</h2>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="package.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
-<span id="cb180-2"><a href="package.html#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span>
-<span id="cb180-3"><a href="package.html#cb180-3" aria-hidden="true" tabindex="-1"></a><span class="fu">package.skeleton</span>(<span class="at">name=</span><span class="st">&quot;ab&quot;</span>,<span class="at">list=</span><span class="fu">ls</span>())</span></code></pre></div>
-<p>A bush chunk to build:</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb181-1"><a href="package.html#cb181-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-2"><a href="package.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /Users/alexey/OneDrive/Documents/Home/Alex/stat_in_r_Mar2021</span>
-<span id="cb181-3"><a href="package.html#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD build ab</span>
-<span id="cb181-4"><a href="package.html#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD check ab_1.0.tar.gz </span></code></pre></div>
-<p>Follow the instructions for minimal required documentation, i.e.:</p>
-<ul>
-<li>Titles (&amp; Descriptions?) in each object Rd</li>
-<li>Examples (in the package Rd)</li>
-</ul>
-<p>Then install, load and enjoy !</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="package.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(...)</span></span>
-<span id="cb182-2"><a href="package.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ab)</span>
-<span id="cb182-3"><a href="package.html#cb182-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb182-4"><a href="package.html#cb182-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(my_great_dataset)</span></code></pre></div>
+</div>
+<div id="dplyr-style" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Dplyr style</h2>
+<p>Piping - shift + cntr + M
+x %&gt;% f(y,z) is equivalent to f(x,y,z)</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="data-wrangling.html#cb260-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb260-2"><a href="data-wrangling.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(f) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-3"><a href="data-wrangling.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>(),</span>
+<span id="cb260-4"><a href="data-wrangling.html#cb260-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">x_mean=</span><span class="fu">mean</span>(x),</span>
+<span id="cb260-5"><a href="data-wrangling.html#cb260-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_mean=</span><span class="fu">mean</span>(y))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+##   f     count x_mean y_mean
+## * &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 A       500   49.6   24.9
+## 2 B       500   49.7   25.6</code></pre>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="data-wrangling.html#cb262-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb262-2"><a href="data-wrangling.html#cb262-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-3"><a href="data-wrangling.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
+<pre><code>##            y          x f
+## 1  -4.222194 0.08329046 A
+## 2  57.116509 0.28067506 B
+## 3  88.102414 0.38070760 B
+## 4 103.703100 0.54251330 B
+## 5  32.709919 0.71293870 A
+## 6 -23.471388 0.85684769 A</code></pre>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-wrangling.html#cb264-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb264-2"><a href="data-wrangling.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x<span class="sc">&gt;</span><span class="dv">75</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb264-3"><a href="data-wrangling.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
+<span id="cb264-4"><a href="data-wrangling.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
+<pre><code>##            y        x f
+## 1  50.768934 75.10387 B
+## 2 -23.408244 75.21423 B
+## 3  65.858989 75.23387 A
+## 4  38.836660 75.27295 B
+## 5 -14.283928 75.67263 B
+## 6  -9.907719 75.73948 B</code></pre>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-wrangling.html#cb266-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code></pre></div>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-wrangling.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 
 </div>
 </div>
@@ -356,8 +512,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="distributionns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-readingwriting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-readingwriting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regresion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
