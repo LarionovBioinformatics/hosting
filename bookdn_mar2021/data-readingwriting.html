@@ -316,8 +316,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb192-7"><a href="data-readingwriting.html#cb192-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb192-8"><a href="data-readingwriting.html#cb192-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sim_data.df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
-##  $ y: num  1.41 0.063 -7.218 11.647 7.601 ...
-##  $ x: num  40.503 0.502 32.943 4.897 40.773 ...
+##  $ y: num  -3.37 35.64 38.98 -5.11 50.4 ...
+##  $ x: num  20.7 21 29.9 52.8 94.3 ...
 ##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="data-readingwriting.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x, <span class="at">pch=</span><span class="fu">as.integer</span>(f))</span></code></pre></div>
 <p><img src="my_book_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
@@ -353,19 +353,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 1000    3</code></pre>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="data-readingwriting.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
-##  $ y: num  1.41 0.063 -7.218 11.647 7.601 ...
-##  $ x: num  40.503 0.502 32.943 4.897 40.773 ...
+##  $ y: num  -3.37 35.64 38.98 -5.11 50.4 ...
+##  $ x: num  20.7 21 29.9 52.8 94.3 ...
 ##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="data-readingwriting.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
 <pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="data-readingwriting.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
 <pre><code>##        y                 x            f      
-##  Min.   :-61.147   Min.   : 0.02481   A:500  
-##  1st Qu.:  3.028   1st Qu.:23.78238   B:500  
-##  Median : 23.174   Median :49.08387          
-##  Mean   : 23.020   Mean   :50.15032          
-##  3rd Qu.: 43.483   3rd Qu.:76.99167          
-##  Max.   :107.286   Max.   :99.71932</code></pre>
+##  Min.   :-59.243   Min.   : 0.03367   A:500  
+##  1st Qu.:  3.508   1st Qu.:24.51950   B:500  
+##  Median : 24.662   Median :49.41741          
+##  Mean   : 24.892   Mean   :50.22933          
+##  3rd Qu.: 45.431   3rd Qu.:76.76437          
+##  Max.   :128.931   Max.   :99.88402</code></pre>
 
 </div>
 </div>

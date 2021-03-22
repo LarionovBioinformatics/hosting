@@ -296,19 +296,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 1000    3</code></pre>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="data-wrangling.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
-##  $ y: num  1.41 0.063 -7.218 11.647 7.601 ...
-##  $ x: num  40.503 0.502 32.943 4.897 40.773 ...
+##  $ y: num  -3.37 35.64 38.98 -5.11 50.4 ...
+##  $ x: num  20.7 21 29.9 52.8 94.3 ...
 ##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="data-wrangling.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
 <pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="data-wrangling.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
 <pre><code>##        y                 x            f      
-##  Min.   :-61.147   Min.   : 0.02481   A:500  
-##  1st Qu.:  3.028   1st Qu.:23.78238   B:500  
-##  Median : 23.174   Median :49.08387          
-##  Mean   : 23.020   Mean   :50.15032          
-##  3rd Qu.: 43.483   3rd Qu.:76.99167          
-##  Max.   :107.286   Max.   :99.71932</code></pre>
+##  Min.   :-59.243   Min.   : 0.03367   A:500  
+##  1st Qu.:  3.508   1st Qu.:24.51950   B:500  
+##  Median : 24.662   Median :49.41741          
+##  Mean   : 24.892   Mean   :50.22933          
+##  3rd Qu.: 45.431   3rd Qu.:76.76437          
+##  Max.   :128.931   Max.   :99.88402</code></pre>
 </div>
 <div id="apply-summary-functions-over-margin" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Apply (summary) functions over margin</h2>
@@ -336,7 +336,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   0.437500   0.406250   3.687500   2.812500</code></pre>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="data-wrangling.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(my_data.df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],<span class="dv">2</span>,mean)</span></code></pre></div>
 <pre><code>##        y        x 
-## 23.02002 50.15032</code></pre>
+## 24.89241 50.22933</code></pre>
 </div>
 <div id="missed-values" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Missed values</h2>
@@ -376,28 +376,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-wrangling.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering</span></span>
 <span id="cb239-2"><a href="data-wrangling.html#cb239-2" aria-hidden="true" tabindex="-1"></a>my_data.df[my_data.df<span class="sc">$</span>x <span class="sc">&gt;</span><span class="dv">99</span>,]</span></code></pre></div>
 <pre><code>##              y        x f
-## 108  47.195133 99.29377 A
-## 394   3.028367 99.71932 A
-## 556 -10.745097 99.47800 B
-## 570 -33.688480 99.66532 B
-## 766  -4.320287 99.36477 B
-## 768  20.249354 99.67690 B
-## 781 -17.847232 99.27045 B
-## 888  25.609348 99.25009 B
-## 932  46.229335 99.24545 B</code></pre>
+## 247  20.256861 99.88402 A
+## 313  27.066049 99.03915 A
+## 362  27.785778 99.64491 A
+## 448  71.193274 99.41459 A
+## 641  25.385935 99.20777 B
+## 892 -25.607111 99.00981 B
+## 940  -1.263955 99.32724 B</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-wrangling.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordering != sorting</span></span>
 <span id="cb241-2"><a href="data-wrangling.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 0.02481239 0.12080777 0.28969401 0.30274605 0.45990481</code></pre>
+<pre><code>## [1] 0.0336732 0.2630408 0.3182065 0.4130129 0.7787319</code></pre>
 <div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-wrangling.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 784 100 364 532 400</code></pre>
+<pre><code>## [1] 947 190 576 456 205</code></pre>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-wrangling.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df[<span class="fu">order</span>(my_data.df<span class="sc">$</span>x),])</span></code></pre></div>
-<pre><code>##               y          x f
-## 784  63.7902583 0.02481239 B
-## 100 -16.1536565 0.12080777 A
-## 364  -0.8374734 0.28969401 A
-## 532  53.9022785 0.30274605 B
-## 400 -18.4794963 0.45990481 A
-## 117   7.7204599 0.48495717 A</code></pre>
+<pre><code>##              y         x f
+## 947  23.014217 0.0336732 B
+## 190  -4.543789 0.2630408 A
+## 576  59.773240 0.3182065 B
+## 456 -28.387453 0.4130129 A
+## 205 -29.937670 0.7787319 A
+## 696  40.963567 0.8108508 B</code></pre>
 </div>
 <div id="tables-to-tests" class="section level3" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> Tables to tests</h3>
@@ -449,40 +447,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="dplyr-style" class="section level2" number="9.5">
 <h2><span class="header-section-number">9.5</span> Dplyr style</h2>
-<p>Piping - shift + cntr + M
-x %&gt;% f(y,z) is equivalent to f(x,y,z)</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="data-wrangling.html#cb260-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
-<span id="cb260-2"><a href="data-wrangling.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(f) <span class="sc">%&gt;%</span> </span>
-<span id="cb260-3"><a href="data-wrangling.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>(),</span>
-<span id="cb260-4"><a href="data-wrangling.html#cb260-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">x_mean=</span><span class="fu">mean</span>(x),</span>
-<span id="cb260-5"><a href="data-wrangling.html#cb260-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_mean=</span><span class="fu">mean</span>(y))</span></code></pre></div>
+<p>Piping: <strong>shift + cntr + M</strong></p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="data-wrangling.html#cb260-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">f</span>(y,z,...)</span></code></pre></div>
+<p>is equivalent to</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="data-wrangling.html#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x,y,z,...) </span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="data-wrangling.html#cb262-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb262-2"><a href="data-wrangling.html#cb262-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(f) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-3"><a href="data-wrangling.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>(),</span>
+<span id="cb262-4"><a href="data-wrangling.html#cb262-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">x_mean=</span><span class="fu">mean</span>(x),</span>
+<span id="cb262-5"><a href="data-wrangling.html#cb262-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_mean=</span><span class="fu">mean</span>(y))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   f     count x_mean y_mean
 ## * &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1 A       500   48.7   23.2
-## 2 B       500   51.6   22.8</code></pre>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="data-wrangling.html#cb262-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
-<span id="cb262-2"><a href="data-wrangling.html#cb262-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
-<span id="cb262-3"><a href="data-wrangling.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##             y          x f
-## 1  63.7902583 0.02481239 B
-## 2 -16.1536565 0.12080777 A
-## 3  -0.8374734 0.28969401 A
-## 4  53.9022785 0.30274605 B
-## 5 -18.4794963 0.45990481 A
-## 6   7.7204599 0.48495717 A</code></pre>
+## 1 A       500   50.6   25.8
+## 2 B       500   49.9   24.0</code></pre>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-wrangling.html#cb264-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
-<span id="cb264-2"><a href="data-wrangling.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x<span class="sc">&gt;</span><span class="dv">75</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb264-3"><a href="data-wrangling.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
-<span id="cb264-4"><a href="data-wrangling.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
+<span id="cb264-2"><a href="data-wrangling.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
+<span id="cb264-3"><a href="data-wrangling.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
+<pre><code>##            y         x f
+## 1  23.014217 0.0336732 B
+## 2  -4.543789 0.2630408 A
+## 3  59.773240 0.3182065 B
+## 4 -28.387453 0.4130129 A
+## 5 -29.937670 0.7787319 A
+## 6  40.963567 0.8108508 B</code></pre>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-wrangling.html#cb266-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb266-2"><a href="data-wrangling.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x<span class="sc">&gt;</span><span class="dv">75</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb266-3"><a href="data-wrangling.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
+<span id="cb266-4"><a href="data-wrangling.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
 <pre><code>##           y        x f
-## 1 44.393930 75.01884 B
-## 2 33.068743 75.08701 A
-## 3  5.927984 75.12663 B
-## 4 13.784244 75.30848 B
-## 5  6.147807 75.42881 A
-## 6  4.957539 75.44720 A</code></pre>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-wrangling.html#cb266-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code></pre></div>
+## 1 58.365807 75.04812 A
+## 2  1.472716 75.08279 B
+## 3 34.000038 75.25866 A
+## 4 45.265151 75.53899 A
+## 5 29.217829 75.56391 B
+## 6 58.324546 75.63785 A</code></pre>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-wrangling.html#cb268-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code></pre></div>
 <pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
 ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
@@ -490,7 +490,7 @@ x %&gt;% f(y,z) is equivalent to f(x,y,z)</p>
 ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-wrangling.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-wrangling.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
 <pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
 ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
