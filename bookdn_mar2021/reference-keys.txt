@@ -32,7 +32,7 @@ lists
 dataframe-list-of-vectorsfactors
 plotly
 reference
-start-section
+load-library
 get-some-data
 plotly-magic
 distributionns
@@ -60,7 +60,6 @@ tables-to-tests
 dplyr-style
 regresion
 note
-start-session
 load-data
 explore-data-1
 impute-if-needed
