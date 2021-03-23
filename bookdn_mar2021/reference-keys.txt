@@ -45,12 +45,12 @@ user-defined-fnction
 recursive-functions-are-allowed
 lets-add-some-data
 prepare-template-for-package-source-folder
-data-readingwriting
+data-reading-writing
 a-simple-simulated-dataset
 saving-and-reading
 rdata
 text-files
-data-modifying-and-exploring
+data-exploring-modifying
 read-data
 apply-summary-functions-over-margin
 missed-values
@@ -63,7 +63,7 @@ traps-in-tidydata
 dplyr-is-big
 piping
 dplyr-examples
-regresion
+regression
 note
 load-data
 explore-data-1
