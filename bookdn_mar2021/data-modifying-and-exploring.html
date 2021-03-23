@@ -303,19 +303,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 1000    3</code></pre>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="data-modifying-and-exploring.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
-##  $ y: num  48.05 40.94 51.96 48.9 7.55 ...
-##  $ x: num  84.75 92.18 86.62 48.2 8.63 ...
+##  $ y: num  34.25 21.29 9.59 12.14 14.8 ...
+##  $ x: num  51 47.9 34.1 33.3 36.9 ...
 ##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="data-modifying-and-exploring.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
 <pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="data-modifying-and-exploring.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
-<pre><code>##        y                 x          f      
-##  Min.   :-64.402   Min.   : 0.188   A:500  
-##  1st Qu.:  3.908   1st Qu.:23.752   B:500  
-##  Median : 24.144   Median :48.712          
-##  Mean   : 24.268   Mean   :49.551          
-##  3rd Qu.: 45.286   3rd Qu.:76.022          
-##  Max.   :121.707   Max.   :99.865</code></pre>
+<pre><code>##        y                 x            f      
+##  Min.   :-61.811   Min.   : 0.03234   A:500  
+##  1st Qu.:  7.471   1st Qu.:24.12953   B:500  
+##  Median : 26.633   Median :48.27018          
+##  Mean   : 26.522   Mean   :48.58083          
+##  3rd Qu.: 45.664   3rd Qu.:72.31085          
+##  Max.   :116.063   Max.   :99.65443</code></pre>
 </div>
 <div id="apply-summary-functions-over-margin" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Apply (summary) functions over margin</h2>
@@ -343,7 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   0.437500   0.406250   3.687500   2.812500</code></pre>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="data-modifying-and-exploring.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(my_data.df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],<span class="dv">2</span>,mean)</span></code></pre></div>
 <pre><code>##        y        x 
-## 24.26848 49.55129</code></pre>
+## 26.52242 48.58083</code></pre>
 </div>
 <div id="missed-values" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Missed values</h2>
@@ -383,33 +383,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-modifying-and-exploring.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering</span></span>
 <span id="cb239-2"><a href="data-modifying-and-exploring.html#cb239-2" aria-hidden="true" tabindex="-1"></a>my_data.df[my_data.df<span class="sc">$</span>x <span class="sc">&gt;</span><span class="dv">99</span>,]</span></code></pre></div>
 <pre><code>##              y        x f
-## 10   16.077501 99.86483 A
-## 15   69.356459 99.83908 A
-## 229  71.360283 99.16905 A
-## 258  -2.370617 99.41633 A
-## 268  67.676079 99.46730 A
-## 343  66.927790 99.56572 A
-## 398  53.403555 99.11474 A
-## 583   3.640976 99.58756 B
-## 632 -31.389320 99.08436 B
-## 634  65.512086 99.03051 B
-## 641  12.516655 99.03133 B
-## 802  57.145557 99.19327 B
-## 871 -64.402160 99.77954 B
-## 900  35.440880 99.58380 B</code></pre>
+## 106   8.979121 99.43615 A
+## 348  68.885181 99.33613 A
+## 593  13.648490 99.26594 B
+## 610  -7.312784 99.65443 B
+## 710  34.573081 99.06603 B
+## 745 -22.404651 99.14822 B
+## 759  40.362655 99.45008 B
+## 924  -9.814173 99.04281 B</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-modifying-and-exploring.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordering != sorting</span></span>
 <span id="cb241-2"><a href="data-modifying-and-exploring.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 0.1880466 0.3187486 0.3345771 0.4568673 0.4809934</code></pre>
+<pre><code>## [1] 0.03234227 0.21207137 0.21521915 0.21800220 0.25019473</code></pre>
 <div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-modifying-and-exploring.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 864 219 998 416 931</code></pre>
+<pre><code>## [1] 774 728 985 543 672</code></pre>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-modifying-and-exploring.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df[<span class="fu">order</span>(my_data.df<span class="sc">$</span>x),])</span></code></pre></div>
-<pre><code>##             y         x f
-## 864 35.432496 0.1880466 B
-## 219 -6.899691 0.3187486 A
-## 998 53.332608 0.3345771 B
-## 416 59.963206 0.4568673 A
-## 931 43.023232 0.4809934 B
-## 601 65.078175 0.5267267 B</code></pre>
+<pre><code>##              y          x f
+## 774  -7.474113 0.03234227 B
+## 728  58.457218 0.21207137 B
+## 985  39.960828 0.21521915 B
+## 543  52.795234 0.21800220 B
+## 672  31.202975 0.25019473 B
+## 51  -14.227907 0.26942699 A</code></pre>
 </div>
 <div id="tables-to-tests" class="section level3" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> Tables to tests</h3>
@@ -465,13 +459,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">9.5.1</span> Tidy Data concept</h3>
 <p><strong>Dplyr</strong>, <strong>ggplot</strong> and some other packages are part of the wider concept of <strong>Tidy Data</strong> :</p>
 <p><a href="https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html" class="uri">https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html</a></p>
-<p>I personaly do not like this concept because consider it as an additional unnecessary layer aove what is already available in base R. On the other hand, I cant deny the convenience of <strong>Dplyr</strong> and <strong>ggplot</strong>. In any way, it is not possible to ignore the <strong>Tidy Data</strong> packages because they became so ubiquitous nowadays.</p>
+<p>I personaly do not like this concept because consider it as an additional unnecessary layer above what is already available in base R. On the other hand, I cant deny the convenience of <strong>Dplyr</strong> and <strong>ggplot</strong>. In any way, it is not possible to ignore the <strong>Tidy Data</strong> packages because they became so ubiquitous nowadays.</p>
 </div>
 <div id="traps-in-tidydata" class="section level3" number="9.5.2">
 <h3><span class="header-section-number">9.5.2</span> Traps in TidyData</h3>
 <p>One of the stupidest thing in <strong>Tidy Data</strong> is that it refuses using <strong>Row Names</strong>, considering them somehow “untidy.” This means that many <strong>dplyr functions just silently drop the row names</strong>.</p>
 <p>Why on Earth row names are less tidy than column names??</p>
-<p>Another possible trap is that dplyr functions may change the row order. So, the user need either explicitly arrange the rows all the time, or , at least, pay attention to the row order when using <strong>dpyr</strong>.</p>
+<p>Another possible trap is that dplyr functions may change the row order. So, the user needs either explicitly arrange the rows all the time,or , at least, pay attention to the row order when using <strong>dpyr</strong>.</p>
 </div>
 <div id="dplyr-is-big" class="section level3" number="9.5.3">
 <h3><span class="header-section-number">9.5.3</span> Dplyr is BIG</h3>
@@ -502,36 +496,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## # A tibble: 2 x 4
 ##   f     count x_mean y_mean
 ## * &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1 A       500   49.8   23.8
-## 2 B       500   49.3   24.7</code></pre>
+## 1 A       500   49.9   26.0
+## 2 B       500   47.3   27.1</code></pre>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-modifying-and-exploring.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sorting</span></span>
 <span id="cb264-2"><a href="data-modifying-and-exploring.html#cb264-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb264-3"><a href="data-modifying-and-exploring.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
 <span id="cb264-4"><a href="data-modifying-and-exploring.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##           y         x f
-## 1 35.432496 0.1880466 B
-## 2 -6.899691 0.3187486 A
-## 3 53.332608 0.3345771 B
-## 4 59.963206 0.4568673 A
-## 5 43.023232 0.4809934 B
-## 6 65.078175 0.5267267 B</code></pre>
+<pre><code>##            y          x f
+## 1  -7.474113 0.03234227 B
+## 2  58.457218 0.21207137 B
+## 3  39.960828 0.21521915 B
+## 4  52.795234 0.21800220 B
+## 5  31.202975 0.25019473 B
+## 6 -14.227907 0.26942699 A</code></pre>
 <div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-modifying-and-exploring.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering rows</span></span>
 <span id="cb266-2"><a href="data-modifying-and-exploring.html#cb266-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb266-3"><a href="data-modifying-and-exploring.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x<span class="sc">&gt;</span><span class="dv">75</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb266-4"><a href="data-modifying-and-exploring.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
 <span id="cb266-5"><a href="data-modifying-and-exploring.html#cb266-5" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##             y        x f
-## 1  41.4260268 75.00599 B
-## 2  -0.1732429 75.02441 B
-## 3  54.0144011 75.10632 A
-## 4  79.4668416 75.15904 A
-## 5  43.0763511 75.24777 A
-## 6 -16.0185951 75.28071 B</code></pre>
+<pre><code>##           y        x f
+## 1  46.35244 75.00531 B
+## 2 -10.42671 75.05953 A
+## 3  33.67213 75.10163 A
+## 4  27.46129 75.10698 B
+## 5 -28.08881 75.46415 B
+## 6  48.27220 75.87352 A</code></pre>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-modifying-and-exploring.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting columns</span></span>
-<span id="cb268-2"><a href="data-modifying-and-exploring.html#cb268-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb268-3"><a href="data-modifying-and-exploring.html#cb268-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb268-4"><a href="data-modifying-and-exploring.html#cb268-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Piping can be done outside of the dplyr too</span></span>
-<span id="cb268-5"><a href="data-modifying-and-exploring.html#cb268-5" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code></pre></div>
+<span id="cb268-2"><a href="data-modifying-and-exploring.html#cb268-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb268-3"><a href="data-modifying-and-exploring.html#cb268-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(y,x) <span class="sc">%&gt;%</span> </span>
+<span id="cb268-4"><a href="data-modifying-and-exploring.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
+<pre><code>##           y        x
+## 1 34.253368 50.96594
+## 2 21.287237 47.93993
+## 3  9.588271 34.06550
+## 4 12.136617 33.28157
+## 5 14.801084 36.94890
+## 6 38.463749 91.46315</code></pre>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-modifying-and-exploring.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Piping can be done outside of the dplyr too</span></span>
+<span id="cb270-2"><a href="data-modifying-and-exploring.html#cb270-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code></pre></div>
 <pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
 ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
@@ -539,7 +541,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-modifying-and-exploring.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="data-modifying-and-exploring.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
 <pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
 ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4

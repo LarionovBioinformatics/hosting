@@ -298,177 +298,177 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="load-data" class="section level2" number="10.2">
 <h2><span class="header-section-number">10.2</span> Load data</h2>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="regresion.html#cb272-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;results.tsv&quot;</span>, </span>
-<span id="cb272-2"><a href="regresion.html#cb272-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb272-3"><a href="regresion.html#cb272-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="regresion.html#cb274-1" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;results.tsv&quot;</span>, </span>
+<span id="cb274-2"><a href="regresion.html#cb274-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb274-3"><a href="regresion.html#cb274-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header=</span>T)</span></code></pre></div>
 </div>
 <div id="explore-data-1" class="section level2" number="10.3">
 <h2><span class="header-section-number">10.3</span> Explore data</h2>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="regresion.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_data.df)</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="regresion.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_data.df)</span></code></pre></div>
 <pre><code>## [1] 1000    3</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="regresion.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="regresion.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
-##  $ y: num  48.05 40.94 51.96 48.9 7.55 ...
-##  $ x: num  84.75 92.18 86.62 48.2 8.63 ...
+##  $ y: num  34.25 21.29 9.59 12.14 14.8 ...
+##  $ x: num  51 47.9 34.1 33.3 36.9 ...
 ##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="regresion.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="regresion.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
 <pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="regresion.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df)</span></code></pre></div>
-<pre><code>##           y         x f
-## 1 48.052183 84.752896 A
-## 2 40.938328 92.180345 A
-## 3 51.962379 86.623541 A
-## 4 48.903728 48.196343 A
-## 5  7.552352  8.634585 A
-## 6 -7.684337 72.471086 A</code></pre>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="regresion.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
-<pre><code>##        y                 x          f      
-##  Min.   :-64.402   Min.   : 0.188   A:500  
-##  1st Qu.:  3.908   1st Qu.:23.752   B:500  
-##  Median : 24.144   Median :48.712          
-##  Mean   : 24.268   Mean   :49.551          
-##  3rd Qu.: 45.286   3rd Qu.:76.022          
-##  Max.   :121.707   Max.   :99.865</code></pre>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="regresion.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(my_data.df))</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="regresion.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df)</span></code></pre></div>
+<pre><code>##           y        x f
+## 1 34.253368 50.96594 A
+## 2 21.287237 47.93993 A
+## 3  9.588271 34.06550 A
+## 4 12.136617 33.28157 A
+## 5 14.801084 36.94890 A
+## 6 38.463749 91.46315 A</code></pre>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="regresion.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
+<pre><code>##        y                 x            f      
+##  Min.   :-61.811   Min.   : 0.03234   A:500  
+##  1st Qu.:  7.471   1st Qu.:24.12953   B:500  
+##  Median : 26.633   Median :48.27018          
+##  Mean   : 26.522   Mean   :48.58083          
+##  3rd Qu.: 45.664   3rd Qu.:72.31085          
+##  Max.   :116.063   Max.   :99.65443</code></pre>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="regresion.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(my_data.df))</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="regresion.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>my_data.df,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y,<span class="at">color=</span>f)) <span class="sc">+</span> </span>
-<span id="cb285-2"><a href="regresion.html#cb285-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb285-3"><a href="regresion.html#cb285-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="regresion.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>my_data.df,<span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y,<span class="at">color=</span>f)) <span class="sc">+</span> </span>
+<span id="cb287-2"><a href="regresion.html#cb287-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb287-3"><a href="regresion.html#cb287-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="my_book_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 </div>
 <div id="impute-if-needed" class="section level2" number="10.4">
 <h2><span class="header-section-number">10.4</span> Impute if needed</h2>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="regresion.html#cb287-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="cn">NA</span>,<span class="cn">NA</span>)</span>
-<span id="cb287-2"><a href="regresion.html#cb287-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="regresion.html#cb289-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="cn">NA</span>,<span class="cn">NA</span>)</span>
+<span id="cb289-2"><a href="regresion.html#cb289-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(x)</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE FALSE  TRUE  TRUE</code></pre>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="regresion.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regresion.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regresion.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))<span class="sc">/</span><span class="fu">length</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="regresion.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(x))<span class="sc">/</span><span class="fu">length</span>(x)</span></code></pre></div>
 <pre><code>## [1] 0.4</code></pre>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="regresion.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="regresion.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(x))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="regresion.html#cb295-1" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> T)</span>
-<span id="cb295-2"><a href="regresion.html#cb295-2" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">-&gt;</span> x[<span class="fu">is.na</span>(x)]</span>
-<span id="cb295-3"><a href="regresion.html#cb295-3" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="regresion.html#cb297-1" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> T)</span>
+<span id="cb297-2"><a href="regresion.html#cb297-2" aria-hidden="true" tabindex="-1"></a>mean_x <span class="ot">-&gt;</span> x[<span class="fu">is.na</span>(x)]</span>
+<span id="cb297-3"><a href="regresion.html#cb297-3" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## [1] 1.000000 2.000000 5.000000 2.666667 2.666667</code></pre>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="regresion.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="regresion.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
 </div>
 <div id="linear-modelling" class="section level2" number="10.5">
 <h2><span class="header-section-number">10.5</span> Linear modelling</h2>
 <div id="single-term" class="section level3" number="10.5.1">
 <h3><span class="header-section-number">10.5.1</span> Single term</h3>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="regresion.html#cb298-1" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x, <span class="at">data=</span>my_data.df)</span>
-<span id="cb298-2"><a href="regresion.html#cb298-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb298-3"><a href="regresion.html#cb298-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="regresion.html#cb300-1" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x, <span class="at">data=</span>my_data.df)</span>
+<span id="cb300-2"><a href="regresion.html#cb300-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb300-3"><a href="regresion.html#cb300-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x, data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.046 -20.079  -0.123  21.029  97.859 
+## -87.828 -19.107  -0.139  19.086  89.296 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 24.88473    1.80932  13.754   &lt;2e-16 ***
-## x           -0.01244    0.03138  -0.396    0.692    
+## (Intercept) 27.08184    1.77571  15.251   &lt;2e-16 ***
+## x           -0.01152    0.03154  -0.365    0.715    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.26 on 998 degrees of freedom
-## Multiple R-squared:  0.0001574,  Adjusted R-squared:  -0.0008445 
-## F-statistic: 0.1571 on 1 and 998 DF,  p-value: 0.6919</code></pre>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="regresion.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_1)</span></code></pre></div>
+## Residual standard error: 28.38 on 998 degrees of freedom
+## Multiple R-squared:  0.0001335,  Adjusted R-squared:  -0.0008683 
+## F-statistic: 0.1333 on 1 and 998 DF,  p-value: 0.7151</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="regresion.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_1)</span></code></pre></div>
 <p><img src="my_book_files/figure-html/unnamed-chunk-50-1.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-50-2.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-50-3.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-50-4.png" width="672" /></p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="regresion.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">data=</span>my_data.df)</span>
-<span id="cb301-2"><a href="regresion.html#cb301-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_1, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="regresion.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">data=</span>my_data.df)</span>
+<span id="cb303-2"><a href="regresion.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_1, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="my_book_files/figure-html/unnamed-chunk-50-5.png" width="672" /></p>
 </div>
 <div id="multiple-terms-without-interaction" class="section level3" number="10.5.2">
 <h3><span class="header-section-number">10.5.2</span> Multiple terms without interaction</h3>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="regresion.html#cb302-1" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
-<span id="cb302-2"><a href="regresion.html#cb302-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-3"><a href="regresion.html#cb302-3" aria-hidden="true" tabindex="-1"></a><span class="co">#equivalent: note using dot for ALL terms</span></span>
-<span id="cb302-4"><a href="regresion.html#cb302-4" aria-hidden="true" tabindex="-1"></a>model_2_dot <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>., <span class="at">data=</span>my_data.df)</span>
-<span id="cb302-5"><a href="regresion.html#cb302-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-6"><a href="regresion.html#cb302-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="regresion.html#cb304-1" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb304-2"><a href="regresion.html#cb304-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-3"><a href="regresion.html#cb304-3" aria-hidden="true" tabindex="-1"></a><span class="co">#equivalent: note using dot for ALL terms</span></span>
+<span id="cb304-4"><a href="regresion.html#cb304-4" aria-hidden="true" tabindex="-1"></a>model_2_dot <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>., <span class="at">data=</span>my_data.df)</span>
+<span id="cb304-5"><a href="regresion.html#cb304-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-6"><a href="regresion.html#cb304-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x + f, data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.478 -20.439   0.092  20.951  98.279 
+## -88.401 -18.775   0.155  18.901  88.883 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 24.45286    2.03989  11.987   &lt;2e-16 ***
-## x           -0.01230    0.03139  -0.392    0.695    
-## fB           0.84995    1.85136   0.459    0.646    
+## (Intercept) 26.50435    2.02354  13.098   &lt;2e-16 ***
+## x           -0.01065    0.03158  -0.337    0.736    
+## fB           1.07079    1.79727   0.596    0.551    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.27 on 997 degrees of freedom
-## Multiple R-squared:  0.0003687,  Adjusted R-squared:  -0.001637 
-## F-statistic: 0.1839 on 2 and 997 DF,  p-value: 0.8321</code></pre>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="regresion.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2_dot)</span></code></pre></div>
+## Residual standard error: 28.39 on 997 degrees of freedom
+## Multiple R-squared:  0.0004894,  Adjusted R-squared:  -0.001516 
+## F-statistic: 0.2441 on 2 and 997 DF,  p-value: 0.7835</code></pre>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="regresion.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2_dot)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ ., data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.478 -20.439   0.092  20.951  98.279 
+## -88.401 -18.775   0.155  18.901  88.883 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 24.45286    2.03989  11.987   &lt;2e-16 ***
-## x           -0.01230    0.03139  -0.392    0.695    
-## fB           0.84995    1.85136   0.459    0.646    
+## (Intercept) 26.50435    2.02354  13.098   &lt;2e-16 ***
+## x           -0.01065    0.03158  -0.337    0.736    
+## fB           1.07079    1.79727   0.596    0.551    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.27 on 997 degrees of freedom
-## Multiple R-squared:  0.0003687,  Adjusted R-squared:  -0.001637 
-## F-statistic: 0.1839 on 2 and 997 DF,  p-value: 0.8321</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="regresion.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_2)</span></code></pre></div>
+## Residual standard error: 28.39 on 997 degrees of freedom
+## Multiple R-squared:  0.0004894,  Adjusted R-squared:  -0.001516 
+## F-statistic: 0.2441 on 2 and 997 DF,  p-value: 0.7835</code></pre>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="regresion.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_2)</span></code></pre></div>
 <p><img src="my_book_files/figure-html/unnamed-chunk-51-1.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-51-2.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-51-3.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-51-4.png" width="672" /></p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="regresion.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">col=</span><span class="fu">as.integer</span>(f),<span class="at">data=</span>my_data.df)</span>
-<span id="cb307-2"><a href="regresion.html#cb307-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_2, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="regresion.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">col=</span><span class="fu">as.integer</span>(f),<span class="at">data=</span>my_data.df)</span>
+<span id="cb309-2"><a href="regresion.html#cb309-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_2, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Warning in abline(model_2, col = &quot;blue&quot;, lwd = 3): only using the first two of 3
 ## regression coefficients</code></pre>
 <p><img src="my_book_files/figure-html/unnamed-chunk-51-5.png" width="672" /></p>
 </div>
 <div id="with-interaction" class="section level3" number="10.5.3">
 <h3><span class="header-section-number">10.5.3</span> With interaction</h3>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="regresion.html#cb309-1" aria-hidden="true" tabindex="-1"></a>model_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">*</span>f, <span class="at">data=</span>my_data.df)</span>
-<span id="cb309-2"><a href="regresion.html#cb309-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb309-3"><a href="regresion.html#cb309-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_3)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="regresion.html#cb311-1" aria-hidden="true" tabindex="-1"></a>model_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">*</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb311-2"><a href="regresion.html#cb311-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb311-3"><a href="regresion.html#cb311-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x * f, data = my_data.df)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -70.444 -17.028   0.432  15.936  83.759 
+##    Min     1Q Median     3Q    Max 
+## -81.19 -16.98   0.50  16.70  79.50 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -0.98630    2.22371  -0.444    0.657    
-## x            0.49816    0.03846  12.952   &lt;2e-16 ***
-## fB          50.85302    3.11815  16.309   &lt;2e-16 ***
-## x:fB        -1.00905    0.05408 -18.660   &lt;2e-16 ***
+## (Intercept)  1.75421    2.27653   0.771    0.441    
+## x            0.48543    0.03980  12.196   &lt;2e-16 ***
+## fB          47.81551    3.12121  15.320   &lt;2e-16 ***
+## x:fB        -0.96137    0.05541 -17.350   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 25.21 on 996 degrees of freedom
-## Multiple R-squared:  0.2593, Adjusted R-squared:  0.2571 
-## F-statistic: 116.2 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="regresion.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_3)</span></code></pre></div>
+## Residual standard error: 24.89 on 996 degrees of freedom
+## Multiple R-squared:  0.2325, Adjusted R-squared:  0.2301 
+## F-statistic: 100.6 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="regresion.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_3)</span></code></pre></div>
 <p><img src="my_book_files/figure-html/unnamed-chunk-52-1.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-52-2.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-52-3.png" width="672" /><img src="my_book_files/figure-html/unnamed-chunk-52-4.png" width="672" /></p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="regresion.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">col=</span><span class="fu">as.integer</span>(f),<span class="at">data=</span>my_data.df)</span>
-<span id="cb312-2"><a href="regresion.html#cb312-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_3, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="regresion.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,<span class="at">col=</span><span class="fu">as.integer</span>(f),<span class="at">data=</span>my_data.df)</span>
+<span id="cb314-2"><a href="regresion.html#cb314-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_3, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Warning in abline(model_3, col = &quot;blue&quot;, lwd = 3): only using the first two of 4
 ## regression coefficients</code></pre>
 <p><img src="my_book_files/figure-html/unnamed-chunk-52-5.png" width="672" /></p>
@@ -479,30 +479,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Note that there are at least two slightly different functions for ANOVA: <strong>anova()</strong> and <strong>aov()</strong></p>
 <p><a href="https://stats.stackexchange.com/questions/115304/interpreting-output-from-anova-when-using-lm-as-input" class="uri">https://stats.stackexchange.com/questions/115304/interpreting-output-from-anova-when-using-lm-as-input</a></p>
 <p>Anova output may be more clear when categorical variables have more than 3 levels (we discussed it during the practical session)</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="regresion.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1)</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="regresion.html#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: y
 ##            Df Sum Sq Mean Sq F value Pr(&gt;F)
-## x           1    134  134.49  0.1571 0.6919
-## Residuals 998 854412  856.12</code></pre>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="regresion.html#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_2)</span></code></pre></div>
+## x           1    107  107.34  0.1333 0.7151
+## Residuals 998 803701  805.31</code></pre>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="regresion.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: y
 ##            Df Sum Sq Mean Sq F value Pr(&gt;F)
-## x           1    134  134.49  0.1570 0.6921
-## f           1    181  180.59  0.2108 0.6463
-## Residuals 997 854232  856.80</code></pre>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="regresion.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_3)</span></code></pre></div>
+## x           1    107  107.34  0.1332 0.7152
+## f           1    286  286.04  0.3550 0.5515
+## Residuals 997 803414  805.83</code></pre>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="regresion.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_3)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: y
 ##            Df Sum Sq Mean Sq  F value Pr(&gt;F)    
-## x           1    134     134   0.2116 0.6456    
-## f           1    181     181   0.2842 0.5941    
-## x:f         1 221279  221279 348.2004 &lt;2e-16 ***
-## Residuals 996 632952     635                    
+## x           1    107     107   0.1733 0.6773    
+## f           1    286     286   0.4618 0.4970    
+## x:f         1 186459  186459 301.0159 &lt;2e-16 ***
+## Residuals 996 616955     619                    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div id="anova-could-be-used-to-compare-models" class="section level3" number="10.6.1">
@@ -515,35 +515,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
 <li>If the model is improved significantly, then the predictor is important</li>
 </ul>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="regresion.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1,model_3)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="regresion.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1,model_3)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: y ~ x
 ## Model 2: y ~ x * f
 ##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1    998 854412                                  
-## 2    996 632952  2    221460 174.24 &lt; 2.2e-16 ***
+## 1    998 803701                                  
+## 2    996 616955  2    186745 150.74 &lt; 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="regresion.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1,model_2,model_3)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="regresion.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_1,model_2,model_3)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: y ~ x
 ## Model 2: y ~ x + f
 ## Model 3: y ~ x * f
 ##   Res.Df    RSS Df Sum of Sq        F Pr(&gt;F)    
-## 1    998 854412                                 
-## 2    997 854232  1       181   0.2842 0.5941    
-## 3    996 632952  1    221279 348.2004 &lt;2e-16 ***
+## 1    998 803701                                 
+## 2    997 803414  1       286   0.4618  0.497    
+## 3    996 616955  1    186459 301.0159 &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 <div id="a-bit-of-oop-about-anovalm" class="section level3" number="10.6.2">
 <h3><span class="header-section-number">10.6.2</span> A bit of OOP about anova(lm)</h3>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="regresion.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What other methods could be applied to lm object?</span></span>
-<span id="cb324-2"><a href="regresion.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(model_1)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="regresion.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What other methods could be applied to lm object?</span></span>
+<span id="cb326-2"><a href="regresion.html#cb326-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(model_1)</span></code></pre></div>
 <pre><code>## [1] &quot;lm&quot;</code></pre>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="regresion.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="regresion.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <pre><code>##  [1] add1           alias          anova          case.names     coerce        
 ##  [6] confint        cooks.distance deviance       dfbeta         dfbetas       
 ## [11] drop1          dummy.coef     effects        extractAIC     family        
@@ -554,75 +554,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [36] show           simulate       slotsFromS3    summary        variable.names
 ## [41] vcov          
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="regresion.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What other classes coul be evaluated by ANOVA?</span></span>
-<span id="cb328-2"><a href="regresion.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(anova)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="regresion.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What other classes coul be evaluated by ANOVA?</span></span>
+<span id="cb330-2"><a href="regresion.html#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(anova)</span></code></pre></div>
 <pre><code>##  [1] anova.gam*     anova.glm*     anova.glmlist* anova.gls*     anova.lm*     
 ##  [6] anova.lme*     anova.lmlist*  anova.loess*   anova.mlm*     anova.nls*    
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="regresion.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="co">#?aov</span></span>
-<span id="cb330-2"><a href="regresion.html#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="co">#?anova</span></span>
-<span id="cb330-3"><a href="regresion.html#cb330-3" aria-hidden="true" tabindex="-1"></a><span class="co">#?anova.lm</span></span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="regresion.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="co">#?aov</span></span>
+<span id="cb332-2"><a href="regresion.html#cb332-2" aria-hidden="true" tabindex="-1"></a><span class="co">#?anova</span></span>
+<span id="cb332-3"><a href="regresion.html#cb332-3" aria-hidden="true" tabindex="-1"></a><span class="co">#?anova.lm</span></span></code></pre></div>
 </div>
 </div>
 <div id="predict" class="section level2" number="10.7">
 <h2><span class="header-section-number">10.7</span> Predict</h2>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="regresion.html#cb331-1" aria-hidden="true" tabindex="-1"></a>new_data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>), <span class="at">f=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>)))</span>
-<span id="cb331-2"><a href="regresion.html#cb331-2" aria-hidden="true" tabindex="-1"></a>new_data.df</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="regresion.html#cb333-1" aria-hidden="true" tabindex="-1"></a>new_data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>), <span class="at">f=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>)))</span>
+<span id="cb333-2"><a href="regresion.html#cb333-2" aria-hidden="true" tabindex="-1"></a>new_data.df</span></code></pre></div>
 <pre><code>##    x f
 ## 1 10 A
 ## 2 20 B</code></pre>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="regresion.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_1,new_data.df)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="regresion.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_1,new_data.df)</span></code></pre></div>
 <pre><code>##        1        2 
-## 24.76036 24.63600</code></pre>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="regresion.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_2,new_data.df)</span></code></pre></div>
+## 26.96669 26.85154</code></pre>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="regresion.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_2,new_data.df)</span></code></pre></div>
 <pre><code>##        1        2 
-## 24.32989 25.05686</code></pre>
+## 26.39787 27.36216</code></pre>
 </div>
 <div id="update" class="section level2" number="10.8">
 <h2><span class="header-section-number">10.8</span> Update</h2>
 <p>It is very rarely used, but occasionally could be seen in help and tutorials</p>
 <p>Note using dots on the left and right of <strong>~</strong> in the formula</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="regresion.html#cb337-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">lm</span>(y<span class="sc">~</span>x, <span class="at">data=</span>my_data.df)</span>
-<span id="cb337-2"><a href="regresion.html#cb337-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="regresion.html#cb339-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">lm</span>(y<span class="sc">~</span>x, <span class="at">data=</span>my_data.df)</span>
+<span id="cb339-2"><a href="regresion.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x, data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.046 -20.079  -0.123  21.029  97.859 
+## -87.828 -19.107  -0.139  19.086  89.296 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 24.88473    1.80932  13.754   &lt;2e-16 ***
-## x           -0.01244    0.03138  -0.396    0.692    
+## (Intercept) 27.08184    1.77571  15.251   &lt;2e-16 ***
+## x           -0.01152    0.03154  -0.365    0.715    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.26 on 998 degrees of freedom
-## Multiple R-squared:  0.0001574,  Adjusted R-squared:  -0.0008445 
-## F-statistic: 0.1571 on 1 and 998 DF,  p-value: 0.6919</code></pre>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="regresion.html#cb339-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">update</span>(m1,.<span class="sc">~</span>.<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
-<span id="cb339-2"><a href="regresion.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+## Residual standard error: 28.38 on 998 degrees of freedom
+## Multiple R-squared:  0.0001335,  Adjusted R-squared:  -0.0008683 
+## F-statistic: 0.1333 on 1 and 998 DF,  p-value: 0.7151</code></pre>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="regresion.html#cb341-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">update</span>(m1,.<span class="sc">~</span>.<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb341-2"><a href="regresion.html#cb341-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x + f, data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.478 -20.439   0.092  20.951  98.279 
+## -88.401 -18.775   0.155  18.901  88.883 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 24.45286    2.03989  11.987   &lt;2e-16 ***
-## x           -0.01230    0.03139  -0.392    0.695    
-## fB           0.84995    1.85136   0.459    0.646    
+## (Intercept) 26.50435    2.02354  13.098   &lt;2e-16 ***
+## x           -0.01065    0.03158  -0.337    0.736    
+## fB           1.07079    1.79727   0.596    0.551    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.27 on 997 degrees of freedom
-## Multiple R-squared:  0.0003687,  Adjusted R-squared:  -0.001637 
-## F-statistic: 0.1839 on 2 and 997 DF,  p-value: 0.8321</code></pre>
+## Residual standard error: 28.39 on 997 degrees of freedom
+## Multiple R-squared:  0.0004894,  Adjusted R-squared:  -0.001516 
+## F-statistic: 0.2441 on 2 and 997 DF,  p-value: 0.7835</code></pre>
 </div>
 <div id="crooked-things-yet-to-explore" class="section level2" number="10.9">
 <h2><span class="header-section-number">10.9</span> Crooked things yet to explore …</h2>
@@ -638,73 +638,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Something strange happens without intercept in the model.
 This something could be undertood by staring at “design matrix”</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="regresion.html#cb341-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
-<span id="cb341-2"><a href="regresion.html#cb341-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="regresion.html#cb343-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb343-2"><a href="regresion.html#cb343-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x + f, data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.478 -20.439   0.092  20.951  98.279 
+## -88.401 -18.775   0.155  18.901  88.883 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 24.45286    2.03989  11.987   &lt;2e-16 ***
-## x           -0.01230    0.03139  -0.392    0.695    
-## fB           0.84995    1.85136   0.459    0.646    
+## (Intercept) 26.50435    2.02354  13.098   &lt;2e-16 ***
+## x           -0.01065    0.03158  -0.337    0.736    
+## fB           1.07079    1.79727   0.596    0.551    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.27 on 997 degrees of freedom
-## Multiple R-squared:  0.0003687,  Adjusted R-squared:  -0.001637 
-## F-statistic: 0.1839 on 2 and 997 DF,  p-value: 0.8321</code></pre>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="regresion.html#cb343-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f<span class="dv">-1</span>, <span class="at">data=</span>my_data.df)</span>
-<span id="cb343-2"><a href="regresion.html#cb343-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+## Residual standard error: 28.39 on 997 degrees of freedom
+## Multiple R-squared:  0.0004894,  Adjusted R-squared:  -0.001516 
+## F-statistic: 0.2441 on 2 and 997 DF,  p-value: 0.7835</code></pre>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="regresion.html#cb345-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x<span class="sc">+</span>f<span class="dv">-1</span>, <span class="at">data=</span>my_data.df)</span>
+<span id="cb345-2"><a href="regresion.html#cb345-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x + f - 1, data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.478 -20.439   0.092  20.951  98.279 
+## -88.401 -18.775   0.155  18.901  88.883 
 ## 
 ## Coefficients:
 ##    Estimate Std. Error t value Pr(&gt;|t|)    
-## x  -0.01230    0.03139  -0.392    0.695    
-## fA 24.45286    2.03989  11.987   &lt;2e-16 ***
-## fB 25.30281    2.02622  12.488   &lt;2e-16 ***
+## x  -0.01065    0.03158  -0.337    0.736    
+## fA 26.50435    2.02354  13.098   &lt;2e-16 ***
+## fB 27.57514    1.95978  14.071   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.27 on 997 degrees of freedom
-## Multiple R-squared:  0.4082, Adjusted R-squared:  0.4064 
-## F-statistic: 229.3 on 3 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="regresion.html#cb345-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
-<span id="cb345-2"><a href="regresion.html#cb345-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span></code></pre></div>
+## Residual standard error: 28.39 on 997 degrees of freedom
+## Multiple R-squared:  0.467,  Adjusted R-squared:  0.4654 
+## F-statistic: 291.1 on 3 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="regresion.html#cb347-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>x<span class="sc">+</span>f, <span class="at">data=</span>my_data.df)</span>
+<span id="cb347-2"><a href="regresion.html#cb347-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ 0 + x + f, data = my_data.df)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -88.478 -20.439   0.092  20.951  98.279 
+## -88.401 -18.775   0.155  18.901  88.883 
 ## 
 ## Coefficients:
 ##    Estimate Std. Error t value Pr(&gt;|t|)    
-## x  -0.01230    0.03139  -0.392    0.695    
-## fA 24.45286    2.03989  11.987   &lt;2e-16 ***
-## fB 25.30281    2.02622  12.488   &lt;2e-16 ***
+## x  -0.01065    0.03158  -0.337    0.736    
+## fA 26.50435    2.02354  13.098   &lt;2e-16 ***
+## fB 27.57514    1.95978  14.071   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.27 on 997 degrees of freedom
-## Multiple R-squared:  0.4082, Adjusted R-squared:  0.4064 
-## F-statistic: 229.3 on 3 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="regresion.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mtcars&quot;</span>)</span>
-<span id="cb347-2"><a href="regresion.html#cb347-2" aria-hidden="true" tabindex="-1"></a>other_data <span class="ot">&lt;-</span> mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="fu">c</span>(<span class="st">&quot;vs&quot;</span>,<span class="st">&quot;am&quot;</span>,<span class="st">&quot;gear&quot;</span>)]</span>
-<span id="cb347-3"><a href="regresion.html#cb347-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb347-4"><a href="regresion.html#cb347-4" aria-hidden="true" tabindex="-1"></a>other_data</span></code></pre></div>
+## Residual standard error: 28.39 on 997 degrees of freedom
+## Multiple R-squared:  0.467,  Adjusted R-squared:  0.4654 
+## F-statistic: 291.1 on 3 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="regresion.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mtcars&quot;</span>)</span>
+<span id="cb349-2"><a href="regresion.html#cb349-2" aria-hidden="true" tabindex="-1"></a>other_data <span class="ot">&lt;-</span> mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="fu">c</span>(<span class="st">&quot;vs&quot;</span>,<span class="st">&quot;am&quot;</span>,<span class="st">&quot;gear&quot;</span>)]</span>
+<span id="cb349-3"><a href="regresion.html#cb349-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb349-4"><a href="regresion.html#cb349-4" aria-hidden="true" tabindex="-1"></a>other_data</span></code></pre></div>
 <pre><code>##                   vs am gear
 ## Mazda RX4          0  1    4
 ## Mazda RX4 Wag      0  1    4
@@ -716,7 +716,7 @@ This something could be undertood by staring at “design matrix”</p>
 ## Merc 240D          1  0    4
 ## Merc 230           1  0    4
 ## Merc 280           1  0    4</code></pre>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="regresion.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span>am<span class="sc">+</span>gear, <span class="at">data=</span>other_data)</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="regresion.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span>am<span class="sc">+</span>gear, <span class="at">data=</span>other_data)</span></code></pre></div>
 <pre><code>##                   (Intercept) am gear
 ## Mazda RX4                   1  1    4
 ## Mazda RX4 Wag               1  1    4
@@ -730,7 +730,7 @@ This something could be undertood by staring at “design matrix”</p>
 ## Merc 280                    1  0    4
 ## attr(,&quot;assign&quot;)
 ## [1] 0 1 2</code></pre>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="regresion.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>am<span class="sc">+</span>gear, <span class="at">data=</span>other_data)</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="regresion.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>am<span class="sc">+</span>gear, <span class="at">data=</span>other_data)</span></code></pre></div>
 <pre><code>##                   am gear
 ## Mazda RX4          1    4
 ## Mazda RX4 Wag      1    4
@@ -750,11 +750,11 @@ This something could be undertood by staring at “design matrix”</p>
 <p>Also, there is some cryptic way allowing to specify what sub-groups to include/exclude in the comparison: this is something to do with “contrasts”</p>
 <p><a href="https://rcompanion.org/rcompanion/h_01.html" class="uri">https://rcompanion.org/rcompanion/h_01.html</a></p>
 <p><a href="https://stats.stackexchange.com/questions/64249/creating-contrast-matrix-for-linear-regression-in-r" class="uri">https://stats.stackexchange.com/questions/64249/creating-contrast-matrix-for-linear-regression-in-r</a></p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="regresion.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(my_data.df<span class="sc">$</span>f)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="regresion.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(my_data.df<span class="sc">$</span>f)</span></code></pre></div>
 <pre><code>##   B
 ## A 0
 ## B 1</code></pre>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="regresion.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(<span class="fu">as.factor</span>(other_data<span class="sc">$</span>gear))</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="regresion.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(<span class="fu">as.factor</span>(other_data<span class="sc">$</span>gear))</span></code></pre></div>
 <pre><code>##   4
 ## 3 0
 ## 4 1</code></pre>
