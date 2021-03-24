@@ -24,7 +24,7 @@
 <meta name="author" content="Of course, its Me" />
 
 
-<meta name="date" content="2021-03-23" />
+<meta name="date" content="2021-03-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -270,6 +270,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.9.3" data-path="regression.html"><a href="regression.html#type-i-ii-and-iii-sums"><i class="fa fa-check"></i><b>10.9.3</b> Type I, II and III sums</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html"><i class="fa fa-check"></i><b>11</b> Real life lm() example</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#summary"><i class="fa fa-check"></i><b>11.1</b> Summary</a></li>
+<li class="chapter" data-level="11.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#start-section"><i class="fa fa-check"></i><b>11.2</b> Start section</a></li>
+<li class="chapter" data-level="11.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#read-data-1"><i class="fa fa-check"></i><b>11.3</b> Read data</a></li>
+<li class="chapter" data-level="11.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-and-prepare-data"><i class="fa fa-check"></i><b>11.4</b> Explore and prepare data</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#overall-size-and-structure"><i class="fa fa-check"></i><b>11.4.1</b> Overall size and structure</a></li>
+<li class="chapter" data-level="11.4.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#missingness"><i class="fa fa-check"></i><b>11.4.2</b> Missingness</a></li>
+<li class="chapter" data-level="11.4.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#impute-missed"><i class="fa fa-check"></i><b>11.4.3</b> Impute missed</a></li>
+<li class="chapter" data-level="11.4.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#calculate-age"><i class="fa fa-check"></i><b>11.4.4</b> Calculate <em>age</em></a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-in-a-univariate-manner"><i class="fa fa-check"></i><b>11.5</b> Explore in a univariate manner</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#anova-for-categorical-variable-makes"><i class="fa fa-check"></i><b>11.5.1</b> Anova for categorical variable <em>makes</em></a></li>
+<li class="chapter" data-level="11.5.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#univariate-lm-for-numeric-variables"><i class="fa fa-check"></i><b>11.5.2</b> Univariate <em>lm()</em> for numeric variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#model-with-all-variables"><i class="fa fa-check"></i><b>11.6</b> Model with all variables</a></li>
+<li class="chapter" data-level="11.7" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#drop1"><i class="fa fa-check"></i><b>11.7</b> Drop1</a></li>
+<li class="chapter" data-level="11.8" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#optimal-model"><i class="fa fa-check"></i><b>11.8</b> Optimal model</a></li>
+<li class="chapter" data-level="11.9" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#predict-1"><i class="fa fa-check"></i><b>11.9</b> Predict</a></li>
+<li class="chapter" data-level="11.10" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#end-section"><i class="fa fa-check"></i><b>11.10</b> End section</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
 
@@ -303,19 +326,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 1000    3</code></pre>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="data-exploring-modifying.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
-##  $ y: num  -4.036 -10.088 -0.953 30.371 21.234 ...
-##  $ x: num  7.49 6.52 2.84 12.41 46.83 ...
+##  $ y: num  -36.57 2.15 42.44 70.87 88.03 ...
+##  $ x: num  27.7 45.4 81.7 64.4 55.4 ...
 ##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="data-exploring-modifying.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
 <pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="data-exploring-modifying.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
-<pre><code>##        y                 x            f      
-##  Min.   :-58.764   Min.   : 0.04665   A:500  
-##  1st Qu.:  3.804   1st Qu.:24.24327   B:500  
-##  Median : 22.788   Median :49.66040          
-##  Mean   : 23.540   Mean   :49.60082          
-##  3rd Qu.: 42.603   3rd Qu.:74.29039          
-##  Max.   :107.160   Max.   :99.92659</code></pre>
+<pre><code>##        y                 x           f      
+##  Min.   :-82.526   Min.   : 0.2636   A:500  
+##  1st Qu.:  5.312   1st Qu.:24.2604   B:500  
+##  Median : 24.084   Median :50.5506          
+##  Mean   : 24.223   Mean   :49.9268          
+##  3rd Qu.: 43.284   3rd Qu.:74.5549          
+##  Max.   :117.011   Max.   :99.7659</code></pre>
 </div>
 <div id="apply-summary-functions-over-margin" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Apply (summary) functions over margin</h2>
@@ -343,7 +366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   0.437500   0.406250   3.687500   2.812500</code></pre>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="data-exploring-modifying.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(my_data.df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],<span class="dv">2</span>,mean)</span></code></pre></div>
 <pre><code>##        y        x 
-## 23.53977 49.60082</code></pre>
+## 24.22335 49.92681</code></pre>
 </div>
 <div id="missed-values" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Missed values</h2>
@@ -383,27 +406,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  500  500    0</code></pre>
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-exploring-modifying.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering</span></span>
 <span id="cb239-2"><a href="data-exploring-modifying.html#cb239-2" aria-hidden="true" tabindex="-1"></a>my_data.df[my_data.df<span class="sc">$</span>x <span class="sc">&gt;</span><span class="dv">99</span>,]</span></code></pre></div>
-<pre><code>##             y        x f
-## 135  63.53285 99.60168 A
-## 174  35.95206 99.47804 A
-## 392  57.16467 99.20543 A
-## 417  41.48158 99.92659 A
-## 434  62.57526 99.72521 A
-## 811 -22.61801 99.43900 B
-## 896  -9.09346 99.82257 B</code></pre>
+<pre><code>##              y        x f
+## 29   59.108631 99.22415 A
+## 205 -10.178437 99.11799 A
+## 583   8.606938 99.63798 B
+## 612  -2.040589 99.35501 B
+## 615   8.904664 99.44556 B
+## 655   3.271351 99.05113 B
+## 706  -1.584454 99.42078 B
+## 726  11.243354 99.14803 B
+## 753 -26.320111 99.76585 B
+## 993 -35.589642 99.40753 B</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-exploring-modifying.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordering != sorting</span></span>
 <span id="cb241-2"><a href="data-exploring-modifying.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 0.04664706 0.10360118 0.11247254 0.17828955 0.41077132</code></pre>
+<pre><code>## [1] 0.2635849 0.2772705 0.3116284 0.4554120 0.5474435</code></pre>
 <div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-exploring-modifying.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 619 964  52 443  83</code></pre>
+<pre><code>## [1] 119 128 662 643 469</code></pre>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-exploring-modifying.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df[<span class="fu">order</span>(my_data.df<span class="sc">$</span>x),])</span></code></pre></div>
-<pre><code>##             y          x f
-## 619  28.84024 0.04664706 B
-## 964  22.69780 0.10360118 B
-## 52   13.93909 0.11247254 A
-## 443 -17.34737 0.17828955 A
-## 83   16.07430 0.41077132 A
-## 822  49.52343 0.65499248 B</code></pre>
+<pre><code>##             y         x f
+## 119 15.177678 0.2635849 A
+## 128 38.354724 0.2772705 A
+## 662 26.150160 0.3116284 B
+## 643  5.717829 0.4554120 B
+## 469 54.586483 0.5474435 A
+## 788 27.018809 0.6150180 B</code></pre>
 </div>
 <div id="tables-to-tests" class="section level3" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> Tables to tests</h3>
@@ -496,42 +522,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## # A tibble: 2 x 4
 ##   f     count x_mean y_mean
 ## * &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1 A       500   47.6   23.9
-## 2 B       500   51.6   23.2</code></pre>
+## 1 A       500   48.8   23.8
+## 2 B       500   51.0   24.7</code></pre>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-exploring-modifying.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sorting</span></span>
 <span id="cb264-2"><a href="data-exploring-modifying.html#cb264-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb264-3"><a href="data-exploring-modifying.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
 <span id="cb264-4"><a href="data-exploring-modifying.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##           y          x f
-## 1  28.84024 0.04664706 B
-## 2  22.69780 0.10360118 B
-## 3  13.93909 0.11247254 A
-## 4 -17.34737 0.17828955 A
-## 5  16.07430 0.41077132 A
-## 6  49.52343 0.65499248 B</code></pre>
+<pre><code>##           y         x f
+## 1 15.177678 0.2635849 A
+## 2 38.354724 0.2772705 A
+## 3 26.150160 0.3116284 B
+## 4  5.717829 0.4554120 B
+## 5 54.586483 0.5474435 A
+## 6 27.018809 0.6150180 B</code></pre>
 <div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-exploring-modifying.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering rows</span></span>
 <span id="cb266-2"><a href="data-exploring-modifying.html#cb266-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb266-3"><a href="data-exploring-modifying.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x<span class="sc">&gt;</span><span class="dv">75</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb266-4"><a href="data-exploring-modifying.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
 <span id="cb266-5"><a href="data-exploring-modifying.html#cb266-5" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##            y        x f
-## 1  51.664667 75.14120 B
-## 2  74.877955 75.16536 A
-## 3   9.301528 75.21929 B
-## 4  24.431406 75.24749 B
-## 5  38.428195 75.34197 A
-## 6 104.802452 75.36677 A</code></pre>
+<pre><code>##           y        x f
+## 1 37.531548 75.14321 A
+## 2  2.961144 75.35843 B
+## 3 47.599322 75.36817 B
+## 4 25.535710 75.43332 B
+## 5 40.379314 75.54195 B
+## 6  2.878849 75.70843 B</code></pre>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-exploring-modifying.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting columns</span></span>
 <span id="cb268-2"><a href="data-exploring-modifying.html#cb268-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb268-3"><a href="data-exploring-modifying.html#cb268-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(y,x) <span class="sc">%&gt;%</span> </span>
 <span id="cb268-4"><a href="data-exploring-modifying.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##             y         x
-## 1  -4.0355166  7.493717
-## 2 -10.0877060  6.524005
-## 3  -0.9528231  2.841776
-## 4  30.3710849 12.412504
-## 5  21.2335777 46.828968
-## 6  57.6147990 98.162571</code></pre>
+<pre><code>##            y        x
+## 1 -36.567660 27.67588
+## 2   2.149815 45.40984
+## 3  42.442918 81.67726
+## 4  70.871773 64.44782
+## 5  88.032996 55.38734
+## 6  42.314210 93.96441</code></pre>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-exploring-modifying.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Piping can be done outside of the dplyr too</span></span>
 <span id="cb270-2"><a href="data-exploring-modifying.html#cb270-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code></pre></div>
 <pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb

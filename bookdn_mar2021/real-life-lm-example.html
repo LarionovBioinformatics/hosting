@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 11 Real life lm() example | I forgot the title</title>
+  <meta name="description" content="This is my great book !" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 11 Real life lm() example | I forgot the title" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my great book !" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 11 Real life lm() example | I forgot the title" />
+  
+  <meta name="twitter:description" content="This is my great book !" />
+  
+
+<meta name="author" content="Of course, its Me" />
+
+
+<meta name="date" content="2021-03-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Hio the book !</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> My great Math LaTex</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#rendering-to-pdf-and-epub"><i class="fa fa-check"></i><b>1.1</b> Rendering to PDF and EPUB</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#sharing-on-social-media"><i class="fa fa-check"></i><b>1.2</b> Sharing on social media</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>2</b> R-Markdown</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-markdown.html"><a href="r-markdown.html#nd-level-header"><i class="fa fa-check"></i><b>2.1</b> 2nd level header</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r-markdown.html"><a href="r-markdown.html#rd-level-header"><i class="fa fa-check"></i><b>2.1.1</b> 3rd level header</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r-markdown.html"><a href="r-markdown.html#not-only-r"><i class="fa fa-check"></i><b>2.2</b> Not only R …</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-markdown.html"><a href="r-markdown.html#python"><i class="fa fa-check"></i><b>2.2.1</b> Python</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-markdown.html"><a href="r-markdown.html#bash"><i class="fa fa-check"></i><b>2.2.2</b> Bash</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-markdown.html"><a href="r-markdown.html#back-to-r"><i class="fa fa-check"></i><b>2.3</b> Back to R</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-markdown.html"><a href="r-markdown.html#r-markdown-1"><i class="fa fa-check"></i><b>2.3.1</b> R Markdown</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r-markdown.html"><a href="r-markdown.html#including-plots"><i class="fa fa-check"></i><b>2.3.2</b> Including Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html"><i class="fa fa-check"></i><b>3</b> A simple analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#in-built-datasets"><i class="fa fa-check"></i><b>3.1</b> In-built datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#explore-data"><i class="fa fa-check"></i><b>3.2</b> Explore data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#base-r-plottig"><i class="fa fa-check"></i><b>3.2.1</b> Base R plottig</a></li>
+<li class="chapter" data-level="3.2.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#ggplot-style"><i class="fa fa-check"></i><b>3.2.2</b> ggplot style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#t-test"><i class="fa fa-check"></i><b>3.3</b> T-test</a></li>
+<li class="chapter" data-level="3.4" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#liear-model"><i class="fa fa-check"></i><b>3.4</b> Liear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-hp"><i class="fa fa-check"></i><b>3.4.1</b> mpg ~ hp</a></li>
+<li class="chapter" data-level="3.4.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp"><i class="fa fa-check"></i><b>3.4.2</b> mpg ~ vs + hp</a></li>
+<li class="chapter" data-level="3.4.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp-1"><i class="fa fa-check"></i><b>3.4.3</b> mpg ~ vs * hp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-types.html"><a href="data-types.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="data-types.html"><a href="data-types.html#numeric-vectors"><i class="fa fa-check"></i><b>4.1.1</b> Numeric vectors</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-types.html"><a href="data-types.html#vector-elements-may-have-names"><i class="fa fa-check"></i><b>4.1.2</b> Vector elements may have names</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="data-types.html"><a href="data-types.html#numeric-matrices"><i class="fa fa-check"></i><b>4.2</b> Numeric matrices</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-types.html"><a href="data-types.html#matrices-may-have-rownames-and-colnames"><i class="fa fa-check"></i><b>4.2.1</b> Matrices may have rownames and colnames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="data-types.html"><a href="data-types.html#recycling-in-element-wise-operations"><i class="fa fa-check"></i><b>4.3</b> Recycling in element-wise operations</a></li>
+<li class="chapter" data-level="4.4" data-path="data-types.html"><a href="data-types.html#factors-categorical-variale"><i class="fa fa-check"></i><b>4.4</b> Factors: categorical variale</a></li>
+<li class="chapter" data-level="4.5" data-path="data-types.html"><a href="data-types.html#lists"><i class="fa fa-check"></i><b>4.5</b> Lists</a></li>
+<li class="chapter" data-level="4.6" data-path="data-types.html"><a href="data-types.html#dataframe-list-of-vectorsfactors"><i class="fa fa-check"></i><b>4.6</b> Dataframe: list of vectors/factors</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="plotly.html"><a href="plotly.html"><i class="fa fa-check"></i><b>5</b> Plotly</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plotly.html"><a href="plotly.html#reference"><i class="fa fa-check"></i><b>5.1</b> Reference</a></li>
+<li class="chapter" data-level="5.2" data-path="plotly.html"><a href="plotly.html#load-library"><i class="fa fa-check"></i><b>5.2</b> Load library</a></li>
+<li class="chapter" data-level="5.3" data-path="plotly.html"><a href="plotly.html#get-some-data"><i class="fa fa-check"></i><b>5.3</b> Get some data</a></li>
+<li class="chapter" data-level="5.4" data-path="plotly.html"><a href="plotly.html#plotly-magic"><i class="fa fa-check"></i><b>5.4</b> Plotly magic</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distributionns.html"><a href="distributionns.html"><i class="fa fa-check"></i><b>6</b> Distributionns</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distributionns.html"><a href="distributionns.html#function-curve"><i class="fa fa-check"></i><b>6.1</b> Function curve()</a></li>
+<li class="chapter" data-level="6.2" data-path="distributionns.html"><a href="distributionns.html#normal-distribution"><i class="fa fa-check"></i><b>6.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="6.3" data-path="distributionns.html"><a href="distributionns.html#gamma"><i class="fa fa-check"></i><b>6.3</b> Gamma</a></li>
+<li class="chapter" data-level="6.4" data-path="distributionns.html"><a href="distributionns.html#beta"><i class="fa fa-check"></i><b>6.4</b> Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>7</b> Package</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="package.html"><a href="package.html#user-defined-fnction"><i class="fa fa-check"></i><b>7.1</b> User-defined fnction</a></li>
+<li class="chapter" data-level="7.2" data-path="package.html"><a href="package.html#recursive-functions-are-allowed"><i class="fa fa-check"></i><b>7.2</b> Recursive functions are allowed</a></li>
+<li class="chapter" data-level="7.3" data-path="package.html"><a href="package.html#lets-add-some-data"><i class="fa fa-check"></i><b>7.3</b> Lets add some data</a></li>
+<li class="chapter" data-level="7.4" data-path="package.html"><a href="package.html#prepare-template-for-package-source-folder"><i class="fa fa-check"></i><b>7.4</b> Prepare template for package source folder</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-reading-writing.html"><a href="data-reading-writing.html"><i class="fa fa-check"></i><b>8</b> Data reading / writing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-reading-writing.html"><a href="data-reading-writing.html#a-simple-simulated-dataset"><i class="fa fa-check"></i><b>8.1</b> A simple simulated dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="data-reading-writing.html"><a href="data-reading-writing.html#saving-and-reading"><i class="fa fa-check"></i><b>8.2</b> Saving and reading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="data-reading-writing.html"><a href="data-reading-writing.html#rdata"><i class="fa fa-check"></i><b>8.2.1</b> RData</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-reading-writing.html"><a href="data-reading-writing.html#text-files"><i class="fa fa-check"></i><b>8.2.2</b> Text files</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html"><i class="fa fa-check"></i><b>9</b> Data exploring / modifying</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#read-data"><i class="fa fa-check"></i><b>9.1</b> Read data</a></li>
+<li class="chapter" data-level="9.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#apply-summary-functions-over-margin"><i class="fa fa-check"></i><b>9.2</b> Apply (summary) functions over margin</a></li>
+<li class="chapter" data-level="9.3" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#missed-values"><i class="fa fa-check"></i><b>9.3</b> Missed values</a></li>
+<li class="chapter" data-level="9.4" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#sorting-filtering-and-summarising"><i class="fa fa-check"></i><b>9.4</b> Sorting, filtering and summarising</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#base-r"><i class="fa fa-check"></i><b>9.4.1</b> Base R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#tables-to-tests"><i class="fa fa-check"></i><b>9.4.2</b> Tables to tests</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr"><i class="fa fa-check"></i><b>9.5</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#tidy-data-concept"><i class="fa fa-check"></i><b>9.5.1</b> Tidy Data concept</a></li>
+<li class="chapter" data-level="9.5.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#traps-in-tidydata"><i class="fa fa-check"></i><b>9.5.2</b> Traps in TidyData</a></li>
+<li class="chapter" data-level="9.5.3" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr-is-big"><i class="fa fa-check"></i><b>9.5.3</b> Dplyr is BIG</a></li>
+<li class="chapter" data-level="9.5.4" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#piping"><i class="fa fa-check"></i><b>9.5.4</b> Piping</a></li>
+<li class="chapter" data-level="9.5.5" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr-examples"><i class="fa fa-check"></i><b>9.5.5</b> Dplyr examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>10</b> Regression</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regression.html"><a href="regression.html#note"><i class="fa fa-check"></i><b>10.1</b> Note</a></li>
+<li class="chapter" data-level="10.2" data-path="regression.html"><a href="regression.html#load-data"><i class="fa fa-check"></i><b>10.2</b> Load data</a></li>
+<li class="chapter" data-level="10.3" data-path="regression.html"><a href="regression.html#explore-data-1"><i class="fa fa-check"></i><b>10.3</b> Explore data</a></li>
+<li class="chapter" data-level="10.4" data-path="regression.html"><a href="regression.html#impute-if-needed"><i class="fa fa-check"></i><b>10.4</b> Impute if needed</a></li>
+<li class="chapter" data-level="10.5" data-path="regression.html"><a href="regression.html#linear-modelling"><i class="fa fa-check"></i><b>10.5</b> Linear modelling</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regression.html"><a href="regression.html#single-term"><i class="fa fa-check"></i><b>10.5.1</b> Single term</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regression.html"><a href="regression.html#multiple-terms-without-interaction"><i class="fa fa-check"></i><b>10.5.2</b> Multiple terms without interaction</a></li>
+<li class="chapter" data-level="10.5.3" data-path="regression.html"><a href="regression.html#with-interaction"><i class="fa fa-check"></i><b>10.5.3</b> With interaction</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="regression.html"><a href="regression.html#lm-could-be-evaluated-by-anova"><i class="fa fa-check"></i><b>10.6</b> <em>lm</em> could be evaluated by ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="regression.html"><a href="regression.html#anova-could-be-used-to-compare-models"><i class="fa fa-check"></i><b>10.6.1</b> Anova could be used to compare models</a></li>
+<li class="chapter" data-level="10.6.2" data-path="regression.html"><a href="regression.html#a-bit-of-oop-about-anovalm"><i class="fa fa-check"></i><b>10.6.2</b> A bit of OOP about anova(lm)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="regression.html"><a href="regression.html#predict"><i class="fa fa-check"></i><b>10.7</b> Predict</a></li>
+<li class="chapter" data-level="10.8" data-path="regression.html"><a href="regression.html#update"><i class="fa fa-check"></i><b>10.8</b> Update</a></li>
+<li class="chapter" data-level="10.9" data-path="regression.html"><a href="regression.html#crooked-things-yet-to-explore"><i class="fa fa-check"></i><b>10.9</b> Crooked things yet to explore …</a>
+<ul>
+<li class="chapter" data-level="10.9.1" data-path="regression.html"><a href="regression.html#intercept-design-matrix"><i class="fa fa-check"></i><b>10.9.1</b> Intercept, design matrix</a></li>
+<li class="chapter" data-level="10.9.2" data-path="regression.html"><a href="regression.html#contrasts"><i class="fa fa-check"></i><b>10.9.2</b> Contrasts</a></li>
+<li class="chapter" data-level="10.9.3" data-path="regression.html"><a href="regression.html#type-i-ii-and-iii-sums"><i class="fa fa-check"></i><b>10.9.3</b> Type I, II and III sums</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html"><i class="fa fa-check"></i><b>11</b> Real life lm() example</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#summary"><i class="fa fa-check"></i><b>11.1</b> Summary</a></li>
+<li class="chapter" data-level="11.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#start-section"><i class="fa fa-check"></i><b>11.2</b> Start section</a></li>
+<li class="chapter" data-level="11.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#read-data-1"><i class="fa fa-check"></i><b>11.3</b> Read data</a></li>
+<li class="chapter" data-level="11.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-and-prepare-data"><i class="fa fa-check"></i><b>11.4</b> Explore and prepare data</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#overall-size-and-structure"><i class="fa fa-check"></i><b>11.4.1</b> Overall size and structure</a></li>
+<li class="chapter" data-level="11.4.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#missingness"><i class="fa fa-check"></i><b>11.4.2</b> Missingness</a></li>
+<li class="chapter" data-level="11.4.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#impute-missed"><i class="fa fa-check"></i><b>11.4.3</b> Impute missed</a></li>
+<li class="chapter" data-level="11.4.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#calculate-age"><i class="fa fa-check"></i><b>11.4.4</b> Calculate <em>age</em></a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-in-a-univariate-manner"><i class="fa fa-check"></i><b>11.5</b> Explore in a univariate manner</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#anova-for-categorical-variable-makes"><i class="fa fa-check"></i><b>11.5.1</b> Anova for categorical variable <em>makes</em></a></li>
+<li class="chapter" data-level="11.5.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#univariate-lm-for-numeric-variables"><i class="fa fa-check"></i><b>11.5.2</b> Univariate <em>lm()</em> for numeric variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#model-with-all-variables"><i class="fa fa-check"></i><b>11.6</b> Model with all variables</a></li>
+<li class="chapter" data-level="11.7" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#drop1"><i class="fa fa-check"></i><b>11.7</b> Drop1</a></li>
+<li class="chapter" data-level="11.8" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#optimal-model"><i class="fa fa-check"></i><b>11.8</b> Optimal model</a></li>
+<li class="chapter" data-level="11.9" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#predict-1"><i class="fa fa-check"></i><b>11.9</b> Predict</a></li>
+<li class="chapter" data-level="11.10" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#end-section"><i class="fa fa-check"></i><b>11.10</b> End section</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="real-life-lm-example" class="section level1" number="11">
+<h1><span class="header-section-number">Section 11</span> Real life lm() example</h1>
+<div id="summary" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Summary</h2>
+<p>This is only the first orientation with the dataset.</p>
+<p>This example:</p>
+<ul>
+<li>Reads data<br />
+</li>
+<li>Explores missingnes and does simplistic imputation<br />
+</li>
+<li>Looks at univariate regression/anova for each variable: all look highly significant<br />
+</li>
+<li>Multivariate model with all variables: suggests dropping owners<br />
+</li>
+<li><em>drop1</em> suggests keeping only <em>make</em>, <em>engine.size</em> and <em>mileage</em></li>
+</ul>
+<p>Importantly, the example does NOT analyze the normality of residuals in the models etc. It does NOT considers interactions.</p>
+<p>Further directions may also include:</p>
+<ul>
+<li>transformation of variables<br />
+</li>
+<li>using generalized models<br />
+</li>
+<li>using <em>add1</em><br />
+</li>
+<li>estimating accuracy of prediction etc.</li>
+</ul>
+</div>
+<div id="start-section" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Start section</h2>
+</div>
+<div id="read-data-1" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Read data</h2>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="real-life-lm-example.html#cb359-1" aria-hidden="true" tabindex="-1"></a>data_file<span class="ot">=</span><span class="st">&quot;/Users/alexey/OneDrive/Documents/Home/Alex/stat_in_r_Mar2021/example/structure_data.csv&quot;</span></span>
+<span id="cb359-2"><a href="real-life-lm-example.html#cb359-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb359-3"><a href="real-life-lm-example.html#cb359-3" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_file)</span>
+<span id="cb359-4"><a href="real-life-lm-example.html#cb359-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb359-5"><a href="real-life-lm-example.html#cb359-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(data_file)</span></code></pre></div>
+</div>
+<div id="explore-and-prepare-data" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Explore and prepare data</h2>
+<p>Data clean-up and preparation is a separate large realm in data science.</p>
+<p>Here we just check that data look well structured, check the data size, types of variables, missingness.</p>
+<div id="overall-size-and-structure" class="section level3" number="11.4.1">
+<h3><span class="header-section-number">11.4.1</span> Overall size and structure</h3>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="real-life-lm-example.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data.df)</span></code></pre></div>
+<pre><code>## [1] 3780    6</code></pre>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="real-life-lm-example.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    3780 obs. of  6 variables:
+##  $ mileage          : num  32000 69000 95300 85962 64000 ...
+##  $ manufactured.year: int  2015 2012 2001 2010 2013 2004 2003 2012 2013 2012 ...
+##  $ engine.size      : num  1.6 2 3.2 2.7 1.8 3 5 2.1 1.8 2 ...
+##  $ owners           : int  NA 3 6 NA 1 4 3 3 3 2 ...
+##  $ price            : num  7495 7000 8000 7490 7000 ...
+##  $ make             : Factor w/ 43 levels &quot;Abarth&quot;,&quot;Alfa Romeo&quot;,..: 8 4 25 4 4 5 25 25 24 5 ...</code></pre>
+</div>
+<div id="missingness" class="section level3" number="11.4.2">
+<h3><span class="header-section-number">11.4.2</span> Missingness</h3>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="real-life-lm-example.html#cb364-1" aria-hidden="true" tabindex="-1"></a>count.na.udf <span class="ot">&lt;-</span> <span class="cf">function</span>(x)(<span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb364-2"><a href="real-life-lm-example.html#cb364-2" aria-hidden="true" tabindex="-1"></a>count_na <span class="ot">&lt;-</span> <span class="fu">apply</span>(data.df,<span class="dv">2</span>,count.na.udf)</span>
+<span id="cb364-3"><a href="real-life-lm-example.html#cb364-3" aria-hidden="true" tabindex="-1"></a>count_na</span></code></pre></div>
+<pre><code>##           mileage manufactured.year       engine.size            owners 
+##                 0                 0                 2              1968 
+##             price              make 
+##                 0                 0</code></pre>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="real-life-lm-example.html#cb366-1" aria-hidden="true" tabindex="-1"></a>count_na<span class="sc">/</span><span class="fu">nrow</span>(data.df)</span></code></pre></div>
+<pre><code>##           mileage manufactured.year       engine.size            owners 
+##      0.0000000000      0.0000000000      0.0005291005      0.5206349206 
+##             price              make 
+##      0.0000000000      0.0000000000</code></pre>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="real-life-lm-example.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(count.na.udf,count_na)</span></code></pre></div>
+</div>
+<div id="impute-missed" class="section level3" number="11.4.3">
+<h3><span class="header-section-number">11.4.3</span> Impute missed</h3>
+<p>Its a simplistic procedure, with its pros and contras.<br />
+Strictly speaking, it may not be necessary if <em>lm()</em> has its own imputation in place. However, it may not be imediately clear what exactly this default implicit procedure is …<br />
+So, it may be useful to deal with missed data explicitly to be sure how they were treated.</p>
+<p>On a technical point: I recollect that there could be a specialized function for applying mean in place of missed data.</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="real-life-lm-example.html#cb369-1" aria-hidden="true" tabindex="-1"></a>mean_engine_size <span class="ot">&lt;-</span> <span class="fu">mean</span>(data.df<span class="sc">$</span>engine.size, <span class="at">na.rm=</span>T)</span>
+<span id="cb369-2"><a href="real-life-lm-example.html#cb369-2" aria-hidden="true" tabindex="-1"></a>mean_engine_size <span class="ot">-&gt;</span> data.df<span class="sc">$</span>engine.size[<span class="fu">is.na</span>(data.df<span class="sc">$</span>engine.size)]</span>
+<span id="cb369-3"><a href="real-life-lm-example.html#cb369-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb369-4"><a href="real-life-lm-example.html#cb369-4" aria-hidden="true" tabindex="-1"></a>mean_owners <span class="ot">&lt;-</span> <span class="fu">mean</span>(data.df<span class="sc">$</span>owners, <span class="at">na.rm=</span>T)</span>
+<span id="cb369-5"><a href="real-life-lm-example.html#cb369-5" aria-hidden="true" tabindex="-1"></a>mean_owners <span class="ot">-&gt;</span> data.df<span class="sc">$</span>owners[<span class="fu">is.na</span>(data.df<span class="sc">$</span>owners)]</span>
+<span id="cb369-6"><a href="real-life-lm-example.html#cb369-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb369-7"><a href="real-life-lm-example.html#cb369-7" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(data.df))</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="real-life-lm-example.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mean_owners, mean_engine_size)</span></code></pre></div>
+</div>
+<div id="calculate-age" class="section level3" number="11.4.4">
+<h3><span class="header-section-number">11.4.4</span> Calculate <em>age</em></h3>
+<p>Our previous knowledge in the field suggests that <strong>age</strong> may be a better representation for <strong>manufactured.year</strong></p>
+<p>Should <strong>manufactured.year</strong> be removed from analysis after making <strong>age</strong>?<br />
+May including both variables confuse the model (because of collinearuty).</p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="real-life-lm-example.html#cb372-1" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(data.df,<span class="at">age=</span><span class="dv">2021</span><span class="sc">-</span>data.df<span class="sc">$</span>manufactured.year)</span>
+<span id="cb372-2"><a href="real-life-lm-example.html#cb372-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    3780 obs. of  7 variables:
+##  $ mileage          : num  32000 69000 95300 85962 64000 ...
+##  $ manufactured.year: int  2015 2012 2001 2010 2013 2004 2003 2012 2013 2012 ...
+##  $ engine.size      : num  1.6 2 3.2 2.7 1.8 3 5 2.1 1.8 2 ...
+##  $ owners           : num  2.46 3 6 2.46 1 ...
+##  $ price            : num  7495 7000 8000 7490 7000 ...
+##  $ make             : Factor w/ 43 levels &quot;Abarth&quot;,&quot;Alfa Romeo&quot;,..: 8 4 25 4 4 5 25 25 24 5 ...
+##  $ age              : num  6 9 20 11 8 17 18 9 8 9 ...</code></pre>
+</div>
+</div>
+<div id="explore-in-a-univariate-manner" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Explore in a univariate manner</h2>
+<div id="anova-for-categorical-variable-makes" class="section level3" number="11.5.1">
+<h3><span class="header-section-number">11.5.1</span> Anova for categorical variable <em>makes</em></h3>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="real-life-lm-example.html#cb374-1" aria-hidden="true" tabindex="-1"></a>data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb374-2"><a href="real-life-lm-example.html#cb374-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(make) <span class="sc">%&gt;%</span> </span>
+<span id="cb374-3"><a href="real-life-lm-example.html#cb374-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>(),</span>
+<span id="cb374-4"><a href="real-life-lm-example.html#cb374-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_price=</span><span class="fu">mean</span>(price),</span>
+<span id="cb374-5"><a href="real-life-lm-example.html#cb374-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_mileage=</span><span class="fu">mean</span>(mileage),</span>
+<span id="cb374-6"><a href="real-life-lm-example.html#cb374-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_age=</span><span class="fu">mean</span>(age),</span>
+<span id="cb374-7"><a href="real-life-lm-example.html#cb374-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_price=</span><span class="fu">mean</span>(price),</span>
+<span id="cb374-8"><a href="real-life-lm-example.html#cb374-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_owners=</span><span class="fu">mean</span>(owners),</span>
+<span id="cb374-9"><a href="real-life-lm-example.html#cb374-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_engine=</span><span class="fu">mean</span>(engine.size)) <span class="sc">%&gt;%</span> </span>
+<span id="cb374-10"><a href="real-life-lm-example.html#cb374-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))</span></code></pre></div>
+<pre><code>## # A tibble: 43 x 7
+##    make       count mean_price mean_mileage mean_age mean_owners mean_engine
+##    &lt;fct&gt;      &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Vauxhall     715      6188.       44018.     6.09        2.36        1.42
+##  2 Ford         286      6502        52934.     7.21        2.46        1.34
+##  3 Nissan       269      8673.       39307.     5.90        2.31        1.33
+##  4 Hyundai      250      8521        31668.     4.35        2.44        1.30
+##  5 Volkswagen   208      5318.       74174.    10.4         3.03        1.51
+##  6 Toyota       199      6305.       48149.     8.34        2.10        1.55
+##  7 Peugeot      193      6488.       43657.     6.38        2.41        1.39
+##  8 Citroen      165      4882.       53608.     8.18        2.40        1.44
+##  9 Renault      164      6506.       41006.     6.68        2.37        1.34
+## 10 SEAT         156      6342.       53444.     6.63        2.25        1.40
+## # … with 33 more rows</code></pre>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="real-life-lm-example.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(price<span class="sc">~</span>make, <span class="at">data=</span>data.df)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="real-life-lm-example.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(price<span class="sc">~</span>make, <span class="at">data=</span>data.df))</span></code></pre></div>
+<pre><code>##               Df    Sum Sq   Mean Sq F value Pr(&gt;F)    
+## make          42 1.171e+10 278725988   21.38 &lt;2e-16 ***
+## Residuals   3737 4.871e+10  13035655                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="univariate-lm-for-numeric-variables" class="section level3" number="11.5.2">
+<h3><span class="header-section-number">11.5.2</span> Univariate <em>lm()</em> for numeric variables</h3>
+<p>There is a way of doing this in one step …</p>
+<div id="mileage" class="section level4" number="11.5.2.1">
+<h4><span class="header-section-number">11.5.2.1</span> mileage</h4>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="real-life-lm-example.html#cb379-1" aria-hidden="true" tabindex="-1"></a>mileage.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>mileage, <span class="at">data=</span>data.df)</span>
+<span id="cb379-2"><a href="real-life-lm-example.html#cb379-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mileage.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ mileage, data = data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6878.8 -1971.3  -661.8  1175.8 29729.6 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  9.780e+03  9.264e+01  105.57   &lt;2e-16 ***
+## mileage     -5.909e-02  1.469e-03  -40.23   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3346 on 3778 degrees of freedom
+## Multiple R-squared:  0.2999, Adjusted R-squared:  0.2997 
+## F-statistic:  1618 on 1 and 3778 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="real-life-lm-example.html#cb381-1" aria-hidden="true" tabindex="-1"></a>mileage.lm.p<span class="ot">=</span><span class="fu">coefficients</span>(<span class="fu">summary</span>(mileage.lm))[<span class="dv">2</span>,<span class="st">&quot;Pr(&gt;|t|)&quot;</span>]</span>
+<span id="cb381-2"><a href="real-life-lm-example.html#cb381-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>mileage, <span class="at">data=</span>data.df, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Univariate mileage p =&quot;</span>,<span class="fu">round</span>(mileage.lm.p,<span class="dv">5</span>)))</span>
+<span id="cb381-3"><a href="real-life-lm-example.html#cb381-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(mileage.lm, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="real-life-lm-example.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mileage.lm,mileage.lm.p)</span></code></pre></div>
+</div>
+<div id="age" class="section level4" number="11.5.2.2">
+<h4><span class="header-section-number">11.5.2.2</span> age</h4>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="real-life-lm-example.html#cb383-1" aria-hidden="true" tabindex="-1"></a>age.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>age, <span class="at">data=</span>data.df)</span>
+<span id="cb383-2"><a href="real-life-lm-example.html#cb383-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(age.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ age, data = data.df)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -4784  -1868   -717    898  36767 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 11038.23      95.84  115.18   &lt;2e-16 ***
+## age          -584.32      11.21  -52.12   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3050 on 3778 degrees of freedom
+## Multiple R-squared:  0.4183, Adjusted R-squared:  0.4182 
+## F-statistic:  2717 on 1 and 3778 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="real-life-lm-example.html#cb385-1" aria-hidden="true" tabindex="-1"></a>age.lm.p<span class="ot">=</span><span class="fu">coefficients</span>(<span class="fu">summary</span>(age.lm))[<span class="dv">2</span>,<span class="st">&quot;Pr(&gt;|t|)&quot;</span>]</span>
+<span id="cb385-2"><a href="real-life-lm-example.html#cb385-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>age, <span class="at">data=</span>data.df, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Univariate age p =&quot;</span>,<span class="fu">round</span>(age.lm.p,<span class="dv">5</span>)))</span>
+<span id="cb385-3"><a href="real-life-lm-example.html#cb385-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(age.lm, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="real-life-lm-example.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(age.lm,age.lm.p)</span></code></pre></div>
+</div>
+<div id="owners" class="section level4" number="11.5.2.3">
+<h4><span class="header-section-number">11.5.2.3</span> owners</h4>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="real-life-lm-example.html#cb387-1" aria-hidden="true" tabindex="-1"></a>owners.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>owners, <span class="at">data=</span>data.df)</span>
+<span id="cb387-2"><a href="real-life-lm-example.html#cb387-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(owners.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ owners, data = data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7583.5 -2683.5  -343.3  1862.9 31164.2 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  9651.66     161.15   59.89   &lt;2e-16 ***
+## owners      -1173.18      60.43  -19.41   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3813 on 3778 degrees of freedom
+## Multiple R-squared:  0.09071,    Adjusted R-squared:  0.09047 
+## F-statistic: 376.9 on 1 and 3778 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="real-life-lm-example.html#cb389-1" aria-hidden="true" tabindex="-1"></a>owners.lm.p<span class="ot">=</span><span class="fu">coefficients</span>(<span class="fu">summary</span>(owners.lm))[<span class="dv">2</span>,<span class="st">&quot;Pr(&gt;|t|)&quot;</span>]</span>
+<span id="cb389-2"><a href="real-life-lm-example.html#cb389-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>owners, <span class="at">data=</span>data.df, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Univariate owners p =&quot;</span>,<span class="fu">round</span>(owners.lm.p,<span class="dv">5</span>)))</span>
+<span id="cb389-3"><a href="real-life-lm-example.html#cb389-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(owners.lm, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="real-life-lm-example.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(owners.lm,owners.lm.p)</span></code></pre></div>
+</div>
+<div id="engine.size" class="section level4" number="11.5.2.4">
+<h4><span class="header-section-number">11.5.2.4</span> engine.size</h4>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="real-life-lm-example.html#cb391-1" aria-hidden="true" tabindex="-1"></a>engine.size.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>engine.size, <span class="at">data=</span>data.df)</span>
+<span id="cb391-2"><a href="real-life-lm-example.html#cb391-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(engine.size.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ engine.size, data = data.df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7582.8 -2853.8   -75.1  2179.3 26531.7 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   4682.0      231.5  20.224   &lt;2e-16 ***
+## engine.size   1393.1      148.8   9.362   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3954 on 3778 degrees of freedom
+## Multiple R-squared:  0.02267,    Adjusted R-squared:  0.02241 
+## F-statistic: 87.65 on 1 and 3778 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="real-life-lm-example.html#cb393-1" aria-hidden="true" tabindex="-1"></a>engine.size.lm.p<span class="ot">=</span><span class="fu">coefficients</span>(<span class="fu">summary</span>(engine.size.lm))[<span class="dv">2</span>,<span class="st">&quot;Pr(&gt;|t|)&quot;</span>]</span>
+<span id="cb393-2"><a href="real-life-lm-example.html#cb393-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>engine.size, <span class="at">data=</span>data.df, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Univariate engine.size p =&quot;</span>,<span class="fu">round</span>(engine.size.lm.p,<span class="dv">5</span>)))</span>
+<span id="cb393-3"><a href="real-life-lm-example.html#cb393-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(engine.size.lm, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="real-life-lm-example.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(engine.size.lm,engine.size.lm.p)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="model-with-all-variables" class="section level2" number="11.6">
+<h2><span class="header-section-number">11.6</span> Model with all variables</h2>
+<p>It seems that <em>owners</em> are not very informative: could it be because we imputed half of them</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="real-life-lm-example.html#cb395-1" aria-hidden="true" tabindex="-1"></a>full.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>., <span class="at">data=</span>data.df)</span>
+<span id="cb395-2"><a href="real-life-lm-example.html#cb395-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(full.m)</span></span>
+<span id="cb395-3"><a href="real-life-lm-example.html#cb395-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(full.m)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: price
+##                     Df     Sum Sq    Mean Sq   F value Pr(&gt;F)    
+## mileage              1 1.8119e+10 1.8119e+10 4178.8708 &lt;2e-16 ***
+## manufactured.year    1 8.2483e+09 8.2483e+09 1902.3510 &lt;2e-16 ***
+## engine.size          1 1.0903e+10 1.0903e+10 2514.5751 &lt;2e-16 ***
+## owners               1 1.0695e+06 1.0695e+06    0.2467 0.6195    
+## make                42 6.9638e+09 1.6580e+08   38.2404 &lt;2e-16 ***
+## Residuals         3733 1.6186e+10 4.3359e+06                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="drop1" class="section level2" number="11.7">
+<h2><span class="header-section-number">11.7</span> Drop1</h2>
+<p>I think that drop1 suggests to keep only <em>make</em>, <em>engine.size</em>, <em>mileage</em></p>
+<p><a href="https://stats.stackexchange.com/questions/4639/interpreting-the-drop1-output-in-r" class="uri">https://stats.stackexchange.com/questions/4639/interpreting-the-drop1-output-in-r</a></p>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="real-life-lm-example.html#cb397-1" aria-hidden="true" tabindex="-1"></a>drop1.m <span class="ot">&lt;-</span> <span class="fu">drop1</span>(full.m,  <span class="at">test=</span><span class="st">&quot;F&quot;</span>)</span>
+<span id="cb397-2"><a href="real-life-lm-example.html#cb397-2" aria-hidden="true" tabindex="-1"></a><span class="co">#drop1.m</span></span>
+<span id="cb397-3"><a href="real-life-lm-example.html#cb397-3" aria-hidden="true" tabindex="-1"></a>drop1.m[<span class="fu">order</span>(drop1.m<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>),]</span></code></pre></div>
+<pre><code>## Single term deletions
+## 
+## Model:
+## price ~ mileage + manufactured.year + engine.size + owners + 
+##     make + age
+##                   Df  Sum of Sq        RSS   AIC  F value Pr(&gt;F)    
+## make              42 6963803785 2.3150e+10 59083  38.2404 &lt;2e-16 ***
+## engine.size        1 3549033541 1.9735e+10 58562 818.5316 &lt;2e-16 ***
+## mileage            1 1900987496 1.8087e+10 58232 438.4344 &lt;2e-16 ***
+## owners             1    4803073 1.6191e+10 57813   1.1078 0.2926    
+## &lt;none&gt;                          1.6186e+10 57814                    
+## manufactured.year  0          0 1.6186e+10 57814                    
+## age                0          0 1.6186e+10 57814                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="real-life-lm-example.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(full.m,drop1.m)</span></code></pre></div>
+</div>
+<div id="optimal-model" class="section level2" number="11.8">
+<h2><span class="header-section-number">11.8</span> Optimal model</h2>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="real-life-lm-example.html#cb400-1" aria-hidden="true" tabindex="-1"></a>optimal.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>make <span class="sc">+</span> engine.size <span class="sc">+</span> mileage, <span class="at">data=</span>data.df)</span>
+<span id="cb400-2"><a href="real-life-lm-example.html#cb400-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(optimal.m)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: price
+##               Df     Sum Sq    Mean Sq  F value    Pr(&gt;F)    
+## make          42 1.1706e+10 2.7873e+08   37.793 &lt; 2.2e-16 ***
+## engine.size    1 1.1660e+08 1.1660e+08   15.810 7.136e-05 ***
+## mileage        1 2.1052e+10 2.1052e+10 2854.492 &lt; 2.2e-16 ***
+## Residuals   3735 2.7546e+10 7.3750e+06                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="predict-1" class="section level2" number="11.9">
+<h2><span class="header-section-number">11.9</span> Predict</h2>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="real-life-lm-example.html#cb402-1" aria-hidden="true" tabindex="-1"></a>new_data.df <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">make=</span><span class="fu">c</span>(<span class="st">&quot;Citroen&quot;</span>,<span class="st">&quot;Audi&quot;</span>,<span class="st">&quot;Mercedes-Benz&quot;</span>), </span>
+<span id="cb402-2"><a href="real-life-lm-example.html#cb402-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">engine.size=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>,<span class="dv">3</span>),</span>
+<span id="cb402-3"><a href="real-life-lm-example.html#cb402-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mileage=</span><span class="fu">c</span>(<span class="dv">70000</span>,<span class="dv">50000</span>,<span class="dv">10000</span>))</span>
+<span id="cb402-4"><a href="real-life-lm-example.html#cb402-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb402-5"><a href="real-life-lm-example.html#cb402-5" aria-hidden="true" tabindex="-1"></a>predicted_price <span class="ot">&lt;-</span> <span class="fu">predict</span>(optimal.m,<span class="at">newdata =</span> new_data.df)</span>
+<span id="cb402-6"><a href="real-life-lm-example.html#cb402-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb402-7"><a href="real-life-lm-example.html#cb402-7" aria-hidden="true" tabindex="-1"></a>new_data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(new_data.df, predicted_price)</span>
+<span id="cb402-8"><a href="real-life-lm-example.html#cb402-8" aria-hidden="true" tabindex="-1"></a>new_data.df</span></code></pre></div>
+<pre><code>##            make engine.size mileage predicted_price
+## 1       Citroen         1.0   70000        2653.858
+## 2          Audi         1.5   50000       10086.041
+## 3 Mercedes-Benz         3.0   10000       15371.881</code></pre>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="real-life-lm-example.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(predicted_price)</span></code></pre></div>
+</div>
+<div id="end-section" class="section level2" number="11.10">
+<h2><span class="header-section-number">11.10</span> End section</h2>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="real-life-lm-example.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ls()</span></span>
+<span id="cb405-2"><a href="real-life-lm-example.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] dplyr_1.0.4   plotly_4.9.3  ggplot2_3.3.3
+## 
+## loaded via a namespace (and not attached):
+##  [1] reticulate_1.18   tidyselect_1.1.0  xfun_0.21         purrr_0.3.4      
+##  [5] splines_3.6.2     lattice_0.20-41   colorspace_2.0-0  vctrs_0.3.6      
+##  [9] generics_0.1.0    htmltools_0.5.1.1 viridisLite_0.3.0 yaml_2.2.1       
+## [13] mgcv_1.8-33       utf8_1.1.4        rlang_0.4.10      pillar_1.4.7     
+## [17] glue_1.4.2        withr_2.4.1       DBI_1.1.1         lifecycle_1.0.0  
+## [21] stringr_1.4.0     munsell_0.5.0     gtable_0.3.0      htmlwidgets_1.5.3
+## [25] evaluate_0.14     labeling_0.4.2    knitr_1.31        crosstalk_1.1.1  
+## [29] fansi_0.4.2       highr_0.8         Rcpp_1.0.6        scales_1.1.1     
+## [33] jsonlite_1.7.2    farver_2.0.3      digest_0.6.27     stringi_1.5.3    
+## [37] bookdown_0.21     grid_3.6.2        cli_2.3.0         tools_3.6.2      
+## [41] magrittr_2.0.1    lazyeval_0.2.2    tibble_3.0.6      crayon_1.4.1     
+## [45] tidyr_1.1.2       pkgconfig_2.0.3   ellipsis_0.3.1    Matrix_1.3-2     
+## [49] data.table_1.13.6 assertthat_0.2.1  rmarkdown_2.6     httr_1.4.2       
+## [53] rstudioapi_0.13   R6_2.5.0          nlme_3.1-152      compiler_3.6.2</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
