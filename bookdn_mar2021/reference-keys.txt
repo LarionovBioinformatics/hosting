@@ -101,4 +101,13 @@ model-with-all-variables
 drop1
 optimal-model
 predict-1
-end-section
+stepwise-selection-of-predictors-in-lm
+prepare-data
+load
+impute-missed-1
+the-full-model
+stepwise-selection
+backward
+forward
+a-sidetrack-about-seed
+final-section

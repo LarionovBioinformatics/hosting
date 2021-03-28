@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Section 9 Data exploring / modifying | I forgot the title</title>
+  <title>Section 9 Data exploring / modifying | Stepwise selection of predictors in lm()</title>
   <meta name="description" content="This is my great book !" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Section 9 Data exploring / modifying | I forgot the title" />
+  <meta property="og:title" content="Section 9 Data exploring / modifying | Stepwise selection of predictors in lm()" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,14 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Section 9 Data exploring / modifying | I forgot the title" />
+  <meta name="twitter:title" content="Section 9 Data exploring / modifying | Stepwise selection of predictors in lm()" />
   
   <meta name="twitter:description" content="This is my great book !" />
   
 
-<meta name="author" content="Of course, its Me" />
+<meta name="author" content="AL" />
 
 
-<meta name="date" content="2021-03-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -291,7 +290,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.7" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#drop1"><i class="fa fa-check"></i><b>11.7</b> Drop1</a></li>
 <li class="chapter" data-level="11.8" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#optimal-model"><i class="fa fa-check"></i><b>11.8</b> Optimal model</a></li>
 <li class="chapter" data-level="11.9" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#predict-1"><i class="fa fa-check"></i><b>11.9</b> Predict</a></li>
-<li class="chapter" data-level="11.10" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#end-section"><i class="fa fa-check"></i><b>11.10</b> End section</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html"><i class="fa fa-check"></i><b>12</b> Stepwise selection of predictors in lm()</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#prepare-data"><i class="fa fa-check"></i><b>12.1</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#load"><i class="fa fa-check"></i><b>12.1.1</b> Load</a></li>
+<li class="chapter" data-level="12.1.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#impute-missed-1"><i class="fa fa-check"></i><b>12.1.2</b> Impute missed</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#the-full-model"><i class="fa fa-check"></i><b>12.2</b> The full model</a></li>
+<li class="chapter" data-level="12.3" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#stepwise-selection"><i class="fa fa-check"></i><b>12.3</b> Stepwise selection</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#backward"><i class="fa fa-check"></i><b>12.3.1</b> backward</a></li>
+<li class="chapter" data-level="12.3.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#forward"><i class="fa fa-check"></i><b>12.3.2</b> forward</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#a-sidetrack-about-seed"><i class="fa fa-check"></i><b>12.4</b> A sidetrack about seed</a></li>
+<li class="chapter" data-level="12.5" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#final-section"><i class="fa fa-check"></i><b>12.5</b> Final section</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
@@ -305,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stepwise selection of predictors in lm()</a>
           </h1>
         </div>
 
@@ -326,19 +340,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 1000    3</code></pre>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="data-exploring-modifying.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(my_data.df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  3 variables:
-##  $ y: num  -36.57 2.15 42.44 70.87 88.03 ...
-##  $ x: num  27.7 45.4 81.7 64.4 55.4 ...
+##  $ y: num  38.74 6.65 78.23 35.87 59.61 ...
+##  $ x: num  62.8 81.5 86.1 56.1 53.6 ...
 ##  $ f: Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="data-exploring-modifying.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(my_data.df)</span></code></pre></div>
 <pre><code>## [1] &quot;y&quot; &quot;x&quot; &quot;f&quot;</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="data-exploring-modifying.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_data.df)</span></code></pre></div>
-<pre><code>##        y                 x           f      
-##  Min.   :-82.526   Min.   : 0.2636   A:500  
-##  1st Qu.:  5.312   1st Qu.:24.2604   B:500  
-##  Median : 24.084   Median :50.5506          
-##  Mean   : 24.223   Mean   :49.9268          
-##  3rd Qu.: 43.284   3rd Qu.:74.5549          
-##  Max.   :117.011   Max.   :99.7659</code></pre>
+<pre><code>##        y                 x            f      
+##  Min.   :-72.800   Min.   : 0.01993   A:500  
+##  1st Qu.:  5.818   1st Qu.:25.09700   B:500  
+##  Median : 24.579   Median :51.27297          
+##  Mean   : 25.523   Mean   :50.12205          
+##  3rd Qu.: 45.572   3rd Qu.:74.01090          
+##  Max.   :113.920   Max.   :99.94953</code></pre>
 </div>
 <div id="apply-summary-functions-over-margin" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Apply (summary) functions over margin</h2>
@@ -366,7 +380,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   0.437500   0.406250   3.687500   2.812500</code></pre>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="data-exploring-modifying.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(my_data.df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],<span class="dv">2</span>,mean)</span></code></pre></div>
 <pre><code>##        y        x 
-## 24.22335 49.92681</code></pre>
+## 25.52319 50.12205</code></pre>
 </div>
 <div id="missed-values" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Missed values</h2>
@@ -407,29 +421,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-exploring-modifying.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering</span></span>
 <span id="cb239-2"><a href="data-exploring-modifying.html#cb239-2" aria-hidden="true" tabindex="-1"></a>my_data.df[my_data.df<span class="sc">$</span>x <span class="sc">&gt;</span><span class="dv">99</span>,]</span></code></pre></div>
 <pre><code>##              y        x f
-## 29   59.108631 99.22415 A
-## 205 -10.178437 99.11799 A
-## 583   8.606938 99.63798 B
-## 612  -2.040589 99.35501 B
-## 615   8.904664 99.44556 B
-## 655   3.271351 99.05113 B
-## 706  -1.584454 99.42078 B
-## 726  11.243354 99.14803 B
-## 753 -26.320111 99.76585 B
-## 993 -35.589642 99.40753 B</code></pre>
+## 48   -1.379957 99.94953 A
+## 139   4.800641 99.23182 A
+## 392  51.954874 99.27734 A
+## 534  37.497113 99.50399 B
+## 680 -35.893699 99.41878 B
+## 716  -3.413774 99.51158 B
+## 800   2.240359 99.34165 B
+## 823 -30.945133 99.85718 B
+## 830  -1.262147 99.29401 B
+## 934 -19.780000 99.41986 B
+## 994  -7.016268 99.81947 B</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-exploring-modifying.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordering != sorting</span></span>
 <span id="cb241-2"><a href="data-exploring-modifying.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 0.2635849 0.2772705 0.3116284 0.4554120 0.5474435</code></pre>
+<pre><code>## [1] 0.01993272 0.05278010 0.11524886 0.18856402 0.42426903</code></pre>
 <div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-exploring-modifying.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(my_data.df<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] 119 128 662 643 469</code></pre>
+<pre><code>## [1] 661 123 652 676 481</code></pre>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-exploring-modifying.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data.df[<span class="fu">order</span>(my_data.df<span class="sc">$</span>x),])</span></code></pre></div>
-<pre><code>##             y         x f
-## 119 15.177678 0.2635849 A
-## 128 38.354724 0.2772705 A
-## 662 26.150160 0.3116284 B
-## 643  5.717829 0.4554120 B
-## 469 54.586483 0.5474435 A
-## 788 27.018809 0.6150180 B</code></pre>
+<pre><code>##              y          x f
+## 661  48.314925 0.01993272 B
+## 123  21.741033 0.05278010 A
+## 652  48.545650 0.11524886 B
+## 676   1.715605 0.18856402 B
+## 481  24.976149 0.42426903 A
+## 42  -40.422466 0.60749438 A</code></pre>
 </div>
 <div id="tables-to-tests" class="section level3" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> Tables to tests</h3>
@@ -522,42 +537,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## # A tibble: 2 x 4
 ##   f     count x_mean y_mean
 ## * &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1 A       500   48.8   23.8
-## 2 B       500   51.0   24.7</code></pre>
+## 1 A       500   50.3   25.8
+## 2 B       500   49.9   25.2</code></pre>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-exploring-modifying.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sorting</span></span>
 <span id="cb264-2"><a href="data-exploring-modifying.html#cb264-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb264-3"><a href="data-exploring-modifying.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
 <span id="cb264-4"><a href="data-exploring-modifying.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##           y         x f
-## 1 15.177678 0.2635849 A
-## 2 38.354724 0.2772705 A
-## 3 26.150160 0.3116284 B
-## 4  5.717829 0.4554120 B
-## 5 54.586483 0.5474435 A
-## 6 27.018809 0.6150180 B</code></pre>
+<pre><code>##            y          x f
+## 1  48.314925 0.01993272 B
+## 2  21.741033 0.05278010 A
+## 3  48.545650 0.11524886 B
+## 4   1.715605 0.18856402 B
+## 5  24.976149 0.42426903 A
+## 6 -40.422466 0.60749438 A</code></pre>
 <div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-exploring-modifying.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering rows</span></span>
 <span id="cb266-2"><a href="data-exploring-modifying.html#cb266-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb266-3"><a href="data-exploring-modifying.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(x<span class="sc">&gt;</span><span class="dv">75</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb266-4"><a href="data-exploring-modifying.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(x) <span class="sc">%&gt;%</span> </span>
 <span id="cb266-5"><a href="data-exploring-modifying.html#cb266-5" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
 <pre><code>##           y        x f
-## 1 37.531548 75.14321 A
-## 2  2.961144 75.35843 B
-## 3 47.599322 75.36817 B
-## 4 25.535710 75.43332 B
-## 5 40.379314 75.54195 B
-## 6  2.878849 75.70843 B</code></pre>
+## 1  31.75972 75.06202 B
+## 2  41.85073 75.06381 B
+## 3  43.26266 75.07611 A
+## 4 -11.50037 75.22381 B
+## 5  42.37263 75.24931 A
+## 6 -11.93193 75.58763 B</code></pre>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-exploring-modifying.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting columns</span></span>
 <span id="cb268-2"><a href="data-exploring-modifying.html#cb268-2" aria-hidden="true" tabindex="-1"></a>my_data.df <span class="sc">%&gt;%</span> </span>
 <span id="cb268-3"><a href="data-exploring-modifying.html#cb268-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(y,x) <span class="sc">%&gt;%</span> </span>
 <span id="cb268-4"><a href="data-exploring-modifying.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  head</span></code></pre></div>
-<pre><code>##            y        x
-## 1 -36.567660 27.67588
-## 2   2.149815 45.40984
-## 3  42.442918 81.67726
-## 4  70.871773 64.44782
-## 5  88.032996 55.38734
-## 6  42.314210 93.96441</code></pre>
+<pre><code>##            y         x
+## 1  38.737252 62.769121
+## 2   6.653281 81.470538
+## 3  78.230559 86.050232
+## 4  35.871349 56.099638
+## 5  59.608969 53.607204
+## 6 -13.336377  9.322994</code></pre>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-exploring-modifying.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Piping can be done outside of the dplyr too</span></span>
 <span id="cb270-2"><a href="data-exploring-modifying.html#cb270-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code></pre></div>
 <pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb

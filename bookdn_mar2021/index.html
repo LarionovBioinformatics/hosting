@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>I forgot the title</title>
+  <title>Stepwise selection of predictors in lm()</title>
   <meta name="description" content="This is my great book !" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="I forgot the title" />
+  <meta property="og:title" content="Stepwise selection of predictors in lm()" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,14 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="I forgot the title" />
+  <meta name="twitter:title" content="Stepwise selection of predictors in lm()" />
   
   <meta name="twitter:description" content="This is my great book !" />
   
 
-<meta name="author" content="Of course, its Me" />
+<meta name="author" content="AL" />
 
 
-<meta name="date" content="2021-03-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -291,7 +290,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.7" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#drop1"><i class="fa fa-check"></i><b>11.7</b> Drop1</a></li>
 <li class="chapter" data-level="11.8" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#optimal-model"><i class="fa fa-check"></i><b>11.8</b> Optimal model</a></li>
 <li class="chapter" data-level="11.9" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#predict-1"><i class="fa fa-check"></i><b>11.9</b> Predict</a></li>
-<li class="chapter" data-level="11.10" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#end-section"><i class="fa fa-check"></i><b>11.10</b> End section</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html"><i class="fa fa-check"></i><b>12</b> Stepwise selection of predictors in lm()</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#prepare-data"><i class="fa fa-check"></i><b>12.1</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#load"><i class="fa fa-check"></i><b>12.1.1</b> Load</a></li>
+<li class="chapter" data-level="12.1.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#impute-missed-1"><i class="fa fa-check"></i><b>12.1.2</b> Impute missed</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#the-full-model"><i class="fa fa-check"></i><b>12.2</b> The full model</a></li>
+<li class="chapter" data-level="12.3" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#stepwise-selection"><i class="fa fa-check"></i><b>12.3</b> Stepwise selection</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#backward"><i class="fa fa-check"></i><b>12.3.1</b> backward</a></li>
+<li class="chapter" data-level="12.3.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#forward"><i class="fa fa-check"></i><b>12.3.2</b> forward</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#a-sidetrack-about-seed"><i class="fa fa-check"></i><b>12.4</b> A sidetrack about seed</a></li>
+<li class="chapter" data-level="12.5" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#final-section"><i class="fa fa-check"></i><b>12.5</b> Final section</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
@@ -305,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stepwise selection of predictors in lm()</a>
           </h1>
         </div>
 
@@ -314,9 +328,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">I forgot the title</h1>
-<p class="author"><em>Of course, its Me</em></p>
-<p class="date"><em>2021-03-24</em></p>
+<h1 class="title">Stepwise selection of predictors in lm()</h1>
+<p class="author"><em>AL</em></p>
+<p class="date"><em>28/03/2021</em></p>
 </div>
 <div id="my-great-math-latex" class="section level1" number="1">
 <h1><span class="header-section-number">Section 1</span> My great Math LaTex</h1>

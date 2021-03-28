@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Section 6 Distributionns | I forgot the title</title>
+  <title>Section 6 Distributionns | Stepwise selection of predictors in lm()</title>
   <meta name="description" content="This is my great book !" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Section 6 Distributionns | I forgot the title" />
+  <meta property="og:title" content="Section 6 Distributionns | Stepwise selection of predictors in lm()" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,14 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Section 6 Distributionns | I forgot the title" />
+  <meta name="twitter:title" content="Section 6 Distributionns | Stepwise selection of predictors in lm()" />
   
   <meta name="twitter:description" content="This is my great book !" />
   
 
-<meta name="author" content="Of course, its Me" />
+<meta name="author" content="AL" />
 
 
-<meta name="date" content="2021-03-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -291,7 +290,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.7" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#drop1"><i class="fa fa-check"></i><b>11.7</b> Drop1</a></li>
 <li class="chapter" data-level="11.8" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#optimal-model"><i class="fa fa-check"></i><b>11.8</b> Optimal model</a></li>
 <li class="chapter" data-level="11.9" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#predict-1"><i class="fa fa-check"></i><b>11.9</b> Predict</a></li>
-<li class="chapter" data-level="11.10" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#end-section"><i class="fa fa-check"></i><b>11.10</b> End section</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html"><i class="fa fa-check"></i><b>12</b> Stepwise selection of predictors in lm()</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#prepare-data"><i class="fa fa-check"></i><b>12.1</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#load"><i class="fa fa-check"></i><b>12.1.1</b> Load</a></li>
+<li class="chapter" data-level="12.1.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#impute-missed-1"><i class="fa fa-check"></i><b>12.1.2</b> Impute missed</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#the-full-model"><i class="fa fa-check"></i><b>12.2</b> The full model</a></li>
+<li class="chapter" data-level="12.3" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#stepwise-selection"><i class="fa fa-check"></i><b>12.3</b> Stepwise selection</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#backward"><i class="fa fa-check"></i><b>12.3.1</b> backward</a></li>
+<li class="chapter" data-level="12.3.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#forward"><i class="fa fa-check"></i><b>12.3.2</b> forward</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#a-sidetrack-about-seed"><i class="fa fa-check"></i><b>12.4</b> A sidetrack about seed</a></li>
+<li class="chapter" data-level="12.5" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#final-section"><i class="fa fa-check"></i><b>12.5</b> Final section</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
@@ -305,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stepwise selection of predictors in lm()</a>
           </h1>
         </div>
 
@@ -342,7 +356,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="distributionns.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">qnorm</span>(x))</span></code></pre></div>
 <p><img src="my_book_files/figure-html/unnamed-chunk-24-5.png" width="672" /></p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="distributionns.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## [1]  0.3127052 -1.7464490 -0.2896767 -0.2313764 -1.5151107</code></pre>
+<pre><code>## [1]  1.6508980 -0.5321094  0.9727586  0.4346222 -0.2604831</code></pre>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="distributionns.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>),<span class="at">freq =</span> F,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.5</span>))</span>
 <span id="cb166-2"><a href="distributionns.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x),<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>,<span class="at">add=</span>T,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p><img src="my_book_files/figure-html/unnamed-chunk-24-6.png" width="672" /></p>
