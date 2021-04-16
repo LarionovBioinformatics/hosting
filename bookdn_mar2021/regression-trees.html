@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 13 Regression trees | I forgot the title</title>
+  <meta name="description" content="This is my great book !" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 13 Regression trees | I forgot the title" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my great book !" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 13 Regression trees | I forgot the title" />
+  
+  <meta name="twitter:description" content="This is my great book !" />
+  
+
+<meta name="author" content="Of course, its Me" />
+
+
+<meta name="date" content="2021-04-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="stepwise-selection-of-predictors-in-lm.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Hio the book !</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> My great Math LaTex</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#rendering-to-pdf-and-epub"><i class="fa fa-check"></i><b>1.1</b> Rendering to PDF and EPUB</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#sharing-on-social-media"><i class="fa fa-check"></i><b>1.2</b> Sharing on social media</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>2</b> R-Markdown</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-markdown.html"><a href="r-markdown.html#nd-level-header"><i class="fa fa-check"></i><b>2.1</b> 2nd level header</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r-markdown.html"><a href="r-markdown.html#rd-level-header"><i class="fa fa-check"></i><b>2.1.1</b> 3rd level header</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r-markdown.html"><a href="r-markdown.html#not-only-r"><i class="fa fa-check"></i><b>2.2</b> Not only R …</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-markdown.html"><a href="r-markdown.html#python"><i class="fa fa-check"></i><b>2.2.1</b> Python</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-markdown.html"><a href="r-markdown.html#bash"><i class="fa fa-check"></i><b>2.2.2</b> Bash</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-markdown.html"><a href="r-markdown.html#back-to-r"><i class="fa fa-check"></i><b>2.3</b> Back to R</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-markdown.html"><a href="r-markdown.html#r-markdown-1"><i class="fa fa-check"></i><b>2.3.1</b> R Markdown</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r-markdown.html"><a href="r-markdown.html#including-plots"><i class="fa fa-check"></i><b>2.3.2</b> Including Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html"><i class="fa fa-check"></i><b>3</b> A simple analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#in-built-datasets"><i class="fa fa-check"></i><b>3.1</b> In-built datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#explore-data"><i class="fa fa-check"></i><b>3.2</b> Explore data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#base-r-plottig"><i class="fa fa-check"></i><b>3.2.1</b> Base R plottig</a></li>
+<li class="chapter" data-level="3.2.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#ggplot-style"><i class="fa fa-check"></i><b>3.2.2</b> ggplot style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#t-test"><i class="fa fa-check"></i><b>3.3</b> T-test</a></li>
+<li class="chapter" data-level="3.4" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#liear-model"><i class="fa fa-check"></i><b>3.4</b> Liear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-hp"><i class="fa fa-check"></i><b>3.4.1</b> mpg ~ hp</a></li>
+<li class="chapter" data-level="3.4.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp"><i class="fa fa-check"></i><b>3.4.2</b> mpg ~ vs + hp</a></li>
+<li class="chapter" data-level="3.4.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp-1"><i class="fa fa-check"></i><b>3.4.3</b> mpg ~ vs * hp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-types.html"><a href="data-types.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="data-types.html"><a href="data-types.html#numeric-vectors"><i class="fa fa-check"></i><b>4.1.1</b> Numeric vectors</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-types.html"><a href="data-types.html#vector-elements-may-have-names"><i class="fa fa-check"></i><b>4.1.2</b> Vector elements may have names</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="data-types.html"><a href="data-types.html#numeric-matrices"><i class="fa fa-check"></i><b>4.2</b> Numeric matrices</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-types.html"><a href="data-types.html#matrices-may-have-rownames-and-colnames"><i class="fa fa-check"></i><b>4.2.1</b> Matrices may have rownames and colnames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="data-types.html"><a href="data-types.html#recycling-in-element-wise-operations"><i class="fa fa-check"></i><b>4.3</b> Recycling in element-wise operations</a></li>
+<li class="chapter" data-level="4.4" data-path="data-types.html"><a href="data-types.html#factors-categorical-variale"><i class="fa fa-check"></i><b>4.4</b> Factors: categorical variale</a></li>
+<li class="chapter" data-level="4.5" data-path="data-types.html"><a href="data-types.html#lists"><i class="fa fa-check"></i><b>4.5</b> Lists</a></li>
+<li class="chapter" data-level="4.6" data-path="data-types.html"><a href="data-types.html#dataframe-list-of-vectorsfactors"><i class="fa fa-check"></i><b>4.6</b> Dataframe: list of vectors/factors</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="plotly.html"><a href="plotly.html"><i class="fa fa-check"></i><b>5</b> Plotly</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plotly.html"><a href="plotly.html#reference"><i class="fa fa-check"></i><b>5.1</b> Reference</a></li>
+<li class="chapter" data-level="5.2" data-path="plotly.html"><a href="plotly.html#load-library"><i class="fa fa-check"></i><b>5.2</b> Load library</a></li>
+<li class="chapter" data-level="5.3" data-path="plotly.html"><a href="plotly.html#get-some-data"><i class="fa fa-check"></i><b>5.3</b> Get some data</a></li>
+<li class="chapter" data-level="5.4" data-path="plotly.html"><a href="plotly.html#plotly-magic"><i class="fa fa-check"></i><b>5.4</b> Plotly magic</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distributionns.html"><a href="distributionns.html"><i class="fa fa-check"></i><b>6</b> Distributionns</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distributionns.html"><a href="distributionns.html#function-curve"><i class="fa fa-check"></i><b>6.1</b> Function curve()</a></li>
+<li class="chapter" data-level="6.2" data-path="distributionns.html"><a href="distributionns.html#normal-distribution"><i class="fa fa-check"></i><b>6.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="6.3" data-path="distributionns.html"><a href="distributionns.html#gamma"><i class="fa fa-check"></i><b>6.3</b> Gamma</a></li>
+<li class="chapter" data-level="6.4" data-path="distributionns.html"><a href="distributionns.html#beta"><i class="fa fa-check"></i><b>6.4</b> Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>7</b> Package</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="package.html"><a href="package.html#user-defined-fnction"><i class="fa fa-check"></i><b>7.1</b> User-defined fnction</a></li>
+<li class="chapter" data-level="7.2" data-path="package.html"><a href="package.html#recursive-functions-are-allowed"><i class="fa fa-check"></i><b>7.2</b> Recursive functions are allowed</a></li>
+<li class="chapter" data-level="7.3" data-path="package.html"><a href="package.html#lets-add-some-data"><i class="fa fa-check"></i><b>7.3</b> Lets add some data</a></li>
+<li class="chapter" data-level="7.4" data-path="package.html"><a href="package.html#prepare-template-for-package-source-folder"><i class="fa fa-check"></i><b>7.4</b> Prepare template for package source folder</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-reading-writing.html"><a href="data-reading-writing.html"><i class="fa fa-check"></i><b>8</b> Data reading / writing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-reading-writing.html"><a href="data-reading-writing.html#a-simple-simulated-dataset"><i class="fa fa-check"></i><b>8.1</b> A simple simulated dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="data-reading-writing.html"><a href="data-reading-writing.html#saving-and-reading"><i class="fa fa-check"></i><b>8.2</b> Saving and reading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="data-reading-writing.html"><a href="data-reading-writing.html#rdata"><i class="fa fa-check"></i><b>8.2.1</b> RData</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-reading-writing.html"><a href="data-reading-writing.html#text-files"><i class="fa fa-check"></i><b>8.2.2</b> Text files</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html"><i class="fa fa-check"></i><b>9</b> Data exploring / modifying</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#read-data"><i class="fa fa-check"></i><b>9.1</b> Read data</a></li>
+<li class="chapter" data-level="9.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#apply-summary-functions-over-margin"><i class="fa fa-check"></i><b>9.2</b> Apply (summary) functions over margin</a></li>
+<li class="chapter" data-level="9.3" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#missed-values"><i class="fa fa-check"></i><b>9.3</b> Missed values</a></li>
+<li class="chapter" data-level="9.4" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#sorting-filtering-and-summarising"><i class="fa fa-check"></i><b>9.4</b> Sorting, filtering and summarising</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#base-r"><i class="fa fa-check"></i><b>9.4.1</b> Base R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#tables-to-tests"><i class="fa fa-check"></i><b>9.4.2</b> Tables to tests</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr"><i class="fa fa-check"></i><b>9.5</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#tidy-data-concept"><i class="fa fa-check"></i><b>9.5.1</b> Tidy Data concept</a></li>
+<li class="chapter" data-level="9.5.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#traps-in-tidydata"><i class="fa fa-check"></i><b>9.5.2</b> Traps in TidyData</a></li>
+<li class="chapter" data-level="9.5.3" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr-is-big"><i class="fa fa-check"></i><b>9.5.3</b> Dplyr is BIG</a></li>
+<li class="chapter" data-level="9.5.4" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#piping"><i class="fa fa-check"></i><b>9.5.4</b> Piping</a></li>
+<li class="chapter" data-level="9.5.5" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr-examples"><i class="fa fa-check"></i><b>9.5.5</b> Dplyr examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>10</b> Regression</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regression.html"><a href="regression.html#note"><i class="fa fa-check"></i><b>10.1</b> Note</a></li>
+<li class="chapter" data-level="10.2" data-path="regression.html"><a href="regression.html#load-data"><i class="fa fa-check"></i><b>10.2</b> Load data</a></li>
+<li class="chapter" data-level="10.3" data-path="regression.html"><a href="regression.html#explore-data-1"><i class="fa fa-check"></i><b>10.3</b> Explore data</a></li>
+<li class="chapter" data-level="10.4" data-path="regression.html"><a href="regression.html#impute-if-needed"><i class="fa fa-check"></i><b>10.4</b> Impute if needed</a></li>
+<li class="chapter" data-level="10.5" data-path="regression.html"><a href="regression.html#linear-modelling"><i class="fa fa-check"></i><b>10.5</b> Linear modelling</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regression.html"><a href="regression.html#single-term"><i class="fa fa-check"></i><b>10.5.1</b> Single term</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regression.html"><a href="regression.html#multiple-terms-without-interaction"><i class="fa fa-check"></i><b>10.5.2</b> Multiple terms without interaction</a></li>
+<li class="chapter" data-level="10.5.3" data-path="regression.html"><a href="regression.html#with-interaction"><i class="fa fa-check"></i><b>10.5.3</b> With interaction</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="regression.html"><a href="regression.html#lm-could-be-evaluated-by-anova"><i class="fa fa-check"></i><b>10.6</b> <em>lm</em> could be evaluated by ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="regression.html"><a href="regression.html#anova-could-be-used-to-compare-models"><i class="fa fa-check"></i><b>10.6.1</b> Anova could be used to compare models</a></li>
+<li class="chapter" data-level="10.6.2" data-path="regression.html"><a href="regression.html#a-bit-of-oop-about-anovalm"><i class="fa fa-check"></i><b>10.6.2</b> A bit of OOP about anova(lm)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="regression.html"><a href="regression.html#predict"><i class="fa fa-check"></i><b>10.7</b> Predict</a></li>
+<li class="chapter" data-level="10.8" data-path="regression.html"><a href="regression.html#update"><i class="fa fa-check"></i><b>10.8</b> Update</a></li>
+<li class="chapter" data-level="10.9" data-path="regression.html"><a href="regression.html#crooked-things-yet-to-explore"><i class="fa fa-check"></i><b>10.9</b> Crooked things yet to explore …</a>
+<ul>
+<li class="chapter" data-level="10.9.1" data-path="regression.html"><a href="regression.html#intercept-design-matrix"><i class="fa fa-check"></i><b>10.9.1</b> Intercept, design matrix</a></li>
+<li class="chapter" data-level="10.9.2" data-path="regression.html"><a href="regression.html#contrasts"><i class="fa fa-check"></i><b>10.9.2</b> Contrasts</a></li>
+<li class="chapter" data-level="10.9.3" data-path="regression.html"><a href="regression.html#type-i-ii-and-iii-sums"><i class="fa fa-check"></i><b>10.9.3</b> Type I, II and III sums</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html"><i class="fa fa-check"></i><b>11</b> Real life lm() example</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#summary"><i class="fa fa-check"></i><b>11.1</b> Summary</a></li>
+<li class="chapter" data-level="11.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#start-section"><i class="fa fa-check"></i><b>11.2</b> Start section</a></li>
+<li class="chapter" data-level="11.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#read-data-1"><i class="fa fa-check"></i><b>11.3</b> Read data</a></li>
+<li class="chapter" data-level="11.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-and-prepare-data"><i class="fa fa-check"></i><b>11.4</b> Explore and prepare data</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#overall-size-and-structure"><i class="fa fa-check"></i><b>11.4.1</b> Overall size and structure</a></li>
+<li class="chapter" data-level="11.4.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#missingness"><i class="fa fa-check"></i><b>11.4.2</b> Missingness</a></li>
+<li class="chapter" data-level="11.4.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#impute-missed"><i class="fa fa-check"></i><b>11.4.3</b> Impute missed</a></li>
+<li class="chapter" data-level="11.4.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#calculate-age"><i class="fa fa-check"></i><b>11.4.4</b> Calculate <em>age</em></a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-in-a-univariate-manner"><i class="fa fa-check"></i><b>11.5</b> Explore in a univariate manner</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#anova-for-categorical-variable-makes"><i class="fa fa-check"></i><b>11.5.1</b> Anova for categorical variable <em>makes</em></a></li>
+<li class="chapter" data-level="11.5.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#univariate-lm-for-numeric-variables"><i class="fa fa-check"></i><b>11.5.2</b> Univariate <em>lm()</em> for numeric variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#model-with-all-variables"><i class="fa fa-check"></i><b>11.6</b> Model with all variables</a></li>
+<li class="chapter" data-level="11.7" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#drop1"><i class="fa fa-check"></i><b>11.7</b> Drop1</a></li>
+<li class="chapter" data-level="11.8" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#optimal-model"><i class="fa fa-check"></i><b>11.8</b> Optimal model</a></li>
+<li class="chapter" data-level="11.9" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#predict-1"><i class="fa fa-check"></i><b>11.9</b> Predict</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html"><i class="fa fa-check"></i><b>12</b> Stepwise selection of predictors in lm()</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#prepare-data"><i class="fa fa-check"></i><b>12.1</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#load"><i class="fa fa-check"></i><b>12.1.1</b> Load</a></li>
+<li class="chapter" data-level="12.1.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#impute-missed-1"><i class="fa fa-check"></i><b>12.1.2</b> Impute missed</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#the-full-model"><i class="fa fa-check"></i><b>12.2</b> The full model</a></li>
+<li class="chapter" data-level="12.3" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#stepwise-selection"><i class="fa fa-check"></i><b>12.3</b> Stepwise selection</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#backward"><i class="fa fa-check"></i><b>12.3.1</b> backward</a></li>
+<li class="chapter" data-level="12.3.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#forward"><i class="fa fa-check"></i><b>12.3.2</b> forward</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#a-sidetrack-about-seed"><i class="fa fa-check"></i><b>12.4</b> A sidetrack about seed</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>13</b> Regression trees</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="regression-trees.html"><a href="regression-trees.html#summary-1"><i class="fa fa-check"></i><b>13.1</b> Summary</a></li>
+<li class="chapter" data-level="13.2" data-path="regression-trees.html"><a href="regression-trees.html#start-section-1"><i class="fa fa-check"></i><b>13.2</b> Start section</a></li>
+<li class="chapter" data-level="13.3" data-path="regression-trees.html"><a href="regression-trees.html#prepare-data-1"><i class="fa fa-check"></i><b>13.3</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="regression-trees.html"><a href="regression-trees.html#data"><i class="fa fa-check"></i><b>13.3.1</b> Data</a></li>
+<li class="chapter" data-level="13.3.2" data-path="regression-trees.html"><a href="regression-trees.html#split"><i class="fa fa-check"></i><b>13.3.2</b> Split</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="regression-trees.html"><a href="regression-trees.html#simple-tree-model"><i class="fa fa-check"></i><b>13.4</b> Simple tree model</a></li>
+<li class="chapter" data-level="13.5" data-path="regression-trees.html"><a href="regression-trees.html#full-tree-without-pruning"><i class="fa fa-check"></i><b>13.5</b> Full tree without pruning</a></li>
+<li class="chapter" data-level="13.6" data-path="regression-trees.html"><a href="regression-trees.html#a-model-with-manual-settings-control"><i class="fa fa-check"></i><b>13.6</b> A model with manual settings control</a></li>
+<li class="chapter" data-level="13.7" data-path="regression-trees.html"><a href="regression-trees.html#selecting-optimal-hyperparameters-through-enumeration"><i class="fa fa-check"></i><b>13.7</b> Selecting optimal hyperparameters through enumeration</a>
+<ul>
+<li class="chapter" data-level="13.7.1" data-path="regression-trees.html"><a href="regression-trees.html#make-the-hyperparameters-grid"><i class="fa fa-check"></i><b>13.7.1</b> Make the hyperparameters grid</a></li>
+<li class="chapter" data-level="13.7.2" data-path="regression-trees.html"><a href="regression-trees.html#calculate-models-for-all-combinations-in-the-hyperparameters-grid"><i class="fa fa-check"></i><b>13.7.2</b> # Calculate models for all combinations in the hyperparameters grid</a></li>
+<li class="chapter" data-level="13.7.3" data-path="regression-trees.html"><a href="regression-trees.html#select-hyperparameters-with-lowest-x-validation-error"><i class="fa fa-check"></i><b>13.7.3</b> Select hyperparameters with lowest x-validation error</a></li>
+<li class="chapter" data-level="13.7.4" data-path="regression-trees.html"><a href="regression-trees.html#the-optimal-tree"><i class="fa fa-check"></i><b>13.7.4</b> The optimal tree</a></li>
+<li class="chapter" data-level="13.7.5" data-path="regression-trees.html"><a href="regression-trees.html#prediction"><i class="fa fa-check"></i><b>13.7.5</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="regression-trees.html"><a href="regression-trees.html#bootstrap-aggregating-bagging"><i class="fa fa-check"></i><b>13.8</b> Bootstrap aggregating (bagging)</a>
+<ul>
+<li class="chapter" data-level="13.8.1" data-path="regression-trees.html"><a href="regression-trees.html#bagged-trees-model-with-default-settings"><i class="fa fa-check"></i><b>13.8.1</b> bagged trees model with default settings</a></li>
+<li class="chapter" data-level="13.8.2" data-path="regression-trees.html"><a href="regression-trees.html#selecting-optimal-bag-size"><i class="fa fa-check"></i><b>13.8.2</b> Selecting optimal bag size</a></li>
+</ul></li>
+<li class="chapter" data-level="13.9" data-path="regression-trees.html"><a href="regression-trees.html#bagging-with-caret"><i class="fa fa-check"></i><b>13.9</b> Bagging with caret</a></li>
+<li class="chapter" data-level="13.10" data-path="regression-trees.html"><a href="regression-trees.html#confusion-plots"><i class="fa fa-check"></i><b>13.10</b> Confusion plots</a></li>
+<li class="chapter" data-level="13.11" data-path="regression-trees.html"><a href="regression-trees.html#final-section"><i class="fa fa-check"></i><b>13.11</b> Final section</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regression-trees" class="section level1" number="13">
+<h1><span class="header-section-number">Section 13</span> Regression trees</h1>
+<div id="summary-1" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Summary</h2>
+<ul>
+<li><a href="http://uc-r.github.io/regression_trees" class="uri">http://uc-r.github.io/regression_trees</a></li>
+</ul>
+<p>Also you may see for general R intro example:</p>
+<ul>
+<li><a href="http://uc-r.github.io/" class="uri">http://uc-r.github.io/</a></li>
+</ul>
+</div>
+<div id="start-section-1" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Start section</h2>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="regression-trees.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-04-16 18:39:16 BST&quot;</code></pre>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="regression-trees.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb445-2"><a href="regression-trees.html#cb445-2" aria-hidden="true" tabindex="-1"></a><span class="fu">graphics.off</span>()</span>
+<span id="cb445-3"><a href="regression-trees.html#cb445-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div>
+<pre><code>##           used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+## Ncells 2326991 124.3    4571884 244.2         NA  4571884 244.2
+## Vcells 4263262  32.6   10146329  77.5      16384  8388608  64.0</code></pre>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="regression-trees.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;rpart.plot&quot;)</span></span>
+<span id="cb447-2"><a href="regression-trees.html#cb447-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;AmesHousing&quot;)</span></span>
+<span id="cb447-3"><a href="regression-trees.html#cb447-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb447-4"><a href="regression-trees.html#cb447-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)     <span class="co"># data splitting </span></span>
+<span id="cb447-5"><a href="regression-trees.html#cb447-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)       <span class="co"># data wrangling</span></span>
+<span id="cb447-6"><a href="regression-trees.html#cb447-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)       <span class="co"># performing regression trees</span></span>
+<span id="cb447-7"><a href="regression-trees.html#cb447-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)  <span class="co"># plotting regression trees</span></span>
+<span id="cb447-8"><a href="regression-trees.html#cb447-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ipred)       <span class="co"># bagging</span></span>
+<span id="cb447-9"><a href="regression-trees.html#cb447-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)       <span class="co"># bagging</span></span></code></pre></div>
+<pre><code>## Loading required package: lattice</code></pre>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="regression-trees.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AmesHousing) <span class="co"># data to play with</span></span>
+<span id="cb449-2"><a href="regression-trees.html#cb449-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-3"><a href="regression-trees.html#cb449-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code></pre></div>
+</div>
+<div id="prepare-data-1" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Prepare data</h2>
+<div id="data" class="section level3" number="13.3.1">
+<h3><span class="header-section-number">13.3.1</span> Data</h3>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="regression-trees.html#cb450-1" aria-hidden="true" tabindex="-1"></a>data_file<span class="ot">=</span><span class="st">&quot;/Users/alexey/OneDrive/Documents/Home/Alex/stat_in_r_Mar2021/example/structure_data.csv&quot;</span></span>
+<span id="cb450-2"><a href="regression-trees.html#cb450-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-3"><a href="regression-trees.html#cb450-3" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_file)</span>
+<span id="cb450-4"><a href="regression-trees.html#cb450-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-5"><a href="regression-trees.html#cb450-5" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">unique</span>(data.df)</span>
+<span id="cb450-6"><a href="regression-trees.html#cb450-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-7"><a href="regression-trees.html#cb450-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1600 obs. of  6 variables:
+##  $ mileage          : num  32000 69000 95300 85962 64000 ...
+##  $ manufactured.year: int  2015 2012 2001 2010 2013 2004 2003 2012 2013 2012 ...
+##  $ engine.size      : num  1.6 2 3.2 2.7 1.8 3 5 2.1 1.8 2 ...
+##  $ owners           : int  NA 3 6 NA 1 4 3 3 3 2 ...
+##  $ price            : num  7495 7000 8000 7490 7000 ...
+##  $ make             : Factor w/ 43 levels &quot;Abarth&quot;,&quot;Alfa Romeo&quot;,..: 8 4 25 4 4 5 25 25 24 5 ...</code></pre>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="regression-trees.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data.df)</span></code></pre></div>
+<pre><code>##   mileage manufactured.year engine.size owners price          make
+## 1   32000              2015         1.6     NA  7495       Citroen
+## 2   69000              2012         2.0      3  7000          Audi
+## 3   95300              2001         3.2      6  8000 Mercedes-Benz
+## 4   85962              2010         2.7     NA  7490          Audi
+## 5   64000              2013         1.8      1  7000          Audi
+## 6   47053              2004         3.0      4  7995           BMW</code></pre>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="regression-trees.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data.df)</span></code></pre></div>
+<pre><code>## [1] 1600    6</code></pre>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="regression-trees.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(data_file)</span></code></pre></div>
+</div>
+<div id="split" class="section level3" number="13.3.2">
+<h3><span class="header-section-number">13.3.2</span> Split</h3>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="regression-trees.html#cb457-1" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(data.df)</span>
+<span id="cb457-2"><a href="regression-trees.html#cb457-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data_split)</span></code></pre></div>
+<pre><code>## [1] &quot;data&quot;   &quot;in_id&quot;  &quot;out_id&quot; &quot;id&quot;</code></pre>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="regression-trees.html#cb459-1" aria-hidden="true" tabindex="-1"></a>data_train <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb459-2"><a href="regression-trees.html#cb459-2" aria-hidden="true" tabindex="-1"></a>data_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code></pre></div>
+</div>
+</div>
+<div id="simple-tree-model" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Simple tree model</h2>
+<p>Uses default pruning settings</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="regression-trees.html#cb460-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">rpart</span>(</span>
+<span id="cb460-2"><a href="regression-trees.html#cb460-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> price <span class="sc">~</span> .,</span>
+<span id="cb460-3"><a href="regression-trees.html#cb460-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> data_train,</span>
+<span id="cb460-4"><a href="regression-trees.html#cb460-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method  =</span> <span class="st">&quot;anova&quot;</span></span>
+<span id="cb460-5"><a href="regression-trees.html#cb460-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb460-6"><a href="regression-trees.html#cb460-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb460-7"><a href="regression-trees.html#cb460-7" aria-hidden="true" tabindex="-1"></a>m1</span></code></pre></div>
+<pre><code>## n= 1200 
+## 
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##  1) root 1200 25233610000  7217.132  
+##    2) manufactured.year&lt; 2012.5 360  4569798000  3340.072  
+##      4) engine.size&lt; 3.1 350  1440377000  3008.423  
+##        8) manufactured.year&lt; 2010.5 261   719566900  2484.115 *
+##        9) manufactured.year&gt;=2010.5 89   438652500  4546.000 *
+##      5) engine.size&gt;=3.1 10  1743531000 14947.800 *
+##    3) manufactured.year&gt;=2012.5 840 12933280000  8878.729  
+##      6) engine.size&lt; 2.45 829  8580714000  8635.245  
+##       12) manufactured.year&lt; 2016.5 390  3016570000  7224.836  
+##         24) make=Abarth,Alfa Romeo,Chevrolet,Chrysler,Citroen,Dacia,DS AUTOMOBILES,Fiat,Ford,Honda,Hyundai,Infiniti,Kia,Mazda,MINI,Mitsubishi,Nissan,Peugeot,Renault,SEAT,SKODA,Smart,Suzuki,Toyota,Vauxhall,Volkswagen,Volvo 356  1369669000  6784.680  
+##           48) make=Alfa Romeo,Chevrolet,Chrysler,Citroen,Dacia,DS AUTOMOBILES,Fiat,Ford,Hyundai,Kia,Mitsubishi,Peugeot,Renault,SEAT,SKODA,Smart,Suzuki,Toyota,Vauxhall 259   631373900  6244.714 *
+##           49) make=Abarth,Honda,Infiniti,Mazda,MINI,Nissan,Volkswagen,Volvo 97   461148500  8226.443 *
+##         25) make=Audi,BMW,Jaguar,Lexus,Mercedes-Benz,Porsche 34   855767900 11833.530  
+##           50) mileage&gt;=40446.5 27   193347700 10402.590 *
+##           51) mileage&lt; 40446.5 7   393894700 17352.860 *
+##       13) manufactured.year&gt;=2016.5 439  4099121000  9888.228  
+##         26) engine.size&lt; 1.45 262  1154730000  8583.332 *
+##         27) engine.size&gt;=1.45 177  1837909000 11819.770  
+##           54) make=Citroen,Dacia,DS AUTOMOBILES,Fiat,MG,MINI,Peugeot,Renault,Suzuki,Vauxhall,Volvo 71   307640100  9776.577 *
+##           55) make=Audi,BMW,Ford,Honda,Hyundai,Infiniti,Jeep,Kia,Lexus,Mazda,Mercedes-Benz,Nissan,SEAT,Toyota,Volkswagen 106  1035339000 13188.320 *
+##      7) engine.size&gt;=2.45 11   599548200 27228.550 *</code></pre>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="regression-trees.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(m1)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="regression-trees.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(m1)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-84-2.png" width="672" /></p>
+</div>
+<div id="full-tree-without-pruning" class="section level2" number="13.5">
+<h2><span class="header-section-number">13.5</span> Full tree without pruning</h2>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="regression-trees.html#cb464-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rpart</span>(</span>
+<span id="cb464-2"><a href="regression-trees.html#cb464-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> .,</span>
+<span id="cb464-3"><a href="regression-trees.html#cb464-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data    =</span> data_train,</span>
+<span id="cb464-4"><a href="regression-trees.html#cb464-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method  =</span> <span class="st">&quot;anova&quot;</span>, </span>
+<span id="cb464-5"><a href="regression-trees.html#cb464-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">cp =</span> <span class="dv">0</span>, <span class="at">xval =</span> <span class="dv">10</span>)</span>
+<span id="cb464-6"><a href="regression-trees.html#cb464-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb464-7"><a href="regression-trees.html#cb464-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb464-8"><a href="regression-trees.html#cb464-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(m2)</span>
+<span id="cb464-9"><a href="regression-trees.html#cb464-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">7</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb464-10"><a href="regression-trees.html#cb464-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">20</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+</div>
+<div id="a-model-with-manual-settings-control" class="section level2" number="13.6">
+<h2><span class="header-section-number">13.6</span> A model with manual settings control</h2>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="regression-trees.html#cb465-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">rpart</span>(</span>
+<span id="cb465-2"><a href="regression-trees.html#cb465-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> .,</span>
+<span id="cb465-3"><a href="regression-trees.html#cb465-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data    =</span> data_train,</span>
+<span id="cb465-4"><a href="regression-trees.html#cb465-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method  =</span> <span class="st">&quot;anova&quot;</span>, </span>
+<span id="cb465-5"><a href="regression-trees.html#cb465-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">minsplit =</span> <span class="dv">10</span>, <span class="at">maxdepth =</span> <span class="dv">12</span>, <span class="at">xval =</span> <span class="dv">10</span>)</span>
+<span id="cb465-6"><a href="regression-trees.html#cb465-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb465-7"><a href="regression-trees.html#cb465-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb465-8"><a href="regression-trees.html#cb465-8" aria-hidden="true" tabindex="-1"></a>m3<span class="sc">$</span>cptable</span></code></pre></div>
+<pre><code>##            CP nsplit rel error    xerror       xstd
+## 1  0.30635851      0 1.0000000 1.0026040 0.09546510
+## 2  0.14873099      1 0.6936415 0.7131700 0.10101577
+## 3  0.05805843      2 0.5449105 0.5948951 0.08586096
+## 4  0.05492239      3 0.4868521 0.5677906 0.07959552
+## 5  0.04384951      4 0.4319297 0.5439939 0.07924383
+## 6  0.03135232      5 0.3880802 0.4631415 0.06097607
+## 7  0.01961391      6 0.3567278 0.4104493 0.04707860
+## 8  0.01118181      7 0.3371139 0.3870748 0.04676690
+## 9  0.01098324      8 0.3259321 0.3843668 0.04663158
+## 10 0.01064158      9 0.3149489 0.3802017 0.04662678
+## 11 0.01000000     10 0.3043073 0.3786965 0.04662779</code></pre>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="regression-trees.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(m3)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+</div>
+<div id="selecting-optimal-hyperparameters-through-enumeration" class="section level2" number="13.7">
+<h2><span class="header-section-number">13.7</span> Selecting optimal hyperparameters through enumeration</h2>
+<div id="make-the-hyperparameters-grid" class="section level3" number="13.7.1">
+<h3><span class="header-section-number">13.7.1</span> Make the hyperparameters grid</h3>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="regression-trees.html#cb468-1" aria-hidden="true" tabindex="-1"></a>hyper_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb468-2"><a href="regression-trees.html#cb468-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">minsplit =</span> <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">1</span>),</span>
+<span id="cb468-3"><a href="regression-trees.html#cb468-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxdepth =</span> <span class="fu">seq</span>(<span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">1</span>)</span>
+<span id="cb468-4"><a href="regression-trees.html#cb468-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb468-5"><a href="regression-trees.html#cb468-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb468-6"><a href="regression-trees.html#cb468-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hyper_grid)</span></code></pre></div>
+<pre><code>##   minsplit maxdepth
+## 1        5        8
+## 2        6        8
+## 3        7        8
+## 4        8        8
+## 5        9        8
+## 6       10        8</code></pre>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="regression-trees.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(hyper_grid)</span></code></pre></div>
+<pre><code>##     minsplit maxdepth
+## 123       15       15
+## 124       16       15
+## 125       17       15
+## 126       18       15
+## 127       19       15
+## 128       20       15</code></pre>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="regression-trees.html#cb472-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(hyper_grid)</span></code></pre></div>
+<pre><code>## [1] 128   2</code></pre>
+</div>
+<div id="calculate-models-for-all-combinations-in-the-hyperparameters-grid" class="section level3" number="13.7.2">
+<h3><span class="header-section-number">13.7.2</span> # Calculate models for all combinations in the hyperparameters grid</h3>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="regression-trees.html#cb474-1" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb474-2"><a href="regression-trees.html#cb474-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb474-3"><a href="regression-trees.html#cb474-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hyper_grid)) {</span>
+<span id="cb474-4"><a href="regression-trees.html#cb474-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb474-5"><a href="regression-trees.html#cb474-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get minsplit, maxdepth values at row i</span></span>
+<span id="cb474-6"><a href="regression-trees.html#cb474-6" aria-hidden="true" tabindex="-1"></a>  minsplit <span class="ot">&lt;-</span> hyper_grid<span class="sc">$</span>minsplit[i]</span>
+<span id="cb474-7"><a href="regression-trees.html#cb474-7" aria-hidden="true" tabindex="-1"></a>  maxdepth <span class="ot">&lt;-</span> hyper_grid<span class="sc">$</span>maxdepth[i]</span>
+<span id="cb474-8"><a href="regression-trees.html#cb474-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb474-9"><a href="regression-trees.html#cb474-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># train a model and store in the list</span></span>
+<span id="cb474-10"><a href="regression-trees.html#cb474-10" aria-hidden="true" tabindex="-1"></a>  models[[i]] <span class="ot">&lt;-</span> <span class="fu">rpart</span>(</span>
+<span id="cb474-11"><a href="regression-trees.html#cb474-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> .,</span>
+<span id="cb474-12"><a href="regression-trees.html#cb474-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">data    =</span> data_train,</span>
+<span id="cb474-13"><a href="regression-trees.html#cb474-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">method  =</span> <span class="st">&quot;anova&quot;</span>,</span>
+<span id="cb474-14"><a href="regression-trees.html#cb474-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">minsplit =</span> minsplit, <span class="at">maxdepth =</span> maxdepth)</span>
+<span id="cb474-15"><a href="regression-trees.html#cb474-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb474-16"><a href="regression-trees.html#cb474-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="select-hyperparameters-with-lowest-x-validation-error" class="section level3" number="13.7.3">
+<h3><span class="header-section-number">13.7.3</span> Select hyperparameters with lowest x-validation error</h3>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="regression-trees.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to get optimal cp</span></span>
+<span id="cb475-2"><a href="regression-trees.html#cb475-2" aria-hidden="true" tabindex="-1"></a>get_cp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb475-3"><a href="regression-trees.html#cb475-3" aria-hidden="true" tabindex="-1"></a>  min    <span class="ot">&lt;-</span> <span class="fu">which.min</span>(x<span class="sc">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>])</span>
+<span id="cb475-4"><a href="regression-trees.html#cb475-4" aria-hidden="true" tabindex="-1"></a>  cp <span class="ot">&lt;-</span> x<span class="sc">$</span>cptable[min, <span class="st">&quot;CP&quot;</span>] </span>
+<span id="cb475-5"><a href="regression-trees.html#cb475-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb475-6"><a href="regression-trees.html#cb475-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb475-7"><a href="regression-trees.html#cb475-7" aria-hidden="true" tabindex="-1"></a><span class="co"># function to get minimum error</span></span>
+<span id="cb475-8"><a href="regression-trees.html#cb475-8" aria-hidden="true" tabindex="-1"></a>get_min_error <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb475-9"><a href="regression-trees.html#cb475-9" aria-hidden="true" tabindex="-1"></a>  min    <span class="ot">&lt;-</span> <span class="fu">which.min</span>(x<span class="sc">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>])</span>
+<span id="cb475-10"><a href="regression-trees.html#cb475-10" aria-hidden="true" tabindex="-1"></a>  xerror <span class="ot">&lt;-</span> x<span class="sc">$</span>cptable[min, <span class="st">&quot;xerror&quot;</span>] </span>
+<span id="cb475-11"><a href="regression-trees.html#cb475-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb475-12"><a href="regression-trees.html#cb475-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb475-13"><a href="regression-trees.html#cb475-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add cp and error to hyperparameters grid</span></span>
+<span id="cb475-14"><a href="regression-trees.html#cb475-14" aria-hidden="true" tabindex="-1"></a>hyper_grid <span class="sc">%&gt;%</span></span>
+<span id="cb475-15"><a href="regression-trees.html#cb475-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb475-16"><a href="regression-trees.html#cb475-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">cp    =</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(models, get_cp),</span>
+<span id="cb475-17"><a href="regression-trees.html#cb475-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(models, get_min_error)</span>
+<span id="cb475-18"><a href="regression-trees.html#cb475-18" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb475-19"><a href="regression-trees.html#cb475-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(error) <span class="sc">%&gt;%</span></span>
+<span id="cb475-20"><a href="regression-trees.html#cb475-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="at">wt =</span> error)</span></code></pre></div>
+<pre><code>##   minsplit maxdepth   cp     error
+## 1       12        9 0.01 0.3630854
+## 2        6        8 0.01 0.3651868
+## 3        9        8 0.01 0.3665252
+## 4        9       14 0.01 0.3668898
+## 5       16        8 0.01 0.3671934</code></pre>
+</div>
+<div id="the-optimal-tree" class="section level3" number="13.7.4">
+<h3><span class="header-section-number">13.7.4</span> The optimal tree</h3>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="regression-trees.html#cb477-1" aria-hidden="true" tabindex="-1"></a>optimal_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(</span>
+<span id="cb477-2"><a href="regression-trees.html#cb477-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> .,</span>
+<span id="cb477-3"><a href="regression-trees.html#cb477-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data    =</span> data_train,</span>
+<span id="cb477-4"><a href="regression-trees.html#cb477-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method  =</span> <span class="st">&quot;anova&quot;</span>,</span>
+<span id="cb477-5"><a href="regression-trees.html#cb477-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">minsplit =</span> <span class="dv">12</span>, <span class="at">maxdepth =</span> <span class="dv">9</span>, <span class="at">cp =</span> <span class="fl">0.01</span>)</span>
+<span id="cb477-6"><a href="regression-trees.html#cb477-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb477-7"><a href="regression-trees.html#cb477-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-8"><a href="regression-trees.html#cb477-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(optimal_tree)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+</div>
+<div id="prediction" class="section level3" number="13.7.5">
+<h3><span class="header-section-number">13.7.5</span> Prediction</h3>
+<p>RMSE is the error estimate = how (on average) the predicted value is different from the actual value in the test set</p>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="regression-trees.html#cb478-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(optimal_tree, <span class="at">newdata =</span> data_test)</span>
+<span id="cb478-2"><a href="regression-trees.html#cb478-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb478-3"><a href="regression-trees.html#cb478-3" aria-hidden="true" tabindex="-1"></a><span class="fu">RMSE</span>(<span class="at">pred =</span> pred, <span class="at">obs =</span> data_test<span class="sc">$</span>price)</span></code></pre></div>
+<pre><code>## [1] 2524.683</code></pre>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="regression-trees.html#cb480-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data.df<span class="sc">$</span>price)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="regression-trees.html#cb481-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(data.df<span class="sc">$</span>price)</span></code></pre></div>
+<pre><code>##    0%   25%   50%   75%  100% 
+##   250  3999  6850  9200 34999</code></pre>
+</div>
+</div>
+<div id="bootstrap-aggregating-bagging" class="section level2" number="13.8">
+<h2><span class="header-section-number">13.8</span> Bootstrap aggregating (bagging)</h2>
+<div id="bagged-trees-model-with-default-settings" class="section level3" number="13.8.1">
+<h3><span class="header-section-number">13.8.1</span> bagged trees model with default settings</h3>
+<p>Note</p>
+<ul>
+<li>Out-Of-Bag x-validation<br />
+</li>
+<li>RMSE in the model summary</li>
+</ul>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="regression-trees.html#cb483-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make bootstrapping reproducible</span></span>
+<span id="cb483-2"><a href="regression-trees.html#cb483-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb483-3"><a href="regression-trees.html#cb483-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb483-4"><a href="regression-trees.html#cb483-4" aria-hidden="true" tabindex="-1"></a><span class="co"># train bagged model</span></span>
+<span id="cb483-5"><a href="regression-trees.html#cb483-5" aria-hidden="true" tabindex="-1"></a>bagged_m1 <span class="ot">&lt;-</span> <span class="fu">bagging</span>(</span>
+<span id="cb483-6"><a href="regression-trees.html#cb483-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> price <span class="sc">~</span> .,</span>
+<span id="cb483-7"><a href="regression-trees.html#cb483-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> data_train,</span>
+<span id="cb483-8"><a href="regression-trees.html#cb483-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">coob    =</span> <span class="cn">TRUE</span></span>
+<span id="cb483-9"><a href="regression-trees.html#cb483-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb483-10"><a href="regression-trees.html#cb483-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb483-11"><a href="regression-trees.html#cb483-11" aria-hidden="true" tabindex="-1"></a>bagged_m1</span></code></pre></div>
+<pre><code>## 
+## Bagging regression trees with 25 bootstrap replications 
+## 
+## Call: bagging.data.frame(formula = price ~ ., data = data_train, coob = TRUE)
+## 
+## Out-of-bag estimate of root mean squared error:  3251.254</code></pre>
+</div>
+<div id="selecting-optimal-bag-size" class="section level3" number="13.8.2">
+<h3><span class="header-section-number">13.8.2</span> Selecting optimal bag size</h3>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="regression-trees.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assess 10-50 bagged trees</span></span>
+<span id="cb485-2"><a href="regression-trees.html#cb485-2" aria-hidden="true" tabindex="-1"></a>ntree <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">150</span></span>
+<span id="cb485-3"><a href="regression-trees.html#cb485-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-4"><a href="regression-trees.html#cb485-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create empty vector to store OOB RMSE values</span></span>
+<span id="cb485-5"><a href="regression-trees.html#cb485-5" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="fu">length</span>(ntree))</span>
+<span id="cb485-6"><a href="regression-trees.html#cb485-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-7"><a href="regression-trees.html#cb485-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb485-8"><a href="regression-trees.html#cb485-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(ntree)) {</span>
+<span id="cb485-9"><a href="regression-trees.html#cb485-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb485-10"><a href="regression-trees.html#cb485-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reproducibility</span></span>
+<span id="cb485-11"><a href="regression-trees.html#cb485-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb485-12"><a href="regression-trees.html#cb485-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb485-13"><a href="regression-trees.html#cb485-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># perform bagged model</span></span>
+<span id="cb485-14"><a href="regression-trees.html#cb485-14" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">bagging</span>(</span>
+<span id="cb485-15"><a href="regression-trees.html#cb485-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> price <span class="sc">~</span> .,</span>
+<span id="cb485-16"><a href="regression-trees.html#cb485-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">data    =</span> data_train,</span>
+<span id="cb485-17"><a href="regression-trees.html#cb485-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">coob    =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb485-18"><a href="regression-trees.html#cb485-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">nbagg   =</span> ntree[i])</span>
+<span id="cb485-19"><a href="regression-trees.html#cb485-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb485-20"><a href="regression-trees.html#cb485-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get OOB error</span></span>
+<span id="cb485-21"><a href="regression-trees.html#cb485-21" aria-hidden="true" tabindex="-1"></a>  rmse[i] <span class="ot">&lt;-</span> model<span class="sc">$</span>err</span>
+<span id="cb485-22"><a href="regression-trees.html#cb485-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb485-23"><a href="regression-trees.html#cb485-23" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb485-24"><a href="regression-trees.html#cb485-24" aria-hidden="true" tabindex="-1"></a>y<span class="sc">-</span>x</span></code></pre></div>
+<pre><code>## Time difference of 34.79162 secs</code></pre>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="regression-trees.html#cb487-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ntree, rmse, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb487-2"><a href="regression-trees.html#cb487-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">60</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+</div>
+</div>
+<div id="bagging-with-caret" class="section level2" number="13.9">
+<h2><span class="header-section-number">13.9</span> Bagging with caret</h2>
+<p><a href="https://topepo.github.io/caret" class="uri">https://topepo.github.io/caret</a><br />
+<a href="https://topepo.github.io/caret/available-models.html" class="uri">https://topepo.github.io/caret/available-models.html</a></p>
+<p>to be done: requires</p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="regression-trees.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify 10-fold cross validation</span></span>
+<span id="cb488-2"><a href="regression-trees.html#cb488-2" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="at">number =</span> <span class="dv">10</span>) </span>
+<span id="cb488-3"><a href="regression-trees.html#cb488-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb488-4"><a href="regression-trees.html#cb488-4" aria-hidden="true" tabindex="-1"></a><span class="co"># CV bagged model</span></span>
+<span id="cb488-5"><a href="regression-trees.html#cb488-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb488-6"><a href="regression-trees.html#cb488-6" aria-hidden="true" tabindex="-1"></a>bagged_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb488-7"><a href="regression-trees.html#cb488-7" aria-hidden="true" tabindex="-1"></a>  price <span class="sc">~</span> .,</span>
+<span id="cb488-8"><a href="regression-trees.html#cb488-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">na.omit</span>(data_train),</span>
+<span id="cb488-9"><a href="regression-trees.html#cb488-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;treebag&quot;</span>,</span>
+<span id="cb488-10"><a href="regression-trees.html#cb488-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> ctrl,</span>
+<span id="cb488-11"><a href="regression-trees.html#cb488-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">importance =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb488-12"><a href="regression-trees.html#cb488-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb488-13"><a href="regression-trees.html#cb488-13" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb488-14"><a href="regression-trees.html#cb488-14" aria-hidden="true" tabindex="-1"></a>y<span class="sc">-</span>x</span></code></pre></div>
+<pre><code>## Time difference of 3.312546 secs</code></pre>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="regression-trees.html#cb490-1" aria-hidden="true" tabindex="-1"></a>bagged_cv</span></code></pre></div>
+<pre><code>## Bagged CART 
+## 
+## 561 samples
+##   5 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 504, 506, 505, 505, 505, 505, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared  MAE     
+##   3044.858  0.658359  1909.488</code></pre>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="regression-trees.html#cb492-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot most important variables</span></span>
+<span id="cb492-2"><a href="regression-trees.html#cb492-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">varImp</span>(bagged_cv), <span class="dv">20</span>)  </span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="regression-trees.html#cb493-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(bagged_cv, data_test)</span>
+<span id="cb493-2"><a href="regression-trees.html#cb493-2" aria-hidden="true" tabindex="-1"></a><span class="fu">RMSE</span>(pred, data_test<span class="sc">$</span>price)</span></code></pre></div>
+<pre><code>## Warning in pred - obs: longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## [1] 5330.005</code></pre>
+</div>
+<div id="confusion-plots" class="section level2" number="13.10">
+<h2><span class="header-section-number">13.10</span> Confusion plots</h2>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="regression-trees.html#cb496-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">na.omit</span>(data_train)<span class="sc">$</span>price, </span>
+<span id="cb496-2"><a href="regression-trees.html#cb496-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(bagged_cv, <span class="fu">na.omit</span>(data_train)),</span>
+<span id="cb496-3"><a href="regression-trees.html#cb496-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Training set&quot;</span>)</span>
+<span id="cb496-4"><a href="regression-trees.html#cb496-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>,<span class="at">b=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb496-5"><a href="regression-trees.html#cb496-5" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">na.omit</span>(data_train)<span class="sc">$</span>price, </span>
+<span id="cb496-6"><a href="regression-trees.html#cb496-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">predict</span>(bagged_cv, <span class="fu">na.omit</span>(data_train)))<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb496-7"><a href="regression-trees.html#cb496-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend=</span><span class="fu">paste</span>(<span class="st">&quot;R^2 =&quot;</span>,<span class="fu">round</span>(R2,<span class="dv">2</span>)), <span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="regression-trees.html#cb497-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">na.omit</span>(data_test)<span class="sc">$</span>price, </span>
+<span id="cb497-2"><a href="regression-trees.html#cb497-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(bagged_cv, <span class="fu">na.omit</span>(data_test)),</span>
+<span id="cb497-3"><a href="regression-trees.html#cb497-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Test set&quot;</span>)</span>
+<span id="cb497-4"><a href="regression-trees.html#cb497-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>,<span class="at">b=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb497-5"><a href="regression-trees.html#cb497-5" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">na.omit</span>(data_test)<span class="sc">$</span>price, </span>
+<span id="cb497-6"><a href="regression-trees.html#cb497-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">predict</span>(bagged_cv, <span class="fu">na.omit</span>(data_test)))<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb497-7"><a href="regression-trees.html#cb497-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend=</span><span class="fu">paste</span>(<span class="st">&quot;R^2 =&quot;</span>,<span class="fu">round</span>(R2,<span class="dv">2</span>)), <span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-95-2.png" width="672" /></p>
+</div>
+<div id="final-section" class="section level2" number="13.11">
+<h2><span class="header-section-number">13.11</span> Final section</h2>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="regression-trees.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] AmesHousing_0.0.4 caret_6.0-86      lattice_0.20-41   ipred_0.9-11     
+##  [5] rpart.plot_3.0.9  rpart_4.1-15      rsample_0.0.9     dplyr_1.0.4      
+##  [9] plotly_4.9.3      ggplot2_3.3.3    
+## 
+## loaded via a namespace (and not attached):
+##  [1] httr_1.4.2           tidyr_1.1.2          jsonlite_1.7.2      
+##  [4] viridisLite_0.3.0    splines_3.6.2        foreach_1.5.1       
+##  [7] prodlim_2019.11.13   assertthat_0.2.1     stats4_3.6.2        
+## [10] highr_0.8            yaml_2.2.1           globals_0.14.0      
+## [13] pillar_1.4.7         glue_1.4.2           reticulate_1.18     
+## [16] pROC_1.17.0.1        digest_0.6.27        colorspace_2.0-0    
+## [19] recipes_0.1.15       htmltools_0.5.1.1    Matrix_1.3-2        
+## [22] plyr_1.8.6           timeDate_3043.102    pkgconfig_2.0.3     
+## [25] listenv_0.8.0        bookdown_0.21        purrr_0.3.4         
+## [28] scales_1.1.1         gower_0.2.2          lava_1.6.9          
+## [31] tibble_3.0.6         mgcv_1.8-33          generics_0.1.0      
+## [34] farver_2.0.3         ellipsis_0.3.1       withr_2.4.1         
+## [37] furrr_0.2.2          nnet_7.3-15          lazyeval_0.2.2      
+## [40] cli_2.3.0            survival_3.2-7       magrittr_2.0.1      
+## [43] crayon_1.4.1         evaluate_0.14        future_1.21.0       
+## [46] fansi_0.4.2          parallelly_1.23.0    nlme_3.1-152        
+## [49] MASS_7.3-53.1        class_7.3-18         tools_3.6.2         
+## [52] data.table_1.13.6    lifecycle_1.0.0      stringr_1.4.0       
+## [55] munsell_0.5.0        e1071_1.7-4          compiler_3.6.2      
+## [58] rlang_0.4.10         grid_3.6.2           iterators_1.0.13    
+## [61] rstudioapi_0.13      htmlwidgets_1.5.3    crosstalk_1.1.1     
+## [64] labeling_0.4.2       rmarkdown_2.6        ModelMetrics_1.2.2.2
+## [67] gtable_0.3.0         codetools_0.2-18     DBI_1.1.1           
+## [70] reshape2_1.4.4       R6_2.5.0             lubridate_1.7.9.2   
+## [73] knitr_1.31           utf8_1.1.4           stringi_1.5.3       
+## [76] parallel_3.6.2       Rcpp_1.0.6           vctrs_0.3.6         
+## [79] tidyselect_1.1.0     xfun_0.21</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="stepwise-selection-of-predictors-in-lm.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
