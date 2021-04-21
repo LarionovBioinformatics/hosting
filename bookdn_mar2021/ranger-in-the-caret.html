@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 14 Ranger in the Caret | I forgot the title</title>
+  <meta name="description" content="This is my great book !" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 14 Ranger in the Caret | I forgot the title" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my great book !" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 14 Ranger in the Caret | I forgot the title" />
+  
+  <meta name="twitter:description" content="This is my great book !" />
+  
+
+<meta name="author" content="Of course, its Me" />
+
+
+<meta name="date" content="2021-04-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression-trees.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Hio the book !</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> My great Math LaTex</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#rendering-to-pdf-and-epub"><i class="fa fa-check"></i><b>1.1</b> Rendering to PDF and EPUB</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#sharing-on-social-media"><i class="fa fa-check"></i><b>1.2</b> Sharing on social media</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>2</b> R-Markdown</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r-markdown.html"><a href="r-markdown.html#nd-level-header"><i class="fa fa-check"></i><b>2.1</b> 2nd level header</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r-markdown.html"><a href="r-markdown.html#rd-level-header"><i class="fa fa-check"></i><b>2.1.1</b> 3rd level header</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r-markdown.html"><a href="r-markdown.html#not-only-r"><i class="fa fa-check"></i><b>2.2</b> Not only R …</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r-markdown.html"><a href="r-markdown.html#python"><i class="fa fa-check"></i><b>2.2.1</b> Python</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r-markdown.html"><a href="r-markdown.html#bash"><i class="fa fa-check"></i><b>2.2.2</b> Bash</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-markdown.html"><a href="r-markdown.html#back-to-r"><i class="fa fa-check"></i><b>2.3</b> Back to R</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r-markdown.html"><a href="r-markdown.html#r-markdown-1"><i class="fa fa-check"></i><b>2.3.1</b> R Markdown</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r-markdown.html"><a href="r-markdown.html#including-plots"><i class="fa fa-check"></i><b>2.3.2</b> Including Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html"><i class="fa fa-check"></i><b>3</b> A simple analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#in-built-datasets"><i class="fa fa-check"></i><b>3.1</b> In-built datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#explore-data"><i class="fa fa-check"></i><b>3.2</b> Explore data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#base-r-plottig"><i class="fa fa-check"></i><b>3.2.1</b> Base R plottig</a></li>
+<li class="chapter" data-level="3.2.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#ggplot-style"><i class="fa fa-check"></i><b>3.2.2</b> ggplot style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#t-test"><i class="fa fa-check"></i><b>3.3</b> T-test</a></li>
+<li class="chapter" data-level="3.4" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#liear-model"><i class="fa fa-check"></i><b>3.4</b> Liear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-hp"><i class="fa fa-check"></i><b>3.4.1</b> mpg ~ hp</a></li>
+<li class="chapter" data-level="3.4.2" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp"><i class="fa fa-check"></i><b>3.4.2</b> mpg ~ vs + hp</a></li>
+<li class="chapter" data-level="3.4.3" data-path="a-simple-analysis.html"><a href="a-simple-analysis.html#mpg-vs-hp-1"><i class="fa fa-check"></i><b>3.4.3</b> mpg ~ vs * hp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-types.html"><a href="data-types.html#vectors"><i class="fa fa-check"></i><b>4.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="data-types.html"><a href="data-types.html#numeric-vectors"><i class="fa fa-check"></i><b>4.1.1</b> Numeric vectors</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-types.html"><a href="data-types.html#vector-elements-may-have-names"><i class="fa fa-check"></i><b>4.1.2</b> Vector elements may have names</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="data-types.html"><a href="data-types.html#numeric-matrices"><i class="fa fa-check"></i><b>4.2</b> Numeric matrices</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-types.html"><a href="data-types.html#matrices-may-have-rownames-and-colnames"><i class="fa fa-check"></i><b>4.2.1</b> Matrices may have rownames and colnames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="data-types.html"><a href="data-types.html#recycling-in-element-wise-operations"><i class="fa fa-check"></i><b>4.3</b> Recycling in element-wise operations</a></li>
+<li class="chapter" data-level="4.4" data-path="data-types.html"><a href="data-types.html#factors-categorical-variale"><i class="fa fa-check"></i><b>4.4</b> Factors: categorical variale</a></li>
+<li class="chapter" data-level="4.5" data-path="data-types.html"><a href="data-types.html#lists"><i class="fa fa-check"></i><b>4.5</b> Lists</a></li>
+<li class="chapter" data-level="4.6" data-path="data-types.html"><a href="data-types.html#dataframe-list-of-vectorsfactors"><i class="fa fa-check"></i><b>4.6</b> Dataframe: list of vectors/factors</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="plotly.html"><a href="plotly.html"><i class="fa fa-check"></i><b>5</b> Plotly</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plotly.html"><a href="plotly.html#reference"><i class="fa fa-check"></i><b>5.1</b> Reference</a></li>
+<li class="chapter" data-level="5.2" data-path="plotly.html"><a href="plotly.html#load-library"><i class="fa fa-check"></i><b>5.2</b> Load library</a></li>
+<li class="chapter" data-level="5.3" data-path="plotly.html"><a href="plotly.html#get-some-data"><i class="fa fa-check"></i><b>5.3</b> Get some data</a></li>
+<li class="chapter" data-level="5.4" data-path="plotly.html"><a href="plotly.html#plotly-magic"><i class="fa fa-check"></i><b>5.4</b> Plotly magic</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distributionns.html"><a href="distributionns.html"><i class="fa fa-check"></i><b>6</b> Distributionns</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distributionns.html"><a href="distributionns.html#function-curve"><i class="fa fa-check"></i><b>6.1</b> Function curve()</a></li>
+<li class="chapter" data-level="6.2" data-path="distributionns.html"><a href="distributionns.html#normal-distribution"><i class="fa fa-check"></i><b>6.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="6.3" data-path="distributionns.html"><a href="distributionns.html#gamma"><i class="fa fa-check"></i><b>6.3</b> Gamma</a></li>
+<li class="chapter" data-level="6.4" data-path="distributionns.html"><a href="distributionns.html#beta"><i class="fa fa-check"></i><b>6.4</b> Beta</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>7</b> Package</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="package.html"><a href="package.html#user-defined-fnction"><i class="fa fa-check"></i><b>7.1</b> User-defined fnction</a></li>
+<li class="chapter" data-level="7.2" data-path="package.html"><a href="package.html#recursive-functions-are-allowed"><i class="fa fa-check"></i><b>7.2</b> Recursive functions are allowed</a></li>
+<li class="chapter" data-level="7.3" data-path="package.html"><a href="package.html#lets-add-some-data"><i class="fa fa-check"></i><b>7.3</b> Lets add some data</a></li>
+<li class="chapter" data-level="7.4" data-path="package.html"><a href="package.html#prepare-template-for-package-source-folder"><i class="fa fa-check"></i><b>7.4</b> Prepare template for package source folder</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-reading-writing.html"><a href="data-reading-writing.html"><i class="fa fa-check"></i><b>8</b> Data reading / writing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-reading-writing.html"><a href="data-reading-writing.html#a-simple-simulated-dataset"><i class="fa fa-check"></i><b>8.1</b> A simple simulated dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="data-reading-writing.html"><a href="data-reading-writing.html#saving-and-reading"><i class="fa fa-check"></i><b>8.2</b> Saving and reading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="data-reading-writing.html"><a href="data-reading-writing.html#rdata"><i class="fa fa-check"></i><b>8.2.1</b> RData</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-reading-writing.html"><a href="data-reading-writing.html#text-files"><i class="fa fa-check"></i><b>8.2.2</b> Text files</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html"><i class="fa fa-check"></i><b>9</b> Data exploring / modifying</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#read-data"><i class="fa fa-check"></i><b>9.1</b> Read data</a></li>
+<li class="chapter" data-level="9.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#apply-summary-functions-over-margin"><i class="fa fa-check"></i><b>9.2</b> Apply (summary) functions over margin</a></li>
+<li class="chapter" data-level="9.3" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#missed-values"><i class="fa fa-check"></i><b>9.3</b> Missed values</a></li>
+<li class="chapter" data-level="9.4" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#sorting-filtering-and-summarising"><i class="fa fa-check"></i><b>9.4</b> Sorting, filtering and summarising</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#base-r"><i class="fa fa-check"></i><b>9.4.1</b> Base R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#tables-to-tests"><i class="fa fa-check"></i><b>9.4.2</b> Tables to tests</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr"><i class="fa fa-check"></i><b>9.5</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#tidy-data-concept"><i class="fa fa-check"></i><b>9.5.1</b> Tidy Data concept</a></li>
+<li class="chapter" data-level="9.5.2" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#traps-in-tidydata"><i class="fa fa-check"></i><b>9.5.2</b> Traps in TidyData</a></li>
+<li class="chapter" data-level="9.5.3" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr-is-big"><i class="fa fa-check"></i><b>9.5.3</b> Dplyr is BIG</a></li>
+<li class="chapter" data-level="9.5.4" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#piping"><i class="fa fa-check"></i><b>9.5.4</b> Piping</a></li>
+<li class="chapter" data-level="9.5.5" data-path="data-exploring-modifying.html"><a href="data-exploring-modifying.html#dplyr-examples"><i class="fa fa-check"></i><b>9.5.5</b> Dplyr examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>10</b> Regression</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="regression.html"><a href="regression.html#note"><i class="fa fa-check"></i><b>10.1</b> Note</a></li>
+<li class="chapter" data-level="10.2" data-path="regression.html"><a href="regression.html#load-data"><i class="fa fa-check"></i><b>10.2</b> Load data</a></li>
+<li class="chapter" data-level="10.3" data-path="regression.html"><a href="regression.html#explore-data-1"><i class="fa fa-check"></i><b>10.3</b> Explore data</a></li>
+<li class="chapter" data-level="10.4" data-path="regression.html"><a href="regression.html#impute-if-needed"><i class="fa fa-check"></i><b>10.4</b> Impute if needed</a></li>
+<li class="chapter" data-level="10.5" data-path="regression.html"><a href="regression.html#linear-modelling"><i class="fa fa-check"></i><b>10.5</b> Linear modelling</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="regression.html"><a href="regression.html#single-term"><i class="fa fa-check"></i><b>10.5.1</b> Single term</a></li>
+<li class="chapter" data-level="10.5.2" data-path="regression.html"><a href="regression.html#multiple-terms-without-interaction"><i class="fa fa-check"></i><b>10.5.2</b> Multiple terms without interaction</a></li>
+<li class="chapter" data-level="10.5.3" data-path="regression.html"><a href="regression.html#with-interaction"><i class="fa fa-check"></i><b>10.5.3</b> With interaction</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="regression.html"><a href="regression.html#lm-could-be-evaluated-by-anova"><i class="fa fa-check"></i><b>10.6</b> <em>lm</em> could be evaluated by ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="regression.html"><a href="regression.html#anova-could-be-used-to-compare-models"><i class="fa fa-check"></i><b>10.6.1</b> Anova could be used to compare models</a></li>
+<li class="chapter" data-level="10.6.2" data-path="regression.html"><a href="regression.html#a-bit-of-oop-about-anovalm"><i class="fa fa-check"></i><b>10.6.2</b> A bit of OOP about anova(lm)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="regression.html"><a href="regression.html#predict"><i class="fa fa-check"></i><b>10.7</b> Predict</a></li>
+<li class="chapter" data-level="10.8" data-path="regression.html"><a href="regression.html#update"><i class="fa fa-check"></i><b>10.8</b> Update</a></li>
+<li class="chapter" data-level="10.9" data-path="regression.html"><a href="regression.html#crooked-things-yet-to-explore"><i class="fa fa-check"></i><b>10.9</b> Crooked things yet to explore …</a>
+<ul>
+<li class="chapter" data-level="10.9.1" data-path="regression.html"><a href="regression.html#intercept-design-matrix"><i class="fa fa-check"></i><b>10.9.1</b> Intercept, design matrix</a></li>
+<li class="chapter" data-level="10.9.2" data-path="regression.html"><a href="regression.html#contrasts"><i class="fa fa-check"></i><b>10.9.2</b> Contrasts</a></li>
+<li class="chapter" data-level="10.9.3" data-path="regression.html"><a href="regression.html#type-i-ii-and-iii-sums"><i class="fa fa-check"></i><b>10.9.3</b> Type I, II and III sums</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html"><i class="fa fa-check"></i><b>11</b> Real life lm() example</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#summary"><i class="fa fa-check"></i><b>11.1</b> Summary</a></li>
+<li class="chapter" data-level="11.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#start-section"><i class="fa fa-check"></i><b>11.2</b> Start section</a></li>
+<li class="chapter" data-level="11.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#read-data-1"><i class="fa fa-check"></i><b>11.3</b> Read data</a></li>
+<li class="chapter" data-level="11.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-and-prepare-data"><i class="fa fa-check"></i><b>11.4</b> Explore and prepare data</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#overall-size-and-structure"><i class="fa fa-check"></i><b>11.4.1</b> Overall size and structure</a></li>
+<li class="chapter" data-level="11.4.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#missingness"><i class="fa fa-check"></i><b>11.4.2</b> Missingness</a></li>
+<li class="chapter" data-level="11.4.3" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#impute-missed"><i class="fa fa-check"></i><b>11.4.3</b> Impute missed</a></li>
+<li class="chapter" data-level="11.4.4" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#calculate-age"><i class="fa fa-check"></i><b>11.4.4</b> Calculate <em>age</em></a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#explore-in-a-univariate-manner"><i class="fa fa-check"></i><b>11.5</b> Explore in a univariate manner</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#anova-for-categorical-variable-makes"><i class="fa fa-check"></i><b>11.5.1</b> Anova for categorical variable <em>makes</em></a></li>
+<li class="chapter" data-level="11.5.2" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#univariate-lm-for-numeric-variables"><i class="fa fa-check"></i><b>11.5.2</b> Univariate <em>lm()</em> for numeric variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#model-with-all-variables"><i class="fa fa-check"></i><b>11.6</b> Model with all variables</a></li>
+<li class="chapter" data-level="11.7" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#drop1"><i class="fa fa-check"></i><b>11.7</b> Drop1</a></li>
+<li class="chapter" data-level="11.8" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#optimal-model"><i class="fa fa-check"></i><b>11.8</b> Optimal model</a></li>
+<li class="chapter" data-level="11.9" data-path="real-life-lm-example.html"><a href="real-life-lm-example.html#predict-1"><i class="fa fa-check"></i><b>11.9</b> Predict</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html"><i class="fa fa-check"></i><b>12</b> Stepwise selection of predictors in lm()</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#prepare-data"><i class="fa fa-check"></i><b>12.1</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#load"><i class="fa fa-check"></i><b>12.1.1</b> Load</a></li>
+<li class="chapter" data-level="12.1.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#impute-missed-1"><i class="fa fa-check"></i><b>12.1.2</b> Impute missed</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#the-full-model"><i class="fa fa-check"></i><b>12.2</b> The full model</a></li>
+<li class="chapter" data-level="12.3" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#stepwise-selection"><i class="fa fa-check"></i><b>12.3</b> Stepwise selection</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#backward"><i class="fa fa-check"></i><b>12.3.1</b> backward</a></li>
+<li class="chapter" data-level="12.3.2" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#forward"><i class="fa fa-check"></i><b>12.3.2</b> forward</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="stepwise-selection-of-predictors-in-lm.html"><a href="stepwise-selection-of-predictors-in-lm.html#a-sidetrack-about-seed"><i class="fa fa-check"></i><b>12.4</b> A sidetrack about seed</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>13</b> Regression trees</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="regression-trees.html"><a href="regression-trees.html#summary-1"><i class="fa fa-check"></i><b>13.1</b> Summary</a></li>
+<li class="chapter" data-level="13.2" data-path="regression-trees.html"><a href="regression-trees.html#start-section-1"><i class="fa fa-check"></i><b>13.2</b> Start section</a></li>
+<li class="chapter" data-level="13.3" data-path="regression-trees.html"><a href="regression-trees.html#prepare-data-1"><i class="fa fa-check"></i><b>13.3</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="regression-trees.html"><a href="regression-trees.html#data"><i class="fa fa-check"></i><b>13.3.1</b> Data</a></li>
+<li class="chapter" data-level="13.3.2" data-path="regression-trees.html"><a href="regression-trees.html#split"><i class="fa fa-check"></i><b>13.3.2</b> Split</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="regression-trees.html"><a href="regression-trees.html#simple-tree-model"><i class="fa fa-check"></i><b>13.4</b> Simple tree model</a></li>
+<li class="chapter" data-level="13.5" data-path="regression-trees.html"><a href="regression-trees.html#full-tree-without-pruning"><i class="fa fa-check"></i><b>13.5</b> Full tree without pruning</a></li>
+<li class="chapter" data-level="13.6" data-path="regression-trees.html"><a href="regression-trees.html#a-model-with-manual-settings-control"><i class="fa fa-check"></i><b>13.6</b> A model with manual settings control</a></li>
+<li class="chapter" data-level="13.7" data-path="regression-trees.html"><a href="regression-trees.html#selecting-optimal-hyperparameters-through-enumeration"><i class="fa fa-check"></i><b>13.7</b> Selecting optimal hyperparameters through enumeration</a>
+<ul>
+<li class="chapter" data-level="13.7.1" data-path="regression-trees.html"><a href="regression-trees.html#make-the-hyperparameters-grid"><i class="fa fa-check"></i><b>13.7.1</b> Make the hyperparameters grid</a></li>
+<li class="chapter" data-level="13.7.2" data-path="regression-trees.html"><a href="regression-trees.html#calculate-models-for-all-combinations-in-the-hyperparameters-grid"><i class="fa fa-check"></i><b>13.7.2</b> # Calculate models for all combinations in the hyperparameters grid</a></li>
+<li class="chapter" data-level="13.7.3" data-path="regression-trees.html"><a href="regression-trees.html#select-hyperparameters-with-lowest-x-validation-error"><i class="fa fa-check"></i><b>13.7.3</b> Select hyperparameters with lowest x-validation error</a></li>
+<li class="chapter" data-level="13.7.4" data-path="regression-trees.html"><a href="regression-trees.html#the-optimal-tree"><i class="fa fa-check"></i><b>13.7.4</b> The optimal tree</a></li>
+<li class="chapter" data-level="13.7.5" data-path="regression-trees.html"><a href="regression-trees.html#prediction"><i class="fa fa-check"></i><b>13.7.5</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="regression-trees.html"><a href="regression-trees.html#bootstrap-aggregating-bagging"><i class="fa fa-check"></i><b>13.8</b> Bootstrap aggregating (bagging)</a>
+<ul>
+<li class="chapter" data-level="13.8.1" data-path="regression-trees.html"><a href="regression-trees.html#bagged-trees-model-with-default-settings"><i class="fa fa-check"></i><b>13.8.1</b> bagged trees model with default settings</a></li>
+<li class="chapter" data-level="13.8.2" data-path="regression-trees.html"><a href="regression-trees.html#selecting-optimal-bag-size"><i class="fa fa-check"></i><b>13.8.2</b> Selecting optimal bag size</a></li>
+</ul></li>
+<li class="chapter" data-level="13.9" data-path="regression-trees.html"><a href="regression-trees.html#bagging-with-caret"><i class="fa fa-check"></i><b>13.9</b> Bagging with caret</a></li>
+<li class="chapter" data-level="13.10" data-path="regression-trees.html"><a href="regression-trees.html#confusion-plots"><i class="fa fa-check"></i><b>13.10</b> Confusion plots</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html"><i class="fa fa-check"></i><b>14</b> Ranger in the Caret</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#summary-2"><i class="fa fa-check"></i><b>14.1</b> Summary</a></li>
+<li class="chapter" data-level="14.2" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#start-section-2"><i class="fa fa-check"></i><b>14.2</b> Start section</a></li>
+<li class="chapter" data-level="14.3" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#prepare-data-2"><i class="fa fa-check"></i><b>14.3</b> Prepare data</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#load-raw-data"><i class="fa fa-check"></i><b>14.3.1</b> Load raw data</a></li>
+<li class="chapter" data-level="14.3.2" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#remove-duplictes"><i class="fa fa-check"></i><b>14.3.2</b> Remove duplictes</a></li>
+<li class="chapter" data-level="14.3.3" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#remove-records-with-missed-data"><i class="fa fa-check"></i><b>14.3.3</b> Remove records with missed data</a></li>
+<li class="chapter" data-level="14.3.4" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#exclude-rare-makes"><i class="fa fa-check"></i><b>14.3.4</b> Exclude rare makes</a></li>
+<li class="chapter" data-level="14.3.5" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#transformations"><i class="fa fa-check"></i><b>14.3.5</b> Transformation(s)</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#split-to-training-and-test-sets"><i class="fa fa-check"></i><b>14.4</b> Split to training and test sets</a></li>
+<li class="chapter" data-level="14.5" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#explore-split-data"><i class="fa fa-check"></i><b>14.5</b> Explore split data</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#response-distribution"><i class="fa fa-check"></i><b>14.5.1</b> Response distribution</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#predictors-distribution"><i class="fa fa-check"></i><b>14.5.2</b> Predictors distribution</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#checks-not-used-for-this-model"><i class="fa fa-check"></i><b>14.5.3</b> Checks not used for this model</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#set-parallel-processing"><i class="fa fa-check"></i><b>14.6</b> Set parallel processing</a></li>
+<li class="chapter" data-level="14.7" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#build-models"><i class="fa fa-check"></i><b>14.7</b> Build model(s)</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#configure-resampling"><i class="fa fa-check"></i><b>14.7.1</b> Configure resampling</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#default-model"><i class="fa fa-check"></i><b>14.7.2</b> Default model</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#model-with-custom-grid"><i class="fa fa-check"></i><b>14.7.3</b> Model with custom grid</a></li>
+</ul></li>
+<li class="chapter" data-level="14.8" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#evaluate-models-on-the-test-set"><i class="fa fa-check"></i><b>14.8</b> Evaluate models on the test set</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#carets-default-hyper-parameters-grid"><i class="fa fa-check"></i><b>14.8.1</b> Caret’s default hyper-parameters grid</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#custom-hyper-parameters-grid"><i class="fa fa-check"></i><b>14.8.2</b> Custom hyper-parameters grid</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#manual-selection-of-the-best-model"><i class="fa fa-check"></i><b>14.9</b> Manual selection of the best model</a></li>
+<li class="chapter" data-level="14.10" data-path="ranger-in-the-caret.html"><a href="ranger-in-the-caret.html#final-section"><i class="fa fa-check"></i><b>14.10</b> Final section</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://larionov.co.uk" target="blank">This is the man</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">I forgot the title</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ranger-in-the-caret" class="section level1" number="14">
+<h1><span class="header-section-number">Section 14</span> Ranger in the Caret</h1>
+<div id="summary-2" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Summary</h2>
+<p><a href="https://topepo.github.io/caret/" class="uri">https://topepo.github.io/caret/</a></p>
+<p><a href="https://topepo.github.io/caret/available-models.html" class="uri">https://topepo.github.io/caret/available-models.html</a></p>
+<p><a href="http://zevross.com/blog/2017/09/19/predictive-modeling-and-machine-learning-in-r-with-the-caret-package/" class="uri">http://zevross.com/blog/2017/09/19/predictive-modeling-and-machine-learning-in-r-with-the-caret-package/</a></p>
+<p><a href="https://uc-r.github.io/random_forests" class="uri">https://uc-r.github.io/random_forests</a></p>
+</div>
+<div id="start-section-2" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Start section</h2>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="ranger-in-the-caret.html#cb502-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-04-21 13:58:47 BST&quot;</code></pre>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="ranger-in-the-caret.html#cb504-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb504-2"><a href="ranger-in-the-caret.html#cb504-2" aria-hidden="true" tabindex="-1"></a><span class="fu">graphics.off</span>()</span>
+<span id="cb504-3"><a href="ranger-in-the-caret.html#cb504-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div>
+<pre><code>##           used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+## Ncells 2767568 147.9    4344478 232.1         NA  4344478 232.1
+## Vcells 5013100  38.3   14815979 113.1      16384 14815979 113.1</code></pre>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="ranger-in-the-caret.html#cb506-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb506-2"><a href="ranger-in-the-caret.html#cb506-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb506-3"><a href="ranger-in-the-caret.html#cb506-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb506-4"><a href="ranger-in-the-caret.html#cb506-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doMC)</span></code></pre></div>
+<pre><code>## Loading required package: foreach</code></pre>
+<pre><code>## Loading required package: iterators</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="ranger-in-the-caret.html#cb510-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
+<pre><code>## corrplot 0.84 loaded</code></pre>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="ranger-in-the-caret.html#cb512-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb512-2"><a href="ranger-in-the-caret.html#cb512-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span>
+<span id="cb512-3"><a href="ranger-in-the-caret.html#cb512-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb512-4"><a href="ranger-in-the-caret.html#cb512-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproducibility (it may be complicated in caret !)</span></span>
+<span id="cb512-5"><a href="ranger-in-the-caret.html#cb512-5" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed(42)</span></span></code></pre></div>
+</div>
+<div id="prepare-data-2" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> Prepare data</h2>
+<div id="load-raw-data" class="section level3" number="14.3.1">
+<h3><span class="header-section-number">14.3.1</span> Load raw data</h3>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="ranger-in-the-caret.html#cb513-1" aria-hidden="true" tabindex="-1"></a>data_file<span class="ot">=</span><span class="st">&quot;/Users/alexey/OneDrive/Documents/Home/Alex/stat_in_r_Mar2021/example/structure_data.csv&quot;</span></span>
+<span id="cb513-2"><a href="ranger-in-the-caret.html#cb513-2" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_file)</span>
+<span id="cb513-3"><a href="ranger-in-the-caret.html#cb513-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data.df)</span></code></pre></div>
+<pre><code>## [1] 3780    6</code></pre>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="ranger-in-the-caret.html#cb515-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb515-2"><a href="ranger-in-the-caret.html#cb515-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(data_file)</span></code></pre></div>
+</div>
+<div id="remove-duplictes" class="section level3" number="14.3.2">
+<h3><span class="header-section-number">14.3.2</span> Remove duplictes</h3>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="ranger-in-the-caret.html#cb516-1" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">unique</span>(data.df)</span>
+<span id="cb516-2"><a href="ranger-in-the-caret.html#cb516-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data.df)</span></code></pre></div>
+<pre><code>## [1] 1600    6</code></pre>
+</div>
+<div id="remove-records-with-missed-data" class="section level3" number="14.3.3">
+<h3><span class="header-section-number">14.3.3</span> Remove records with missed data</h3>
+<p>Could imputation be used for Random Forest?</p>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="ranger-in-the-caret.html#cb518-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count missed data per field</span></span>
+<span id="cb518-2"><a href="ranger-in-the-caret.html#cb518-2" aria-hidden="true" tabindex="-1"></a>count.na.udf <span class="ot">&lt;-</span> <span class="cf">function</span>(x)(<span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb518-3"><a href="ranger-in-the-caret.html#cb518-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb518-4"><a href="ranger-in-the-caret.html#cb518-4" aria-hidden="true" tabindex="-1"></a>count_na <span class="ot">&lt;-</span> <span class="fu">apply</span>(data.df,<span class="dv">2</span>,count.na.udf)</span>
+<span id="cb518-5"><a href="ranger-in-the-caret.html#cb518-5" aria-hidden="true" tabindex="-1"></a>count_na</span></code></pre></div>
+<pre><code>##           mileage manufactured.year       engine.size            owners             price              make 
+##                 0                 0                 2               830                 0                 0</code></pre>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="ranger-in-the-caret.html#cb520-1" aria-hidden="true" tabindex="-1"></a>count_na<span class="sc">/</span><span class="fu">nrow</span>(data.df)</span></code></pre></div>
+<pre><code>##           mileage manufactured.year       engine.size            owners             price              make 
+##           0.00000           0.00000           0.00125           0.51875           0.00000           0.00000</code></pre>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="ranger-in-the-caret.html#cb522-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missed data</span></span>
+<span id="cb522-2"><a href="ranger-in-the-caret.html#cb522-2" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data.df)</span>
+<span id="cb522-3"><a href="ranger-in-the-caret.html#cb522-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data.df)</span></code></pre></div>
+<pre><code>## [1] 769   6</code></pre>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="ranger-in-the-caret.html#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    769 obs. of  6 variables:
+##  $ mileage          : num  69000 95300 64000 47053 38655 ...
+##  $ manufactured.year: int  2012 2001 2013 2004 2003 2012 2013 2012 2009 2017 ...
+##  $ engine.size      : num  2 3.2 1.8 3 5 2.1 1.8 2 1.8 1 ...
+##  $ owners           : int  3 6 1 4 3 3 3 2 3 1 ...
+##  $ price            : num  7000 8000 7000 7995 7999 ...
+##  $ make             : Factor w/ 43 levels &quot;Abarth&quot;,&quot;Alfa Romeo&quot;,..: 4 25 4 5 25 25 24 5 25 30 ...
+##  - attr(*, &quot;na.action&quot;)= &#39;omit&#39; Named int  1 4 12 18 19 21 25 26 27 28 ...
+##   ..- attr(*, &quot;names&quot;)= chr  &quot;1&quot; &quot;4&quot; &quot;12&quot; &quot;19&quot; ...</code></pre>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="ranger-in-the-caret.html#cb526-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb526-2"><a href="ranger-in-the-caret.html#cb526-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(count.na.udf, count_na)</span></code></pre></div>
+</div>
+<div id="exclude-rare-makes" class="section level3" number="14.3.4">
+<h3><span class="header-section-number">14.3.4</span> Exclude rare makes</h3>
+<p>ad-hoc processing - based on previous exploration</p>
+<p>Excluding rare values is a difficult question:</p>
+<ul>
+<li>on one hand, we have little data about them, so it may not be prudent to include them to the model<br />
+</li>
+<li>on the other hand, for numeric parameters (e.g. the oldest age, the highest price) the extreme values could be the rare ones and, sometime, an influential predictor / the most interesting response</li>
+</ul>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="ranger-in-the-caret.html#cb527-1" aria-hidden="true" tabindex="-1"></a>make_counts <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">summary</span>(data.df<span class="sc">$</span>make),<span class="at">decreasing =</span> T)</span>
+<span id="cb527-2"><a href="ranger-in-the-caret.html#cb527-2" aria-hidden="true" tabindex="-1"></a>make_counts</span></code></pre></div>
+<pre><code>##       Vauxhall         Nissan     Volkswagen           Ford            BMW  Mercedes-Benz         Toyota        Renault           Fiat        Peugeot           MINI           Audi        Citroen          Mazda           SEAT            Kia          Honda        Hyundai          SKODA          Volvo         Suzuki     Alfa Romeo     Mitsubishi          Lexus          Dacia         Jaguar             MG         Abarth       Chrysler        Porsche          Smart   Aston Martin      Chevrolet DS AUTOMOBILES           Saab         Subaru       Daihatsu          Dodge       Infiniti          Isuzu           Jeep      SsangYong     Land Rover 
+##             91             60             55             54             41             41             39             38             36             32             30             29             29             29             21             18             17             15             10             10              9              8              8              7              5              5              4              3              3              3              3              2              2              2              2              2              1              1              1              1              1              1              0</code></pre>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="ranger-in-the-caret.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(make_counts,<span class="at">las=</span><span class="dv">2</span>)</span>
+<span id="cb529-2"><a href="ranger-in-the-caret.html#cb529-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fl">16.9</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="ranger-in-the-caret.html#cb530-1" aria-hidden="true" tabindex="-1"></a>rare_makes <span class="ot">&lt;-</span> <span class="fu">names</span>(make_counts[make_counts<span class="sc">&lt;</span><span class="dv">25</span>])</span>
+<span id="cb530-2"><a href="ranger-in-the-caret.html#cb530-2" aria-hidden="true" tabindex="-1"></a>rare_makes</span></code></pre></div>
+<pre><code>##  [1] &quot;SEAT&quot;           &quot;Kia&quot;            &quot;Honda&quot;          &quot;Hyundai&quot;        &quot;SKODA&quot;          &quot;Volvo&quot;          &quot;Suzuki&quot;         &quot;Alfa Romeo&quot;     &quot;Mitsubishi&quot;     &quot;Lexus&quot;          &quot;Dacia&quot;          &quot;Jaguar&quot;         &quot;MG&quot;             &quot;Abarth&quot;         &quot;Chrysler&quot;       &quot;Porsche&quot;        &quot;Smart&quot;          &quot;Aston Martin&quot;   &quot;Chevrolet&quot;      &quot;DS AUTOMOBILES&quot; &quot;Saab&quot;           &quot;Subaru&quot;         &quot;Daihatsu&quot;       &quot;Dodge&quot;          &quot;Infiniti&quot;       &quot;Isuzu&quot;          &quot;Jeep&quot;           &quot;SsangYong&quot;      &quot;Land Rover&quot;</code></pre>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="ranger-in-the-caret.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    769 obs. of  6 variables:
+##  $ mileage          : num  69000 95300 64000 47053 38655 ...
+##  $ manufactured.year: int  2012 2001 2013 2004 2003 2012 2013 2012 2009 2017 ...
+##  $ engine.size      : num  2 3.2 1.8 3 5 2.1 1.8 2 1.8 1 ...
+##  $ owners           : int  3 6 1 4 3 3 3 2 3 1 ...
+##  $ price            : num  7000 8000 7000 7995 7999 ...
+##  $ make             : Factor w/ 43 levels &quot;Abarth&quot;,&quot;Alfa Romeo&quot;,..: 4 25 4 5 25 25 24 5 25 30 ...
+##  - attr(*, &quot;na.action&quot;)= &#39;omit&#39; Named int  1 4 12 18 19 21 25 26 27 28 ...
+##   ..- attr(*, &quot;names&quot;)= chr  &quot;1&quot; &quot;4&quot; &quot;12&quot; &quot;19&quot; ...</code></pre>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="ranger-in-the-caret.html#cb534-1" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> data.df[<span class="sc">!</span><span class="fu">as.vector</span>(data.df<span class="sc">$</span>make) <span class="sc">%in%</span> rare_makes,]</span>
+<span id="cb534-2"><a href="ranger-in-the-caret.html#cb534-2" aria-hidden="true" tabindex="-1"></a>data.df<span class="sc">$</span>make <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(data.df<span class="sc">$</span>make)</span>
+<span id="cb534-3"><a href="ranger-in-the-caret.html#cb534-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    604 obs. of  6 variables:
+##  $ mileage          : num  69000 95300 64000 47053 38655 ...
+##  $ manufactured.year: int  2012 2001 2013 2004 2003 2012 2013 2012 2009 2017 ...
+##  $ engine.size      : num  2 3.2 1.8 3 5 2.1 1.8 2 1.8 1 ...
+##  $ owners           : int  3 6 1 4 3 3 3 2 3 1 ...
+##  $ price            : num  7000 8000 7000 7995 7999 ...
+##  $ make             : Factor w/ 14 levels &quot;Audi&quot;,&quot;BMW&quot;,&quot;Citroen&quot;,..: 1 7 1 2 7 7 6 2 7 10 ...
+##  - attr(*, &quot;na.action&quot;)= &#39;omit&#39; Named int  1 4 12 18 19 21 25 26 27 28 ...
+##   ..- attr(*, &quot;names&quot;)= chr  &quot;1&quot; &quot;4&quot; &quot;12&quot; &quot;19&quot; ...</code></pre>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="ranger-in-the-caret.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(rare_makes, make_counts)</span></code></pre></div>
+</div>
+<div id="transformations" class="section level3" number="14.3.5">
+<h3><span class="header-section-number">14.3.5</span> Transformation(s)</h3>
+<p>Use age instead of manufacture year</p>
+<p>Other things, like PC-s or log-transformations, could also be calculated at this (?) stage</p>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="ranger-in-the-caret.html#cb537-1" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> data.df <span class="sc">%&gt;%</span> </span>
+<span id="cb537-2"><a href="ranger-in-the-caret.html#cb537-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age=</span><span class="dv">2021</span><span class="sc">-</span>manufactured.year) <span class="sc">%&gt;%</span> </span>
+<span id="cb537-3"><a href="ranger-in-the-caret.html#cb537-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>manufactured.year)</span>
+<span id="cb537-4"><a href="ranger-in-the-caret.html#cb537-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb537-5"><a href="ranger-in-the-caret.html#cb537-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    604 obs. of  6 variables:
+##  $ mileage    : num  69000 95300 64000 47053 38655 ...
+##  $ engine.size: num  2 3.2 1.8 3 5 2.1 1.8 2 1.8 1 ...
+##  $ owners     : int  3 6 1 4 3 3 3 2 3 1 ...
+##  $ price      : num  7000 8000 7000 7995 7999 ...
+##  $ make       : Factor w/ 14 levels &quot;Audi&quot;,&quot;BMW&quot;,&quot;Citroen&quot;,..: 1 7 1 2 7 7 6 2 7 10 ...
+##  $ age        : num  9 20 8 17 18 9 8 9 12 4 ...</code></pre>
+</div>
+</div>
+<div id="split-to-training-and-test-sets" class="section level2" number="14.4">
+<h2><span class="header-section-number">14.4</span> Split to training and test sets</h2>
+<p>Use caret function <strong>createDataPartition</strong></p>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="ranger-in-the-caret.html#cb539-1" aria-hidden="true" tabindex="-1"></a>trainIndex <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(data.df<span class="sc">$</span>price, <span class="at">times=</span><span class="dv">1</span>, <span class="at">p=</span><span class="fl">0.7</span>, <span class="at">list=</span>F)</span>
+<span id="cb539-2"><a href="ranger-in-the-caret.html#cb539-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb539-3"><a href="ranger-in-the-caret.html#cb539-3" aria-hidden="true" tabindex="-1"></a>trainIndex[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1]  2  9 10 11 13</code></pre>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="ranger-in-the-caret.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(trainIndex)</span></code></pre></div>
+<pre><code>## [1] 424</code></pre>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="ranger-in-the-caret.html#cb543-1" aria-hidden="true" tabindex="-1"></a>train.df <span class="ot">&lt;-</span> data.df[trainIndex,]</span>
+<span id="cb543-2"><a href="ranger-in-the-caret.html#cb543-2" aria-hidden="true" tabindex="-1"></a>test.df <span class="ot">&lt;-</span> data.df[<span class="sc">-</span>trainIndex,]</span>
+<span id="cb543-3"><a href="ranger-in-the-caret.html#cb543-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb543-4"><a href="ranger-in-the-caret.html#cb543-4" aria-hidden="true" tabindex="-1"></a>training_flag <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data.df) <span class="sc">%in%</span> trainIndex) <span class="co"># for plots</span></span>
+<span id="cb543-5"><a href="ranger-in-the-caret.html#cb543-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb543-6"><a href="ranger-in-the-caret.html#cb543-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(trainIndex)</span></code></pre></div>
+</div>
+<div id="explore-split-data" class="section level2" number="14.5">
+<h2><span class="header-section-number">14.5</span> Explore split data</h2>
+<div id="response-distribution" class="section level3" number="14.5.1">
+<h3><span class="header-section-number">14.5.1</span> Response distribution</h3>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="ranger-in-the-caret.html#cb544-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(train.df<span class="sc">$</span>price)</span></code></pre></div>
+<pre><code>##    0%   25%   50%   75%  100% 
+##   475  3000  5997  8995 34950</code></pre>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="ranger-in-the-caret.html#cb546-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(test.df<span class="sc">$</span>price)</span></code></pre></div>
+<pre><code>##       0%      25%      50%      75%     100% 
+##   250.00  3051.75  5997.50  8995.00 34994.00</code></pre>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="ranger-in-the-caret.html#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data.df) <span class="sc">+</span> </span>
+<span id="cb548-2"><a href="ranger-in-the-caret.html#cb548-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(price, <span class="at">fill=</span>training_flag) <span class="sc">+</span></span>
+<span id="cb548-3"><a href="ranger-in-the-caret.html#cb548-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb548-4"><a href="ranger-in-the-caret.html#cb548-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Price&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+</div>
+<div id="predictors-distribution" class="section level3" number="14.5.2">
+<h3><span class="header-section-number">14.5.2</span> Predictors distribution</h3>
+<div id="mileage-1" class="section level4" number="14.5.2.1">
+<h4><span class="header-section-number">14.5.2.1</span> mileage</h4>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="ranger-in-the-caret.html#cb549-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(train.df<span class="sc">$</span>mileage)</span></code></pre></div>
+<pre><code>##        0%       25%       50%       75%      100% 
+##    931.00  31332.75  53540.50  81000.00 496867.00</code></pre>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="ranger-in-the-caret.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(test.df<span class="sc">$</span>mileage)</span></code></pre></div>
+<pre><code>##        0%       25%       50%       75%      100% 
+##    565.00  29902.25  52000.00  78000.00 179844.00</code></pre>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="ranger-in-the-caret.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data.df) <span class="sc">+</span> </span>
+<span id="cb553-2"><a href="ranger-in-the-caret.html#cb553-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(mileage, <span class="at">fill=</span>training_flag) <span class="sc">+</span></span>
+<span id="cb553-3"><a href="ranger-in-the-caret.html#cb553-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb553-4"><a href="ranger-in-the-caret.html#cb553-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fl">3e5</span>, <span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb553-5"><a href="ranger-in-the-caret.html#cb553-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mileage&quot;</span>,</span>
+<span id="cb553-6"><a href="ranger-in-the-caret.html#cb553-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Should high mileage be removed from data ??&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+</div>
+<div id="engine.size-1" class="section level4" number="14.5.2.2">
+<h4><span class="header-section-number">14.5.2.2</span> engine.size</h4>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="ranger-in-the-caret.html#cb554-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(train.df<span class="sc">$</span>engine.size)</span></code></pre></div>
+<pre><code>##   0%  25%  50%  75% 100% 
+##  0.9  1.2  1.5  1.9  5.5</code></pre>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="ranger-in-the-caret.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(test.df<span class="sc">$</span>engine.size)</span></code></pre></div>
+<pre><code>##    0%   25%   50%   75%  100% 
+## 0.900 1.200 1.500 1.825 5.000</code></pre>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="ranger-in-the-caret.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data.df) <span class="sc">+</span> </span>
+<span id="cb558-2"><a href="ranger-in-the-caret.html#cb558-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(engine.size, <span class="at">fill=</span>training_flag) <span class="sc">+</span></span>
+<span id="cb558-3"><a href="ranger-in-the-caret.html#cb558-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb558-4"><a href="ranger-in-the-caret.html#cb558-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Engine size&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+</div>
+<div id="age-1" class="section level4" number="14.5.2.3">
+<h4><span class="header-section-number">14.5.2.3</span> Age</h4>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="ranger-in-the-caret.html#cb559-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(train.df<span class="sc">$</span>age)</span></code></pre></div>
+<pre><code>##   0%  25%  50%  75% 100% 
+##    1    5    7   11   37</code></pre>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="ranger-in-the-caret.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(test.df<span class="sc">$</span>age)</span></code></pre></div>
+<pre><code>##   0%  25%  50%  75% 100% 
+##    1    5    8   12   23</code></pre>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="ranger-in-the-caret.html#cb563-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data.df) <span class="sc">+</span> </span>
+<span id="cb563-2"><a href="ranger-in-the-caret.html#cb563-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(age, <span class="at">fill=</span>training_flag) <span class="sc">+</span></span>
+<span id="cb563-3"><a href="ranger-in-the-caret.html#cb563-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb563-4"><a href="ranger-in-the-caret.html#cb563-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Age&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+</div>
+<div id="owners-1" class="section level4" number="14.5.2.4">
+<h4><span class="header-section-number">14.5.2.4</span> Owners</h4>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="ranger-in-the-caret.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data.df<span class="sc">$</span>owners,training_flag)</span></code></pre></div>
+<pre><code>##     training_flag
+##      FALSE TRUE
+##   1     52  117
+##   2     57  137
+##   3     32   91
+##   4     18   39
+##   5     13   28
+##   6      4    8
+##   7      2    0
+##   8      2    2
+##   10     0    1
+##   12     0    1</code></pre>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="ranger-in-the-caret.html#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data.df) <span class="sc">+</span> </span>
+<span id="cb566-2"><a href="ranger-in-the-caret.html#cb566-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(owners, <span class="at">fill=</span>training_flag) <span class="sc">+</span></span>
+<span id="cb566-3"><a href="ranger-in-the-caret.html#cb566-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb566-4"><a href="ranger-in-the-caret.html#cb566-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Owners&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="ranger-in-the-caret.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data.df) <span class="sc">+</span> </span>
+<span id="cb567-2"><a href="ranger-in-the-caret.html#cb567-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(owners, <span class="at">fill=</span>training_flag) <span class="sc">+</span></span>
+<span id="cb567-3"><a href="ranger-in-the-caret.html#cb567-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb567-4"><a href="ranger-in-the-caret.html#cb567-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Owners&quot;</span>,</span>
+<span id="cb567-5"><a href="ranger-in-the-caret.html#cb567-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;stacked histogram&quot;</span>,</span>
+<span id="cb567-6"><a href="ranger-in-the-caret.html#cb567-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Processed data&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-109-2.png" width="672" /></p>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="ranger-in-the-caret.html#cb568-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data.df) <span class="sc">+</span> </span>
+<span id="cb568-2"><a href="ranger-in-the-caret.html#cb568-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(owners, <span class="at">fill=</span>training_flag) <span class="sc">+</span></span>
+<span id="cb568-3"><a href="ranger-in-the-caret.html#cb568-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb568-4"><a href="ranger-in-the-caret.html#cb568-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Owners&quot;</span>,</span>
+<span id="cb568-5"><a href="ranger-in-the-caret.html#cb568-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;overlaid histogram&quot;</span>,</span>
+<span id="cb568-6"><a href="ranger-in-the-caret.html#cb568-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Processed data&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-109-3.png" width="672" /></p>
+</div>
+<div id="make" class="section level4" number="14.5.2.5">
+<h4><span class="header-section-number">14.5.2.5</span> Make</h4>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="ranger-in-the-caret.html#cb569-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">table</span>(data.df<span class="sc">$</span>make,training_flag)</span>
+<span id="cb569-2"><a href="ranger-in-the-caret.html#cb569-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>##                training_flag
+##                 FALSE TRUE
+##   Audi              9   20
+##   BMW              11   30
+##   Citroen           9   20
+##   Fiat              9   27
+##   Ford             16   38
+##   Mazda             9   20
+##   Mercedes-Benz    13   28
+##   MINI              9   21
+##   Nissan           22   38
+##   Peugeot           8   24
+##   Renault          13   25
+##   Toyota           13   26
+##   Vauxhall         24   67
+##   Volkswagen       15   40</code></pre>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="ranger-in-the-caret.html#cb571-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x[<span class="fu">order</span>(<span class="fu">rowSums</span>(x), <span class="at">decreasing=</span>T),]</span>
+<span id="cb571-2"><a href="ranger-in-the-caret.html#cb571-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>##                training_flag
+##                 FALSE TRUE
+##   Vauxhall         24   67
+##   Nissan           22   38
+##   Volkswagen       15   40
+##   Ford             16   38
+##   BMW              11   30
+##   Mercedes-Benz    13   28
+##   Toyota           13   26
+##   Renault          13   25
+##   Fiat              9   27
+##   Peugeot           8   24
+##   MINI              9   21
+##   Audi              9   20
+##   Citroen           9   20
+##   Mazda             9   20</code></pre>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="ranger-in-the-caret.html#cb573-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">t</span>(y), <span class="at">main=</span><span class="st">&quot;Make (pre-porcessed &amp; split data)&quot;</span>, <span class="at">las=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="ranger-in-the-caret.html#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb574-2"><a href="ranger-in-the-caret.html#cb574-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x,y,training_flag)</span></code></pre></div>
+</div>
+</div>
+<div id="checks-not-used-for-this-model" class="section level3" number="14.5.3">
+<h3><span class="header-section-number">14.5.3</span> Checks not used for this model</h3>
+<div id="predictors-variability-in-training-data" class="section level4" number="14.5.3.1">
+<h4><span class="header-section-number">14.5.3.1</span> Predictors variability in training data</h4>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="ranger-in-the-caret.html#cb575-1" aria-hidden="true" tabindex="-1"></a>numeric_predictors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mileage&quot;</span>,<span class="st">&quot;engine.size&quot;</span>,<span class="st">&quot;owners&quot;</span>,<span class="st">&quot;age&quot;</span>)</span>
+<span id="cb575-2"><a href="ranger-in-the-caret.html#cb575-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb575-3"><a href="ranger-in-the-caret.html#cb575-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(train.df[,numeric_predictors], <span class="at">saveMetrics =</span> T)</span></code></pre></div>
+<pre><code>##             freqRatio percentUnique zeroVar   nzv
+## mileage      1.000000     85.377358   FALSE FALSE
+## engine.size  1.083333      5.424528   FALSE FALSE
+## owners       1.170940      2.122642   FALSE FALSE
+## age          1.000000      6.132075   FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="ranger-in-the-caret.html#cb577-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(train.df,<span class="at">bad_predictor=</span><span class="dv">1</span>)</span>
+<span id="cb577-2"><a href="ranger-in-the-caret.html#cb577-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    424 obs. of  7 variables:
+##  $ mileage      : num  95300 74500 22255 38926 35035 ...
+##  $ engine.size  : num  3.2 1.8 1 1.5 1.2 1 1.2 1.4 1.4 1.4 ...
+##  $ owners       : int  6 3 1 2 2 5 4 3 2 2 ...
+##  $ price        : num  8000 7600 8995 9990 6495 ...
+##  $ make         : Factor w/ 14 levels &quot;Audi&quot;,&quot;BMW&quot;,&quot;Citroen&quot;,..: 7 7 10 8 13 10 4 4 5 10 ...
+##  $ age          : num  20 12 4 5 4 12 9 11 16 13 ...
+##  $ bad_predictor: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="ranger-in-the-caret.html#cb579-1" aria-hidden="true" tabindex="-1"></a>numeric_predictors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mileage&quot;</span>,<span class="st">&quot;engine.size&quot;</span>,<span class="st">&quot;owners&quot;</span>,<span class="st">&quot;age&quot;</span>,<span class="st">&quot;bad_predictor&quot;</span>)</span>
+<span id="cb579-2"><a href="ranger-in-the-caret.html#cb579-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(x[,numeric_predictors], <span class="at">saveMetrics =</span> T)</span></code></pre></div>
+<pre><code>##               freqRatio percentUnique zeroVar   nzv
+## mileage        1.000000    85.3773585   FALSE FALSE
+## engine.size    1.083333     5.4245283   FALSE FALSE
+## owners         1.170940     2.1226415   FALSE FALSE
+## age            1.000000     6.1320755   FALSE FALSE
+## bad_predictor  0.000000     0.2358491    TRUE  TRUE</code></pre>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="ranger-in-the-caret.html#cb581-1" aria-hidden="true" tabindex="-1"></a>numeric_predictors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mileage&quot;</span>,<span class="st">&quot;engine.size&quot;</span>,<span class="st">&quot;owners&quot;</span>,<span class="st">&quot;age&quot;</span>)</span>
+<span id="cb581-2"><a href="ranger-in-the-caret.html#cb581-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
+</div>
+<div id="scales-of-numeric-predictors" class="section level4" number="14.5.3.2">
+<h4><span class="header-section-number">14.5.3.2</span> Scales of numeric predictors</h4>
+<p>Centering and scaling may be important for some models, but not for Random Forest</p>
+<p>Equivalent for categorical predictors ??</p>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="ranger-in-the-caret.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x =</span> train.df[,numeric_predictors],</span>
+<span id="cb582-2"><a href="ranger-in-the-caret.html#cb582-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> train.df<span class="sc">$</span>price,</span>
+<span id="cb582-3"><a href="ranger-in-the-caret.html#cb582-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot =</span> <span class="st">&quot;scatter&quot;</span>,</span>
+<span id="cb582-4"><a href="ranger-in-the-caret.html#cb582-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">layout =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="ranger-in-the-caret.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To do: Add regression lines</span></span></code></pre></div>
+</div>
+<div id="correlation-of-numeric-predictors" class="section level4" number="14.5.3.3">
+<h4><span class="header-section-number">14.5.3.3</span> Correlation of numeric predictors</h4>
+<p>Technical: use <strong>findCorrelation</strong> from <strong>caret</strong></p>
+<p>Conceptual:</p>
+<ul>
+<li>How is it important for Random Forest ?<br />
+</li>
+<li>What about categorical predictors (chi sq for contingency table) ?</li>
+</ul>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="ranger-in-the-caret.html#cb584-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate correlations</span></span>
+<span id="cb584-2"><a href="ranger-in-the-caret.html#cb584-2" aria-hidden="true" tabindex="-1"></a>corMat <span class="ot">&lt;-</span> <span class="fu">cor</span>(train.df[,numeric_predictors])</span>
+<span id="cb584-3"><a href="ranger-in-the-caret.html#cb584-3" aria-hidden="true" tabindex="-1"></a>corMat</span></code></pre></div>
+<pre><code>##               mileage engine.size    owners       age
+## mileage     1.0000000   0.2066522 0.5397023 0.6020196
+## engine.size 0.2066522   1.0000000 0.2166323 0.2501745
+## owners      0.5397023   0.2166323 1.0000000 0.6505029
+## age         0.6020196   0.2501745 0.6505029 1.0000000</code></pre>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="ranger-in-the-caret.html#cb586-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot (is it better than heatmap?)</span></span>
+<span id="cb586-2"><a href="ranger-in-the-caret.html#cb586-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(corMat, <span class="at">order=</span><span class="st">&quot;hclust&quot;</span>, <span class="at">tl.cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="ranger-in-the-caret.html#cb587-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at hightly correlated predictors</span></span>
+<span id="cb587-2"><a href="ranger-in-the-caret.html#cb587-2" aria-hidden="true" tabindex="-1"></a>highCorr <span class="ot">&lt;-</span> <span class="fu">findCorrelation</span>(corMat, <span class="at">cutoff=</span><span class="fl">0.75</span>)</span>
+<span id="cb587-3"><a href="ranger-in-the-caret.html#cb587-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(highCorr)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="ranger-in-the-caret.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="co">#names(train.df[,numeric_predictors])[highCorr]</span></span>
+<span id="cb589-2"><a href="ranger-in-the-caret.html#cb589-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb589-3"><a href="ranger-in-the-caret.html#cb589-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb589-4"><a href="ranger-in-the-caret.html#cb589-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(corMat,highCorr,numeric_predictors)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="set-parallel-processing" class="section level2" number="14.6">
+<h2><span class="header-section-number">14.6</span> Set parallel processing</h2>
+<p>Obviously, the cross-validation is naturally parallelisable.</p>
+<p><strong>caret</strong> is an example of the new generation of R packages that may recognize and use multiple cores (using help from <strong>doMC</strong> package).</p>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="ranger-in-the-caret.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoMC</span>(<span class="fu">detectCores</span>())</span>
+<span id="cb590-2"><a href="ranger-in-the-caret.html#cb590-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getDoParWorkers</span>()</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+</div>
+<div id="build-models" class="section level2" number="14.7">
+<h2><span class="header-section-number">14.7</span> Build model(s)</h2>
+<div id="configure-resampling" class="section level3" number="14.7.1">
+<h3><span class="header-section-number">14.7.1</span> Configure resampling</h3>
+<p>the small number of CV partitions is on purpose: to avoid issues with lack of data in branches/leaves during cross-validation</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="ranger-in-the-caret.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Faster, less robust (less prone to over-fitting ??)</span></span>
+<span id="cb592-2"><a href="ranger-in-the-caret.html#cb592-2" aria-hidden="true" tabindex="-1"></a>train_ctrl_1 <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method=</span><span class="st">&quot;cv&quot;</span>,</span>
+<span id="cb592-3"><a href="ranger-in-the-caret.html#cb592-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb592-4"><a href="ranger-in-the-caret.html#cb592-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-5"><a href="ranger-in-the-caret.html#cb592-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Slower, more robust (more prone to over-fitting ??)</span></span>
+<span id="cb592-6"><a href="ranger-in-the-caret.html#cb592-6" aria-hidden="true" tabindex="-1"></a>train_ctrl_2 <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method=</span><span class="st">&quot;repeatedcv&quot;</span>,</span>
+<span id="cb592-7"><a href="ranger-in-the-caret.html#cb592-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">number =</span> <span class="dv">5</span>,</span>
+<span id="cb592-8"><a href="ranger-in-the-caret.html#cb592-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">repeats =</span> <span class="dv">10</span>)</span></code></pre></div>
+</div>
+<div id="default-model" class="section level3" number="14.7.2">
+<h3><span class="header-section-number">14.7.2</span> Default model</h3>
+<p>Use default grid of hyper-parameters set for <strong>ranger</strong> by <strong>caret</strong></p>
+<p>The <strong>importance</strong> of varianbles could be evaluated by <strong>Gini</strong> or <strong>Permutation</strong>:</p>
+<p><a href="https://alexisperrier.com/datascience/2015/08/27/feature-importance-random-forests-gini-accuracy.html" class="uri">https://alexisperrier.com/datascience/2015/08/27/feature-importance-random-forests-gini-accuracy.html</a></p>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="ranger-in-the-caret.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train</span></span>
+<span id="cb593-2"><a href="ranger-in-the-caret.html#cb593-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb593-3"><a href="ranger-in-the-caret.html#cb593-3" aria-hidden="true" tabindex="-1"></a>rangerFit1 <span class="ot">&lt;-</span> <span class="fu">train</span>(price <span class="sc">~</span> ., </span>
+<span id="cb593-4"><a href="ranger-in-the-caret.html#cb593-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> train.df, </span>
+<span id="cb593-5"><a href="ranger-in-the-caret.html#cb593-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>, </span>
+<span id="cb593-6"><a href="ranger-in-the-caret.html#cb593-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">trControl =</span> train_ctrl_2, </span>
+<span id="cb593-7"><a href="ranger-in-the-caret.html#cb593-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">importance =</span> <span class="st">&quot;permutation&quot;</span>,</span>
+<span id="cb593-8"><a href="ranger-in-the-caret.html#cb593-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb593-9"><a href="ranger-in-the-caret.html#cb593-9" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> x</span></code></pre></div>
+<pre><code>## Time difference of 47.68218 secs</code></pre>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="ranger-in-the-caret.html#cb595-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check result</span></span>
+<span id="cb595-2"><a href="ranger-in-the-caret.html#cb595-2" aria-hidden="true" tabindex="-1"></a>rangerFit1</span></code></pre></div>
+<pre><code>## Random Forest 
+## 
+## 424 samples
+##   5 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold, repeated 10 times) 
+## Summary of sample sizes: 339, 339, 340, 339, 339, 338, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  splitrule   RMSE      Rsquared   MAE     
+##    2    variance    2666.235  0.7624565  1778.258
+##    2    extratrees  3121.548  0.6977838  2150.264
+##    9    variance    2247.079  0.7892767  1464.055
+##    9    extratrees  2209.335  0.8017228  1455.794
+##   17    variance    2316.893  0.7711552  1499.514
+##   17    extratrees  2172.865  0.8019147  1433.934
+## 
+## Tuning parameter &#39;min.node.size&#39; was held constant at a value of 5
+## RMSE was used to select the optimal model using the smallest value.
+## The final values used for the model were mtry = 17, splitrule = extratrees and min.node.size = 5.</code></pre>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="ranger-in-the-caret.html#cb597-1" aria-hidden="true" tabindex="-1"></a>rangerFit1<span class="sc">$</span>finalModel</span></code></pre></div>
+<pre><code>## Ranger result
+## 
+## Call:
+##  ranger::ranger(dependent.variable.name = &quot;.outcome&quot;, data = x,      mtry = min(param$mtry, ncol(x)), min.node.size = param$min.node.size,      splitrule = as.character(param$splitrule), write.forest = TRUE,      probability = classProbs, ...) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      424 
+## Number of independent variables:  17 
+## Mtry:                             17 
+## Target node size:                 5 
+## Variable importance mode:         permutation 
+## Splitrule:                        extratrees 
+## Number of random splits:          1 
+## OOB prediction error (MSE):       4236339 
+## R squared (OOB):                  0.8119659</code></pre>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="ranger-in-the-caret.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">varImp</span>(rangerFit1),</span>
+<span id="cb599-2"><a href="ranger-in-the-caret.html#cb599-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Feature importance</span><span class="sc">\n</span><span class="st">ranger in caret with default hyper-parameters grid&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="ranger-in-the-caret.html#cb600-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb600-2"><a href="ranger-in-the-caret.html#cb600-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x )</span></code></pre></div>
+</div>
+<div id="model-with-custom-grid" class="section level3" number="14.7.3">
+<h3><span class="header-section-number">14.7.3</span> Model with custom grid</h3>
+<p>Use <strong>expand.grid</strong> function from <strong>base</strong></p>
+<p>Making a custom grid of hyper-parameters requires some knowledge of them …</p>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="ranger-in-the-caret.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting know the hyper-parameters </span></span>
+<span id="cb601-2"><a href="ranger-in-the-caret.html#cb601-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://topepo.github.io/caret/available-models.html -&gt; ranger  </span></span>
+<span id="cb601-3"><a href="ranger-in-the-caret.html#cb601-3" aria-hidden="true" tabindex="-1"></a><span class="co"># getModelInfo(&quot;ranger&quot;)  </span></span>
+<span id="cb601-4"><a href="ranger-in-the-caret.html#cb601-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mtry = 1:5 # number of predictors to pick at random ???  </span></span>
+<span id="cb601-5"><a href="ranger-in-the-caret.html#cb601-5" aria-hidden="true" tabindex="-1"></a><span class="co"># min.node.size: 1:20 # Self-explanatory  </span></span>
+<span id="cb601-6"><a href="ranger-in-the-caret.html#cb601-6" aria-hidden="true" tabindex="-1"></a><span class="co"># if (is.factor(y)): c(&quot;gini&quot;, &quot;extratrees&quot;)  </span></span>
+<span id="cb601-7"><a href="ranger-in-the-caret.html#cb601-7" aria-hidden="true" tabindex="-1"></a><span class="co"># else: c(&quot;variance&quot;, &quot;extratrees&quot;, &quot;maxstat&quot;)  </span></span>
+<span id="cb601-8"><a href="ranger-in-the-caret.html#cb601-8" aria-hidden="true" tabindex="-1"></a><span class="co"># str(data.df)  </span></span>
+<span id="cb601-9"><a href="ranger-in-the-caret.html#cb601-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb601-10"><a href="ranger-in-the-caret.html#cb601-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the custom grid of hyper-parameters  </span></span>
+<span id="cb601-11"><a href="ranger-in-the-caret.html#cb601-11" aria-hidden="true" tabindex="-1"></a>rangerGrid <span class="ot">&lt;-</span>  <span class="fu">expand.grid</span>(</span>
+<span id="cb601-12"><a href="ranger-in-the-caret.html#cb601-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">18</span>,<span class="dv">2</span>),</span>
+<span id="cb601-13"><a href="ranger-in-the-caret.html#cb601-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">splitrule =</span> <span class="fu">c</span>(<span class="st">&quot;variance&quot;</span>, <span class="st">&quot;extratrees&quot;</span>, <span class="st">&quot;maxstat&quot;</span>), </span>
+<span id="cb601-14"><a href="ranger-in-the-caret.html#cb601-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">min.node.size =</span> <span class="fu">seq</span>(<span class="dv">5</span>,<span class="dv">15</span>,<span class="dv">2</span>))</span>
+<span id="cb601-15"><a href="ranger-in-the-caret.html#cb601-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb601-16"><a href="ranger-in-the-caret.html#cb601-16" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(rangerGrid)</span></code></pre></div>
+<pre><code>## [1] 162</code></pre>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="ranger-in-the-caret.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rangerGrid)</span></code></pre></div>
+<pre><code>##   mtry splitrule min.node.size
+## 1    1  variance             5
+## 2    3  variance             5
+## 3    5  variance             5
+## 4    7  variance             5
+## 5    9  variance             5
+## 6   11  variance             5</code></pre>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="ranger-in-the-caret.html#cb605-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(rangerGrid)</span></code></pre></div>
+<pre><code>##     mtry splitrule min.node.size
+## 157    7   maxstat            15
+## 158    9   maxstat            15
+## 159   11   maxstat            15
+## 160   13   maxstat            15
+## 161   15   maxstat            15
+## 162   17   maxstat            15</code></pre>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="ranger-in-the-caret.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train with the custom grid of hyper-parameters</span></span>
+<span id="cb607-2"><a href="ranger-in-the-caret.html#cb607-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb607-3"><a href="ranger-in-the-caret.html#cb607-3" aria-hidden="true" tabindex="-1"></a>rangerFit2 <span class="ot">&lt;-</span> <span class="fu">train</span>(price <span class="sc">~</span> ., </span>
+<span id="cb607-4"><a href="ranger-in-the-caret.html#cb607-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> train.df, </span>
+<span id="cb607-5"><a href="ranger-in-the-caret.html#cb607-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>, </span>
+<span id="cb607-6"><a href="ranger-in-the-caret.html#cb607-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">trControl =</span> train_ctrl_2, </span>
+<span id="cb607-7"><a href="ranger-in-the-caret.html#cb607-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">tuneGrid =</span> rangerGrid,</span>
+<span id="cb607-8"><a href="ranger-in-the-caret.html#cb607-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">importance =</span> <span class="st">&quot;permutation&quot;</span>,</span>
+<span id="cb607-9"><a href="ranger-in-the-caret.html#cb607-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb607-10"><a href="ranger-in-the-caret.html#cb607-10" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> x</span></code></pre></div>
+<pre><code>## Time difference of 19.29393 mins</code></pre>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="ranger-in-the-caret.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check results</span></span>
+<span id="cb609-2"><a href="ranger-in-the-caret.html#cb609-2" aria-hidden="true" tabindex="-1"></a>rangerFit2</span></code></pre></div>
+<pre><code>## Random Forest 
+## 
+## 424 samples
+##   5 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold, repeated 10 times) 
+## Summary of sample sizes: 338, 339, 340, 339, 340, 339, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  splitrule   min.node.size  RMSE      Rsquared   MAE     
+##    1    variance     5             3480.708  0.7090287  2472.049
+##    1    variance     7             3485.074  0.7092895  2475.316
+##    1    variance     9             3489.622  0.7078086  2478.340
+##    1    variance    11             3488.937  0.7074563  2478.689
+##    1    variance    13             3495.424  0.7069768  2482.410
+##    1    variance    15             3497.762  0.7063670  2485.192
+##    1    extratrees   5             3930.052  0.6124170  2879.577
+##    1    extratrees   7             3939.023  0.6071972  2887.027
+##    1    extratrees   9             3932.380  0.6104707  2882.411
+##    1    extratrees  11             3942.351  0.6080585  2891.884
+##    1    extratrees  13             3943.907  0.6059577  2890.984
+##    1    extratrees  15             3948.833  0.6026171  2895.591
+##    1    maxstat      5             4361.519  0.5766463  3253.215
+##    1    maxstat      7             4358.142  0.5797896  3250.234
+##    1    maxstat      9             4361.568  0.5780818  3253.265
+##    1    maxstat     11             4368.732  0.5735337  3259.457
+##    1    maxstat     13             4357.273  0.5765763  3248.064
+##    1    maxstat     15             4359.366  0.5677793  3250.118
+##    3    variance     5             2352.078  0.7933851  1563.604
+##    3    variance     7             2370.127  0.7897887  1578.139
+##    3    variance     9             2393.975  0.7861035  1593.235
+##    3    variance    11             2414.148  0.7821976  1604.235
+##    3    variance    13             2435.040  0.7790921  1618.012
+##    3    variance    15             2455.284  0.7766778  1630.401
+##    3    extratrees   5             2656.494  0.7538935  1813.204
+##    3    extratrees   7             2680.668  0.7492453  1827.349
+##    3    extratrees   9             2700.494  0.7460945  1838.420
+##    3    extratrees  11             2730.644  0.7394906  1858.045
+##    3    extratrees  13             2753.124  0.7360851  1873.314
+##    3    extratrees  15             2777.481  0.7312582  1889.330
+##    3    maxstat      5             3460.214  0.6723615  2442.387
+##    3    maxstat      7             3466.623  0.6702104  2447.492
+##    3    maxstat      9             3466.208  0.6688062  2444.038
+##    3    maxstat     11             3475.988  0.6666921  2453.815
+##    3    maxstat     13             3477.919  0.6655827  2451.536
+##    3    maxstat     15             3488.781  0.6597247  2459.926
+##    5    variance     5             2218.117  0.8026400  1468.044
+##    5    variance     7             2240.590  0.7986390  1481.434
+##    5    variance     9             2267.743  0.7939873  1498.788
+##    5    variance    11             2291.741  0.7906138  1517.405
+##    5    variance    13             2316.331  0.7859540  1532.410
+##    5    variance    15             2339.008  0.7827188  1549.234
+##    5    extratrees   5             2312.319  0.7963695  1550.998
+##    5    extratrees   7             2348.701  0.7911407  1571.691
+##    5    extratrees   9             2396.896  0.7826806  1600.222
+##    5    extratrees  11             2432.837  0.7768959  1621.867
+##    5    extratrees  13             2461.349  0.7727988  1641.644
+##    5    extratrees  15             2497.813  0.7669131  1664.536
+##    5    maxstat      5             2800.925  0.7285356  1894.520
+##    5    maxstat      7             2802.588  0.7260980  1892.335
+##    5    maxstat      9             2817.653  0.7219827  1896.834
+##    5    maxstat     11             2822.011  0.7219941  1902.842
+##    5    maxstat     13             2832.474  0.7176074  1906.936
+##    5    maxstat     15             2840.442  0.7165951  1910.929
+##    7    variance     5             2195.422  0.8013149  1447.152
+##    7    variance     7             2220.482  0.7973964  1461.390
+##    7    variance     9             2241.051  0.7938248  1478.572
+##    7    variance    11             2271.667  0.7884257  1497.196
+##    7    variance    13             2286.093  0.7864966  1509.103
+##    7    variance    15             2310.910  0.7822363  1525.065
+##    7    extratrees   5             2186.410  0.8106278  1461.609
+##    7    extratrees   7             2235.131  0.8031455  1489.085
+##    7    extratrees   9             2272.641  0.7983737  1512.364
+##    7    extratrees  11             2311.592  0.7921418  1535.056
+##    7    extratrees  13             2353.660  0.7851490  1560.921
+##    7    extratrees  15             2386.628  0.7804443  1578.947
+##    7    maxstat      5             2517.904  0.7503736  1672.767
+##    7    maxstat      7             2536.425  0.7462856  1684.164
+##    7    maxstat      9             2551.768  0.7426973  1689.678
+##    7    maxstat     11             2564.673  0.7395181  1698.901
+##    7    maxstat     13             2579.951  0.7363549  1706.882
+##    7    maxstat     15             2587.853  0.7346267  1710.734
+##    9    variance     5             2198.506  0.7981117  1443.302
+##    9    variance     7             2217.049  0.7954140  1456.605
+##    9    variance     9             2235.018  0.7922762  1471.817
+##    9    variance    11             2262.145  0.7873965  1488.140
+##    9    variance    13             2281.747  0.7842274  1500.049
+##    9    variance    15             2299.361  0.7810090  1513.504
+##    9    extratrees   5             2135.504  0.8154829  1427.330
+##    9    extratrees   7             2183.622  0.8079939  1454.198
+##    9    extratrees   9             2220.237  0.8028832  1474.301
+##    9    extratrees  11             2251.764  0.7987958  1494.092
+##    9    extratrees  13             2296.372  0.7915954  1517.576
+##    9    extratrees  15             2329.346  0.7861168  1539.122
+##    9    maxstat      5             2435.714  0.7556420  1611.726
+##    9    maxstat      7             2448.661  0.7527975  1614.753
+##    9    maxstat      9             2468.462  0.7485984  1626.206
+##    9    maxstat     11             2481.306  0.7458888  1633.324
+##    9    maxstat     13             2504.445  0.7407622  1645.711
+##    9    maxstat     15             2517.991  0.7382049  1655.127
+##   11    variance     5             2208.628  0.7948292  1448.881
+##   11    variance     7             2227.374  0.7917467  1462.570
+##   11    variance     9             2242.845  0.7890146  1474.912
+##   11    variance    11             2262.336  0.7855255  1487.473
+##   11    variance    13             2281.811  0.7822043  1498.660
+##   11    variance    15             2300.801  0.7786993  1512.806
+##   11    extratrees   5             2121.980  0.8146371  1413.736
+##   11    extratrees   7             2149.499  0.8109904  1433.529
+##   11    extratrees   9             2199.405  0.8036176  1460.098
+##   11    extratrees  11             2234.409  0.7984726  1480.336
+##   11    extratrees  13             2268.096  0.7934579  1498.733
+##   11    extratrees  15             2294.026  0.7897046  1515.105
+##   11    maxstat      5             2408.593  0.7569455  1590.234
+##   11    maxstat      7             2422.702  0.7540510  1597.424
+##   11    maxstat      9             2443.785  0.7496759  1607.299
+##   11    maxstat     11             2462.165  0.7453431  1617.305
+##   11    maxstat     13             2478.143  0.7425341  1628.410
+##   11    maxstat     15             2495.729  0.7389388  1638.798
+##   13    variance     5             2224.776  0.7904001  1460.655
+##   13    variance     7             2236.880  0.7886909  1468.034
+##   13    variance     9             2255.269  0.7856946  1478.074
+##   13    variance    11             2269.926  0.7825451  1490.774
+##   13    variance    13             2290.953  0.7788466  1504.965
+##   13    variance    15             2303.106  0.7767364  1513.477
+##   13    extratrees   5             2108.888  0.8150672  1406.900
+##   13    extratrees   7             2143.699  0.8104801  1429.810
+##   13    extratrees   9             2187.200  0.8038312  1449.629
+##   13    extratrees  11             2213.848  0.8002418  1467.741
+##   13    extratrees  13             2249.545  0.7947662  1486.598
+##   13    extratrees  15             2272.520  0.7914293  1502.166
+##   13    maxstat      5             2409.709  0.7547325  1591.273
+##   13    maxstat      7             2421.683  0.7522924  1596.497
+##   13    maxstat      9             2443.232  0.7478132  1606.913
+##   13    maxstat     11             2455.971  0.7451920  1615.406
+##   13    maxstat     13             2474.318  0.7412053  1626.891
+##   13    maxstat     15             2490.213  0.7379786  1637.103
+##   15    variance     5             2245.458  0.7857367  1468.871
+##   15    variance     7             2257.614  0.7838378  1476.913
+##   15    variance     9             2268.819  0.7818964  1486.727
+##   15    variance    11             2290.682  0.7777409  1499.959
+##   15    variance    13             2303.803  0.7754090  1508.128
+##   15    variance    15             2314.439  0.7737001  1516.707
+##   15    extratrees   5             2109.192  0.8141949  1403.830
+##   15    extratrees   7             2140.721  0.8097701  1424.623
+##   15    extratrees   9             2171.226  0.8054118  1443.804
+##   15    extratrees  11             2205.492  0.8001438  1463.391
+##   15    extratrees  13             2233.059  0.7962069  1476.409
+##   15    extratrees  15             2261.578  0.7918521  1494.142
+##   15    maxstat      5             2413.008  0.7527492  1596.522
+##   15    maxstat      7             2431.269  0.7487393  1605.224
+##   15    maxstat      9             2444.403  0.7461677  1611.300
+##   15    maxstat     11             2459.750  0.7428750  1621.435
+##   15    maxstat     13             2483.502  0.7382048  1633.102
+##   15    maxstat     15             2503.034  0.7341556  1646.722
+##   17    variance     5             2271.064  0.7804503  1481.357
+##   17    variance     7             2279.668  0.7791901  1487.993
+##   17    variance     9             2291.893  0.7769432  1498.494
+##   17    variance    11             2309.112  0.7734374  1510.798
+##   17    variance    13             2326.162  0.7705538  1520.142
+##   17    variance    15             2334.920  0.7690559  1526.685
+##   17    extratrees   5             2099.762  0.8146892  1399.288
+##   17    extratrees   7             2133.956  0.8099013  1421.661
+##   17    extratrees   9             2164.972  0.8049848  1441.025
+##   17    extratrees  11             2197.491  0.8004547  1457.724
+##   17    extratrees  13             2228.198  0.7953733  1475.359
+##   17    extratrees  15             2245.420  0.7932948  1487.364
+##   17    maxstat      5             2428.483  0.7484978  1610.536
+##   17    maxstat      7             2440.865  0.7458872  1617.972
+##   17    maxstat      9             2461.315  0.7413833  1627.144
+##   17    maxstat     11             2476.466  0.7383731  1634.856
+##   17    maxstat     13             2489.963  0.7355372  1644.713
+##   17    maxstat     15             2513.213  0.7306427  1659.341
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final values used for the model were mtry = 17, splitrule = extratrees and min.node.size = 5.</code></pre>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="ranger-in-the-caret.html#cb611-1" aria-hidden="true" tabindex="-1"></a>rangerFit2<span class="sc">$</span>finalModel</span></code></pre></div>
+<pre><code>## Ranger result
+## 
+## Call:
+##  ranger::ranger(dependent.variable.name = &quot;.outcome&quot;, data = x,      mtry = min(param$mtry, ncol(x)), min.node.size = param$min.node.size,      splitrule = as.character(param$splitrule), write.forest = TRUE,      probability = classProbs, ...) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      424 
+## Number of independent variables:  17 
+## Mtry:                             17 
+## Target node size:                 5 
+## Variable importance mode:         permutation 
+## Splitrule:                        extratrees 
+## Number of random splits:          1 
+## OOB prediction error (MSE):       4352161 
+## R squared (OOB):                  0.8068251</code></pre>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="ranger-in-the-caret.html#cb613-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">varImp</span>(rangerFit1),</span>
+<span id="cb613-2"><a href="ranger-in-the-caret.html#cb613-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">main=</span><span class="st">&quot;Feature importance</span><span class="sc">\n</span><span class="st">ranger in caret with custom hyper-parameters grid&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="ranger-in-the-caret.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="co"># De-clutter</span></span>
+<span id="cb614-2"><a href="ranger-in-the-caret.html#cb614-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x,train_ctrl_1,train_ctrl_2)</span></code></pre></div>
+</div>
+</div>
+<div id="evaluate-models-on-the-test-set" class="section level2" number="14.8">
+<h2><span class="header-section-number">14.8</span> Evaluate models on the test set</h2>
+<div id="carets-default-hyper-parameters-grid" class="section level3" number="14.8.1">
+<h3><span class="header-section-number">14.8.1</span> Caret’s default hyper-parameters grid</h3>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="ranger-in-the-caret.html#cb615-1" aria-hidden="true" tabindex="-1"></a>test_pred_rangerFit1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(rangerFit1, test.df)</span>
+<span id="cb615-2"><a href="ranger-in-the-caret.html#cb615-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb615-3"><a href="ranger-in-the-caret.html#cb615-3" aria-hidden="true" tabindex="-1"></a>RMSE_test_rangerFit1 <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(test_pred_rangerFit1, test.df<span class="sc">$</span>price)</span>
+<span id="cb615-4"><a href="ranger-in-the-caret.html#cb615-4" aria-hidden="true" tabindex="-1"></a>Rsq_test_rangerFit1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(test_pred_rangerFit1, test.df<span class="sc">$</span>price)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb615-5"><a href="ranger-in-the-caret.html#cb615-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb615-6"><a href="ranger-in-the-caret.html#cb615-6" aria-hidden="true" tabindex="-1"></a>RMSE_test_rangerFit1</span></code></pre></div>
+<pre><code>## [1] 1878.018</code></pre>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="ranger-in-the-caret.html#cb617-1" aria-hidden="true" tabindex="-1"></a>Rsq_test_rangerFit1</span></code></pre></div>
+<pre><code>## [1] 0.8267155</code></pre>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="ranger-in-the-caret.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(test.df<span class="sc">$</span>price, test_pred_rangerFit1, </span>
+<span id="cb619-2"><a href="ranger-in-the-caret.html#cb619-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Performance of ranger in caret model on test set</span><span class="sc">\n</span><span class="st">default hyper-parameters grid&quot;</span>)</span>
+<span id="cb619-3"><a href="ranger-in-the-caret.html#cb619-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb619-4"><a href="ranger-in-the-caret.html#cb619-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb619-5"><a href="ranger-in-the-caret.html#cb619-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(test_pred_rangerFit1<span class="sc">~</span>test.df<span class="sc">$</span>price), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb619-6"><a href="ranger-in-the-caret.html#cb619-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb619-7"><a href="ranger-in-the-caret.html#cb619-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, </span>
+<span id="cb619-8"><a href="ranger-in-the-caret.html#cb619-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;lm fitted to ranger prediction&quot;</span>,<span class="st">&quot;diagonal&quot;</span>), </span>
+<span id="cb619-9"><a href="ranger-in-the-caret.html#cb619-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),</span>
+<span id="cb619-10"><a href="ranger-in-the-caret.html#cb619-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb619-11"><a href="ranger-in-the-caret.html#cb619-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb619-12"><a href="ranger-in-the-caret.html#cb619-12" aria-hidden="true" tabindex="-1"></a>legend_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(</span>
+<span id="cb619-13"><a href="ranger-in-the-caret.html#cb619-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;R sq: &quot;</span>,<span class="fu">round</span>(Rsq_test_rangerFit1,<span class="dv">2</span>),<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb619-14"><a href="ranger-in-the-caret.html#cb619-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RMSE: &quot;</span>,<span class="fu">round</span>(RMSE_test_rangerFit1,<span class="dv">0</span>),<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb619-15"><a href="ranger-in-the-caret.html#cb619-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend=</span>legend_text, <span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="ranger-in-the-caret.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb620-2"><a href="ranger-in-the-caret.html#cb620-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(legend_text,Rsq_test_rangerFit1,RMSE_test_rangerFit1,test_pred_rangerFit1)</span></code></pre></div>
+</div>
+<div id="custom-hyper-parameters-grid" class="section level3" number="14.8.2">
+<h3><span class="header-section-number">14.8.2</span> Custom hyper-parameters grid</h3>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="ranger-in-the-caret.html#cb621-1" aria-hidden="true" tabindex="-1"></a>test_pred_rangerFit2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(rangerFit2, test.df)</span>
+<span id="cb621-2"><a href="ranger-in-the-caret.html#cb621-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-3"><a href="ranger-in-the-caret.html#cb621-3" aria-hidden="true" tabindex="-1"></a>RMSE_test_rangerFit2 <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(test_pred_rangerFit2, test.df<span class="sc">$</span>price)</span>
+<span id="cb621-4"><a href="ranger-in-the-caret.html#cb621-4" aria-hidden="true" tabindex="-1"></a>Rsq_test_rangerFit2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(test_pred_rangerFit2, test.df<span class="sc">$</span>price)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb621-5"><a href="ranger-in-the-caret.html#cb621-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-6"><a href="ranger-in-the-caret.html#cb621-6" aria-hidden="true" tabindex="-1"></a>RMSE_test_rangerFit2</span></code></pre></div>
+<pre><code>## [1] 1914.545</code></pre>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="ranger-in-the-caret.html#cb623-1" aria-hidden="true" tabindex="-1"></a>Rsq_test_rangerFit2</span></code></pre></div>
+<pre><code>## [1] 0.8201145</code></pre>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="ranger-in-the-caret.html#cb625-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(test.df<span class="sc">$</span>price, test_pred_rangerFit2, </span>
+<span id="cb625-2"><a href="ranger-in-the-caret.html#cb625-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Performance of ranger in caret model on test set</span><span class="sc">\n</span><span class="st">custom hyper-parameters grid&quot;</span>)</span>
+<span id="cb625-3"><a href="ranger-in-the-caret.html#cb625-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-4"><a href="ranger-in-the-caret.html#cb625-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb625-5"><a href="ranger-in-the-caret.html#cb625-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(test_pred_rangerFit2<span class="sc">~</span>test.df<span class="sc">$</span>price), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb625-6"><a href="ranger-in-the-caret.html#cb625-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-7"><a href="ranger-in-the-caret.html#cb625-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, </span>
+<span id="cb625-8"><a href="ranger-in-the-caret.html#cb625-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;lm fitted to ranger prediction&quot;</span>,<span class="st">&quot;diagonal&quot;</span>), </span>
+<span id="cb625-9"><a href="ranger-in-the-caret.html#cb625-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),</span>
+<span id="cb625-10"><a href="ranger-in-the-caret.html#cb625-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb625-11"><a href="ranger-in-the-caret.html#cb625-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-12"><a href="ranger-in-the-caret.html#cb625-12" aria-hidden="true" tabindex="-1"></a>legend_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(</span>
+<span id="cb625-13"><a href="ranger-in-the-caret.html#cb625-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;R sq: &quot;</span>,<span class="fu">round</span>(Rsq_test_rangerFit2,<span class="dv">2</span>),<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb625-14"><a href="ranger-in-the-caret.html#cb625-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RMSE: &quot;</span>,<span class="fu">round</span>(RMSE_test_rangerFit2,<span class="dv">0</span>),<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb625-15"><a href="ranger-in-the-caret.html#cb625-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend=</span>legend_text, <span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<p><img src="my_book_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="ranger-in-the-caret.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb626-2"><a href="ranger-in-the-caret.html#cb626-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(legend_text,Rsq_test_rangerFit2,RMSE_test_rangerFit2,test_pred_rangerFit2)</span></code></pre></div>
+</div>
+</div>
+<div id="manual-selection-of-the-best-model" class="section level2" number="14.9">
+<h2><span class="header-section-number">14.9</span> Manual selection of the best model</h2>
+<p>We use the <strong>finalModel</strong> suggested by <strong>caret</strong>, but there is a way of selecting it manually using different criteria …</p>
+<p>?tolerance - is it sorted from the least to the most complex model ?</p>
+<div id="carets-default-hyper-parameter-grid" class="section level4" number="14.9.0.1">
+<h4><span class="header-section-number">14.9.0.1</span> Caret’s default hyper-parameter grid</h4>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="ranger-in-the-caret.html#cb627-1" aria-hidden="true" tabindex="-1"></a>RMSE_tol2pct_rangerFit1 <span class="ot">&lt;-</span> <span class="fu">tolerance</span>(rangerFit1<span class="sc">$</span>results, <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span>, </span>
+<span id="cb627-2"><a href="ranger-in-the-caret.html#cb627-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">tol =</span> <span class="dv">2</span>, <span class="at">maximize =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb627-3"><a href="ranger-in-the-caret.html#cb627-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-4"><a href="ranger-in-the-caret.html#cb627-4" aria-hidden="true" tabindex="-1"></a>rangerFit1<span class="sc">$</span>results[RMSE_tol2pct_rangerFit1,]</span></code></pre></div>
+<pre><code>##   mtry min.node.size  splitrule     RMSE  Rsquared      MAE  RMSESD RsquaredSD    MAESD
+## 2    2             5 extratrees 3121.548 0.6977838 2150.264 524.667 0.05123444 169.8643</code></pre>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="ranger-in-the-caret.html#cb629-1" aria-hidden="true" tabindex="-1"></a>Rsq_tol2pct_rangerFit1 <span class="ot">&lt;-</span> <span class="fu">tolerance</span>(rangerFit1<span class="sc">$</span>results, <span class="at">metric =</span> <span class="st">&quot;Rsquared&quot;</span>, </span>
+<span id="cb629-2"><a href="ranger-in-the-caret.html#cb629-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">tol =</span> <span class="dv">2</span>, <span class="at">maximize =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb629-3"><a href="ranger-in-the-caret.html#cb629-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-4"><a href="ranger-in-the-caret.html#cb629-4" aria-hidden="true" tabindex="-1"></a>rangerFit1<span class="sc">$</span>results[Rsq_tol2pct_rangerFit1,]</span></code></pre></div>
+<pre><code>##   mtry min.node.size splitrule     RMSE  Rsquared      MAE   RMSESD RsquaredSD    MAESD
+## 3    9             5  variance 2247.079 0.7892767 1464.055 546.1479 0.05460494 184.0897</code></pre>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="ranger-in-the-caret.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb631-2"><a href="ranger-in-the-caret.html#cb631-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(RMSE_tol2pct_rangerFit1,Rsq_tol2pct_rangerFit1)</span></code></pre></div>
+</div>
+<div id="custom-hyper-parameter-grid" class="section level4" number="14.9.0.2">
+<h4><span class="header-section-number">14.9.0.2</span> Custom hyper-parameter grid</h4>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="ranger-in-the-caret.html#cb632-1" aria-hidden="true" tabindex="-1"></a>rangerFit2<span class="sc">$</span>results</span></code></pre></div>
+<pre><code>##     mtry  splitrule min.node.size     RMSE  Rsquared      MAE   RMSESD RsquaredSD    MAESD
+## 1      1   variance             5 3480.708 0.7090287 2472.049 653.8809 0.05739400 251.8085
+## 2      1   variance             7 3485.074 0.7092895 2475.316 642.7905 0.05646284 246.8308
+## 3      1   variance             9 3489.622 0.7078086 2478.340 651.9453 0.05813802 248.8386
+## 4      1   variance            11 3488.937 0.7074563 2478.689 647.4680 0.05753141 246.4589
+## 5      1   variance            13 3495.424 0.7069768 2482.410 648.0846 0.05784794 245.9483
+## 6      1   variance            15 3497.762 0.7063670 2485.192 646.5400 0.05790954 247.0167
+## 7      1 extratrees             5 3930.052 0.6124170 2879.577 628.2805 0.07380893 243.6790
+## 8      1 extratrees             7 3939.023 0.6071972 2887.027 635.0366 0.06780230 247.2786
+## 9      1 extratrees             9 3932.380 0.6104707 2882.411 637.2757 0.06910053 248.6003
+## 10     1 extratrees            11 3942.351 0.6080585 2891.884 635.7954 0.07049508 249.0843
+## 11     1 extratrees            13 3943.907 0.6059577 2890.984 634.9859 0.06656599 245.5603
+## 12     1 extratrees            15 3948.833 0.6026171 2895.591 635.3994 0.06749773 245.1560
+## 13     1    maxstat             5 4361.519 0.5766463 3253.215 654.6685 0.06860905 246.9378
+## 14     1    maxstat             7 4358.142 0.5797896 3250.234 657.6254 0.07212058 251.5503
+## 15     1    maxstat             9 4361.568 0.5780818 3253.265 653.4601 0.07150346 245.4741
+## 16     1    maxstat            11 4368.732 0.5735337 3259.457 651.3930 0.07221044 243.2442
+## 17     1    maxstat            13 4357.273 0.5765763 3248.064 642.6443 0.06957168 235.0368
+## 18     1    maxstat            15 4359.366 0.5677793 3250.118 651.9950 0.07240528 242.3737
+## 19     3   variance             5 2352.078 0.7933851 1563.604 559.0479 0.04944228 194.9500
+## 20     3   variance             7 2370.127 0.7897887 1578.139 568.0398 0.05084529 199.8765
+## 21     3   variance             9 2393.975 0.7861035 1593.235 575.7855 0.05084433 204.9602
+## 22     3   variance            11 2414.148 0.7821976 1604.235 584.8731 0.05115010 207.0534
+## 23     3   variance            13 2435.040 0.7790921 1618.012 577.9749 0.05111998 205.5794
+## 24     3   variance            15 2455.284 0.7766778 1630.401 582.0422 0.05211189 204.1361
+## 25     3 extratrees             5 2656.494 0.7538935 1813.204 561.3127 0.05085592 211.5217
+## 26     3 extratrees             7 2680.668 0.7492453 1827.349 570.5052 0.05134098 215.5524
+## 27     3 extratrees             9 2700.494 0.7460945 1838.420 577.8251 0.05214093 219.0072
+## 28     3 extratrees            11 2730.644 0.7394906 1858.045 575.2133 0.05201573 215.9733
+## 29     3 extratrees            13 2753.124 0.7360851 1873.314 586.4585 0.05443066 225.9861
+## 30     3 extratrees            15 2777.481 0.7312582 1889.330 585.4652 0.05436938 223.0845
+## 31     3    maxstat             5 3460.214 0.6723615 2442.387 673.7528 0.06515483 247.0978
+## 32     3    maxstat             7 3466.623 0.6702104 2447.492 679.7960 0.06731181 247.6231
+## 33     3    maxstat             9 3466.208 0.6688062 2444.038 673.6115 0.06794990 240.0847
+## 34     3    maxstat            11 3475.988 0.6666921 2453.815 682.3185 0.06920364 245.3531
+## 35     3    maxstat            13 3477.919 0.6655827 2451.536 682.2451 0.06834995 244.8525
+## 36     3    maxstat            15 3488.781 0.6597247 2459.926 687.8721 0.07109304 247.4998
+## 37     5   variance             5 2218.117 0.8026400 1468.044 528.2924 0.04770455 182.7764
+## 38     5   variance             7 2240.590 0.7986390 1481.434 530.8554 0.04784610 182.7778
+## 39     5   variance             9 2267.743 0.7939873 1498.788 546.1234 0.04953236 187.5525
+## 40     5   variance            11 2291.741 0.7906138 1517.405 549.5934 0.05016140 189.2706
+## 41     5   variance            13 2316.331 0.7859540 1532.410 555.5916 0.05036941 192.5030
+## 42     5   variance            15 2339.008 0.7827188 1549.234 559.1909 0.05043419 193.4935
+## 43     5 extratrees             5 2312.319 0.7963695 1550.998 517.4454 0.04645457 189.2701
+## 44     5 extratrees             7 2348.701 0.7911407 1571.691 531.5292 0.04583267 196.2668
+## 45     5 extratrees             9 2396.896 0.7826806 1600.222 545.4848 0.04876185 199.3240
+## 46     5 extratrees            11 2432.837 0.7768959 1621.867 552.9158 0.04764272 198.9975
+## 47     5 extratrees            13 2461.349 0.7727988 1641.644 556.7975 0.04919700 204.5521
+## 48     5 extratrees            15 2497.813 0.7669131 1664.536 562.3792 0.04833071 206.0860
+## 49     5    maxstat             5 2800.925 0.7285356 1894.520 651.4455 0.06009226 227.9112
+## 50     5    maxstat             7 2802.588 0.7260980 1892.335 654.8942 0.06228871 230.0327
+## 51     5    maxstat             9 2817.653 0.7219827 1896.834 666.3828 0.06398817 235.6859
+## 52     5    maxstat            11 2822.011 0.7219941 1902.842 653.1908 0.06237274 226.7886
+## 53     5    maxstat            13 2832.474 0.7176074 1906.936 662.8699 0.06407045 229.8546
+## 54     5    maxstat            15 2840.442 0.7165951 1910.929 665.3258 0.06506307 230.7233
+## 55     7   variance             5 2195.422 0.8013149 1447.152 508.8013 0.04719530 178.3215
+## 56     7   variance             7 2220.482 0.7973964 1461.390 514.1453 0.04695249 177.8916
+## 57     7   variance             9 2241.051 0.7938248 1478.572 515.3166 0.04662153 179.9194
+## 58     7   variance            11 2271.667 0.7884257 1497.196 529.4821 0.04792323 185.0141
+## 59     7   variance            13 2286.093 0.7864966 1509.103 531.1973 0.04811141 185.9506
+## 60     7   variance            15 2310.910 0.7822363 1525.065 533.2558 0.04906881 184.4948
+## 61     7 extratrees             5 2186.410 0.8106278 1461.609 484.5753 0.04297896 172.9852
+## 62     7 extratrees             7 2235.131 0.8031455 1489.085 502.0878 0.04356946 178.3344
+## 63     7 extratrees             9 2272.641 0.7983737 1512.364 513.6440 0.04438049 183.5718
+## 64     7 extratrees            11 2311.592 0.7921418 1535.056 531.6477 0.04621409 191.2128
+## 65     7 extratrees            13 2353.660 0.7851490 1560.921 542.3451 0.04800692 193.3412
+## 66     7 extratrees            15 2386.628 0.7804443 1578.947 549.6777 0.04671849 196.4946
+## 67     7    maxstat             5 2517.904 0.7503736 1672.767 600.4154 0.05637362 203.9183
+## 68     7    maxstat             7 2536.425 0.7462856 1684.164 612.1842 0.05895742 205.9984
+## 69     7    maxstat             9 2551.768 0.7426973 1689.678 619.1666 0.05826909 208.1121
+## 70     7    maxstat            11 2564.673 0.7395181 1698.901 623.7440 0.06120910 206.5662
+## 71     7    maxstat            13 2579.951 0.7363549 1706.882 622.7693 0.06034849 206.8083
+## 72     7    maxstat            15 2587.853 0.7346267 1710.734 626.2172 0.06168224 209.5004
+## 73     9   variance             5 2198.506 0.7981117 1443.302 500.8555 0.04688194 176.7930
+## 74     9   variance             7 2217.049 0.7954140 1456.605 500.9089 0.04590373 176.1508
+## 75     9   variance             9 2235.018 0.7922762 1471.817 504.0781 0.04640002 176.7751
+## 76     9   variance            11 2262.145 0.7873965 1488.140 513.7616 0.04771615 181.1194
+## 77     9   variance            13 2281.747 0.7842274 1500.049 522.7910 0.04886353 182.9050
+## 78     9   variance            15 2299.361 0.7810090 1513.504 527.2283 0.05003504 186.6265
+## 79     9 extratrees             5 2135.504 0.8154829 1427.330 470.2106 0.04334879 167.3108
+## 80     9 extratrees             7 2183.622 0.8079939 1454.198 490.0744 0.04423407 173.4569
+## 81     9 extratrees             9 2220.237 0.8028832 1474.301 506.0734 0.04494859 178.2459
+## 82     9 extratrees            11 2251.764 0.7987958 1494.092 512.7106 0.04455416 182.7378
+## 83     9 extratrees            13 2296.372 0.7915954 1517.576 524.6530 0.04605976 186.3926
+## 84     9 extratrees            15 2329.346 0.7861168 1539.122 530.2303 0.04687606 187.7759
+## 85     9    maxstat             5 2435.714 0.7556420 1611.726 570.8161 0.05552823 193.9666
+## 86     9    maxstat             7 2448.661 0.7527975 1614.753 582.4167 0.05704015 196.2106
+## 87     9    maxstat             9 2468.462 0.7485984 1626.206 588.6516 0.05843964 198.2046
+## 88     9    maxstat            11 2481.306 0.7458888 1633.324 591.9210 0.05918793 200.4703
+## 89     9    maxstat            13 2504.445 0.7407622 1645.711 601.9711 0.06058538 202.2753
+## 90     9    maxstat            15 2517.991 0.7382049 1655.127 603.7236 0.06024504 203.1684
+## 91    11   variance             5 2208.628 0.7948292 1448.881 495.6737 0.04750471 177.0882
+## 92    11   variance             7 2227.374 0.7917467 1462.570 496.2797 0.04691160 178.8564
+## 93    11   variance             9 2242.845 0.7890146 1474.912 502.2390 0.04772099 181.0526
+## 94    11   variance            11 2262.336 0.7855255 1487.473 508.4716 0.04804097 180.2007
+## 95    11   variance            13 2281.811 0.7822043 1498.660 505.3399 0.04812315 182.0668
+## 96    11   variance            15 2300.801 0.7786993 1512.806 505.1617 0.04836799 179.9858
+## 97    11 extratrees             5 2121.980 0.8146371 1413.736 475.6018 0.04499907 167.4452
+## 98    11 extratrees             7 2149.499 0.8109904 1433.529 475.2556 0.04403727 167.9377
+## 99    11 extratrees             9 2199.405 0.8036176 1460.098 492.5168 0.04384786 172.6403
+## 100   11 extratrees            11 2234.409 0.7984726 1480.336 506.0456 0.04585271 180.0340
+## 101   11 extratrees            13 2268.096 0.7934579 1498.733 516.2363 0.04546465 178.6396
+## 102   11 extratrees            15 2294.026 0.7897046 1515.105 524.0581 0.04756092 183.3612
+## 103   11    maxstat             5 2408.593 0.7569455 1590.234 560.5663 0.05533539 194.7188
+## 104   11    maxstat             7 2422.702 0.7540510 1597.424 567.9169 0.05675566 197.3623
+## 105   11    maxstat             9 2443.785 0.7496759 1607.299 571.2541 0.05781119 196.2274
+## 106   11    maxstat            11 2462.165 0.7453431 1617.305 577.5012 0.05850388 197.1825
+## 107   11    maxstat            13 2478.143 0.7425341 1628.410 586.0297 0.05959070 198.7964
+## 108   11    maxstat            15 2495.729 0.7389388 1638.798 588.7539 0.06042413 202.7002
+## 109   13   variance             5 2224.776 0.7904001 1460.655 481.0254 0.04828689 174.8134
+## 110   13   variance             7 2236.880 0.7886909 1468.034 481.2127 0.04658402 173.8269
+## 111   13   variance             9 2255.269 0.7856946 1478.074 487.9459 0.04638150 177.4697
+## 112   13   variance            11 2269.926 0.7825451 1490.774 492.0347 0.04819167 178.1355
+## 113   13   variance            13 2290.953 0.7788466 1504.965 494.0271 0.04800836 179.2905
+## 114   13   variance            15 2303.106 0.7767364 1513.477 499.6572 0.04914277 181.8960
+## 115   13 extratrees             5 2108.888 0.8150672 1406.900 460.8956 0.04501725 161.5215
+## 116   13 extratrees             7 2143.699 0.8104801 1429.810 476.2635 0.04561886 168.4591
+## 117   13 extratrees             9 2187.200 0.8038312 1449.629 486.7118 0.04439793 167.7202
+## 118   13 extratrees            11 2213.848 0.8002418 1467.741 490.9791 0.04431379 171.4975
+## 119   13 extratrees            13 2249.545 0.7947662 1486.598 506.6294 0.04598211 175.4891
+## 120   13 extratrees            15 2272.520 0.7914293 1502.166 513.0152 0.04518420 181.1301
+## 121   13    maxstat             5 2409.709 0.7547325 1591.273 555.4300 0.05631515 196.3642
+## 122   13    maxstat             7 2421.683 0.7522924 1596.497 556.0821 0.05712486 195.3323
+## 123   13    maxstat             9 2443.232 0.7478132 1606.913 563.5372 0.05619844 196.4202
+## 124   13    maxstat            11 2455.971 0.7451920 1615.406 567.7536 0.05785194 197.7244
+## 125   13    maxstat            13 2474.318 0.7412053 1626.891 578.0401 0.05939632 201.3558
+## 126   13    maxstat            15 2490.213 0.7379786 1637.103 582.6910 0.06067540 201.3697
+## 127   15   variance             5 2245.458 0.7857367 1468.871 476.0919 0.04819886 175.8929
+## 128   15   variance             7 2257.614 0.7838378 1476.913 470.7052 0.04630882 173.0441
+## 129   15   variance             9 2268.819 0.7818964 1486.727 476.6829 0.04741934 174.7385
+## 130   15   variance            11 2290.682 0.7777409 1499.959 481.8747 0.04649771 177.0355
+## 131   15   variance            13 2303.803 0.7754090 1508.128 484.9908 0.04855337 179.3236
+## 132   15   variance            15 2314.439 0.7737001 1516.707 487.8661 0.04869217 180.2305
+## 133   15 extratrees             5 2109.192 0.8141949 1403.830 464.4881 0.04351751 160.3821
+## 134   15 extratrees             7 2140.721 0.8097701 1424.623 475.1010 0.04491077 163.4446
+## 135   15 extratrees             9 2171.226 0.8054118 1443.804 482.2199 0.04456001 168.2173
+## 136   15 extratrees            11 2205.492 0.8001438 1463.391 491.5246 0.04569526 172.6320
+## 137   15 extratrees            13 2233.059 0.7962069 1476.409 506.4821 0.04678655 175.4366
+## 138   15 extratrees            15 2261.578 0.7918521 1494.142 509.9930 0.04662749 176.3383
+## 139   15    maxstat             5 2413.008 0.7527492 1596.522 547.0849 0.05650205 196.6912
+## 140   15    maxstat             7 2431.269 0.7487393 1605.224 553.8724 0.05755344 196.4431
+## 141   15    maxstat             9 2444.403 0.7461677 1611.300 560.0403 0.05797248 198.6144
+## 142   15    maxstat            11 2459.750 0.7428750 1621.435 568.4793 0.05904108 200.3133
+## 143   15    maxstat            13 2483.502 0.7382048 1633.102 572.4336 0.05974318 202.1199
+## 144   15    maxstat            15 2503.034 0.7341556 1646.722 579.0257 0.06058044 202.6827
+## 145   17   variance             5 2271.064 0.7804503 1481.357 460.6714 0.04679949 172.1437
+## 146   17   variance             7 2279.668 0.7791901 1487.993 460.2556 0.04607237 171.2131
+## 147   17   variance             9 2291.893 0.7769432 1498.494 463.9629 0.04584838 173.3495
+## 148   17   variance            11 2309.112 0.7734374 1510.798 468.6667 0.04614428 177.4674
+## 149   17   variance            13 2326.162 0.7705538 1520.142 475.9210 0.04764976 179.4543
+## 150   17   variance            15 2334.920 0.7690559 1526.685 478.6440 0.04813462 181.1187
+## 151   17 extratrees             5 2099.762 0.8146892 1399.288 458.1752 0.04468388 163.6685
+## 152   17 extratrees             7 2133.956 0.8099013 1421.661 463.7166 0.04322355 160.6645
+## 153   17 extratrees             9 2164.972 0.8049848 1441.025 471.2761 0.04543728 164.8484
+## 154   17 extratrees            11 2197.491 0.8004547 1457.724 488.6085 0.04542805 169.6087
+## 155   17 extratrees            13 2228.198 0.7953733 1475.359 497.2423 0.04690350 174.4546
+## 156   17 extratrees            15 2245.420 0.7932948 1487.364 500.8902 0.04681644 175.1624
+## 157   17    maxstat             5 2428.483 0.7484978 1610.536 539.9379 0.05751022 196.5421
+## 158   17    maxstat             7 2440.865 0.7458872 1617.972 548.3167 0.05721811 198.5786
+## 159   17    maxstat             9 2461.315 0.7413833 1627.144 555.1827 0.05888327 201.2240
+## 160   17    maxstat            11 2476.466 0.7383731 1634.856 565.5207 0.06037233 203.5473
+## 161   17    maxstat            13 2489.963 0.7355372 1644.713 568.5059 0.06029050 206.1184
+## 162   17    maxstat            15 2513.213 0.7306427 1659.341 576.4425 0.06253614 208.6268</code></pre>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="ranger-in-the-caret.html#cb634-1" aria-hidden="true" tabindex="-1"></a>RMSE_tol2pct_rangerFit2 <span class="ot">&lt;-</span> <span class="fu">tolerance</span>(rangerFit2<span class="sc">$</span>results, <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span>, </span>
+<span id="cb634-2"><a href="ranger-in-the-caret.html#cb634-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">tol =</span> <span class="dv">2</span>, <span class="at">maximize =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb634-3"><a href="ranger-in-the-caret.html#cb634-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb634-4"><a href="ranger-in-the-caret.html#cb634-4" aria-hidden="true" tabindex="-1"></a>rangerFit2<span class="sc">$</span>results[ RMSE_tol2pct_rangerFit2,]</span></code></pre></div>
+<pre><code>##    mtry splitrule min.node.size     RMSE  Rsquared      MAE   RMSESD RsquaredSD    MAESD
+## 13    1   maxstat             5 4361.519 0.5766463 3253.215 654.6685 0.06860905 246.9378</code></pre>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="ranger-in-the-caret.html#cb636-1" aria-hidden="true" tabindex="-1"></a>Rsq_tol2pct_rangerFit2 <span class="ot">&lt;-</span> <span class="fu">tolerance</span>(rangerFit2<span class="sc">$</span>results, <span class="at">metric =</span> <span class="st">&quot;Rsquared&quot;</span>, </span>
+<span id="cb636-2"><a href="ranger-in-the-caret.html#cb636-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">tol =</span> <span class="dv">2</span>, <span class="at">maximize =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb636-3"><a href="ranger-in-the-caret.html#cb636-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb636-4"><a href="ranger-in-the-caret.html#cb636-4" aria-hidden="true" tabindex="-1"></a>rangerFit2<span class="sc">$</span>results[Rsq_tol2pct_rangerFit2,]</span></code></pre></div>
+<pre><code>##    mtry splitrule min.node.size     RMSE Rsquared      MAE   RMSESD RsquaredSD    MAESD
+## 37    5  variance             5 2218.117  0.80264 1468.044 528.2924 0.04770455 182.7764</code></pre>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="ranger-in-the-caret.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-up</span></span>
+<span id="cb638-2"><a href="ranger-in-the-caret.html#cb638-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(RMSE_tol2pct_rangerFit2,Rsq_tol2pct_rangerFit2)</span></code></pre></div>
+</div>
+</div>
+<div id="final-section" class="section level2" number="14.10">
+<h2><span class="header-section-number">14.10</span> Final section</h2>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="ranger-in-the-caret.html#cb639-1" aria-hidden="true" tabindex="-1"></a>ls</span></code></pre></div>
+<pre><code>## function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
+##     pattern, sorted = TRUE) 
+## {
+##     if (!missing(name)) {
+##         pos &lt;- tryCatch(name, error = function(e) e)
+##         if (inherits(pos, &quot;error&quot;)) {
+##             name &lt;- substitute(name)
+##             if (!is.character(name)) 
+##                 name &lt;- deparse(name)
+##             warning(gettextf(&quot;%s converted to character string&quot;, 
+##                 sQuote(name)), domain = NA)
+##             pos &lt;- name
+##         }
+##     }
+##     all.names &lt;- .Internal(ls(envir, all.names, sorted))
+##     if (!missing(pattern)) {
+##         if ((ll &lt;- length(grep(&quot;[&quot;, pattern, fixed = TRUE))) &amp;&amp; 
+##             ll != length(grep(&quot;]&quot;, pattern, fixed = TRUE))) {
+##             if (pattern == &quot;[&quot;) {
+##                 pattern &lt;- &quot;\\[&quot;
+##                 warning(&quot;replaced regular expression pattern &#39;[&#39; by  &#39;\\\\[&#39;&quot;)
+##             }
+##             else if (length(grep(&quot;[^\\\\]\\[&lt;-&quot;, pattern))) {
+##                 pattern &lt;- sub(&quot;\\[&lt;-&quot;, &quot;\\\\\\[&lt;-&quot;, pattern)
+##                 warning(&quot;replaced &#39;[&lt;-&#39; by &#39;\\\\[&lt;-&#39; in regular expression pattern&quot;)
+##             }
+##         }
+##         grep(pattern, all.names, value = TRUE)
+##     }
+##     else all.names
+## }
+## &lt;bytecode: 0x7f8ebbb3eb60&gt;
+## &lt;environment: namespace:base&gt;</code></pre>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="ranger-in-the-caret.html#cb641-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
+## 
+## attached base packages:
+## [1] parallel  stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ranger_0.12.1     corrplot_0.84     doMC_1.3.7        iterators_1.0.13  foreach_1.5.1     AmesHousing_0.0.4 caret_6.0-86      lattice_0.20-41   ipred_0.9-11      rpart.plot_3.0.9  rpart_4.1-15      rsample_0.0.9     dplyr_1.0.4       plotly_4.9.3      ggplot2_3.3.3    
+## 
+## loaded via a namespace (and not attached):
+##  [1] httr_1.4.2           tidyr_1.1.2          jsonlite_1.7.2       viridisLite_0.3.0    splines_3.6.2        prodlim_2019.11.13   assertthat_0.2.1     stats4_3.6.2         highr_0.8            yaml_2.2.1           globals_0.14.0       pillar_1.4.7         glue_1.4.2           reticulate_1.18      pROC_1.17.0.1        digest_0.6.27        colorspace_2.0-0     recipes_0.1.15       htmltools_0.5.1.1    Matrix_1.3-2         plyr_1.8.6           timeDate_3043.102    pkgconfig_2.0.3      listenv_0.8.0        bookdown_0.21        purrr_0.3.4          scales_1.1.1         gower_0.2.2          lava_1.6.9           tibble_3.0.6         mgcv_1.8-33          generics_0.1.0       farver_2.0.3         ellipsis_0.3.1       withr_2.4.1          furrr_0.2.2          nnet_7.3-15          lazyeval_0.2.2       cli_2.3.0            survival_3.2-7       magrittr_2.0.1       crayon_1.4.1         evaluate_0.14        future_1.21.0        fansi_0.4.2          parallelly_1.23.0    nlme_3.1-152        
+## [48] MASS_7.3-53.1        class_7.3-18         tools_3.6.2          data.table_1.13.6    lifecycle_1.0.0      stringr_1.4.0        munsell_0.5.0        e1071_1.7-4          compiler_3.6.2       rlang_0.4.10         grid_3.6.2           rstudioapi_0.13      htmlwidgets_1.5.3    crosstalk_1.1.1      labeling_0.4.2       rmarkdown_2.6        ModelMetrics_1.2.2.2 gtable_0.3.0         codetools_0.2-18     DBI_1.1.1            reshape2_1.4.4       R6_2.5.0             lubridate_1.7.9.2    knitr_1.31           utf8_1.1.4           stringi_1.5.3        Rcpp_1.0.6           vctrs_0.3.6          tidyselect_1.1.0     xfun_0.21</code></pre>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="ranger-in-the-caret.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-04-21 14:19:01 BST&quot;</code></pre>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="ranger-in-the-caret.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div>
+<pre><code>##           used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+## Ncells 2838379 151.6    4344478 232.1         NA  4344478 232.1
+## Vcells 6347678  48.5   14815979 113.1      16384 14815979 113.1</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression-trees.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
